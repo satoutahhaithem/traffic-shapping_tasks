@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Streaming Control Panel (Updated)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .video-container {
+            flex: 1;
+            min-width: 45%;
+            max-width: 48%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 1200px) {
+            .video-container {
+                min-width: 100%;
+                max-width: 100%;
+            }
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        .custom-delay {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f4e8;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="number"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100px;
+        }
+        .controls {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .debug-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .debug-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        .debug-content {
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            display: block;
+        }
+        .video-controls {
+            background-color: #e8f0ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .qos-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .metric {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+    <script src="adjustVideoSize.js"></script>
+</head>
+<body>
+    <h1>Video Streaming Control Panel (Updated)</h1>
+    
+    <div class="controls">
+        <h2>Network Delay Control</h2>
+        <p>Adjust the network delay to simulate different conditions (only affects the receiver side):</p>
+        
+        <h3>Network Parameters Control</h3>
+        
+        <div class="custom-delay">
+            <h4>Delay (Latency)</h4>
+            <p>Set the network delay in milliseconds:</p>
+            <input type="number" id="customDelay" min="0" step="10" value="100">
+            <span>ms</span>
+            <button onclick="setCustomDelay()">Apply Delay</button>
+            <p><small>You can enter any positive value. No upper limit.</small></p>
+        </div>
+        
+        <div class="custom-delay">
+            <h4>Bandwidth (Rate)</h4>
+            <p>Set the bandwidth limit:</p>
+            <input type="number" id="customRate" min="0.1" step="0.1" value="10">
+            <select id="rateUnit">
+                <option value="kbit">Kbit/s</option>
+                <option value="mbit" selected>Mbit/s</option>
+                <option value="gbit">Gbit/s</option>
+            </select>
+            <button onclick="setCustomRate()">Apply Bandwidth</button>
+            <p><small>You can enter any positive value. No upper limit.</small></p>
+        </div>
+        
+        <div class="custom-delay">
+            <h4>Packet Loss</h4>
+            <p>Set the packet loss percentage:</p>
+            <input type="number" id="customLoss" min="0" step="0.1" value="0">
+            <span>%</span>
+            <button onclick="setCustomLoss()">Apply Loss</button>
+            <p><small>You can enter any non-negative value. No upper limit.</small></p>
+        </div>
+        
+        <h3>Preset Network Conditions</h3>
+        <div class="button-group">
+            <button onclick="setNetworkPreset('perfect')">Perfect Connection</button>
+            <button onclick="setNetworkPreset('good')">Good Broadband</button>
+            <button onclick="setNetworkPreset('average')">Average Mobile</button>
+            <button onclick="setNetworkPreset('poor')">Poor Mobile</button>
+            <button onclick="setNetworkPreset('satellite')">Satellite Internet</button>
+            <button onclick="setNetworkPreset('critical')">Critical Conditions</button>
+        </div>
+        
+        <div class="status" id="status">Status: Ready</div>
+        
+        <h3>Quality of Service Metrics</h3>
+        <div class="qos-metrics">
+            <div class="metric">
+                <h4>Latency</h4>
+                <div id="latency-value">0.033 s</div>
+                <div id="latency-quality">Perfect</div>
+            </div>
+            <div class="metric">
+                <h4>Frame Rate</h4>
+                <div id="fps-value">30 fps</div>
+                <div id="fps-quality">Perfect</div>
+            </div>
+            <div class="metric">
+                <h4>Jitter</h4>
+                <div id="jitter-value">0 ms</div>
+                <div id="jitter-quality">Perfect</div>
+            </div>
+            <div class="metric">
+                <h4>Quality Rating</h4>
+                <div id="quality-rating">5/5</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="video-controls">
+        <h3>Video Display Controls</h3>
+        <button onclick="adjustVideoSize(300)">Small</button>
+        <button onclick="adjustVideoSize(450)">Medium</button>
+        <button onclick="adjustVideoSize(600)">Large</button>
+        <button onclick="adjustVideoSize(800)">Extra Large</button>
+        <span style="margin-left: 20px;">Current height: <span id="currentHeight">450</span>px</span>
+    </div>
+    
+    <div class="container">
+        <div class="video-container">
+            <h2>Transmitter Side (Original)</h2>
+            <iframe id="tx-video" src="http://localhost:5000/tx_video_feed" width="100%" height="450" frameborder="0"></iframe>
+        </div>
+        <div class="video-container">
+            <h2>Receiver Side (Delayed)</h2>
+            <iframe id="rx-video" src="http://localhost:5001/rx_video_feed" width="100%" height="450" frameborder="0"></iframe>
+        </div>
+    </div>
+    
+    <script>
+        // Your existing JavaScript remains unchanged...
+    </script>
+</body>
+</html>

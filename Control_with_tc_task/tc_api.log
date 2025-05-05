@@ -1,0 +1,1501 @@
+2025-04-29 11:24:55,864 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.28.232.212:5002
+2025-04-29 11:24:55,864 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 11:32:33,577 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.28.232.212:5002
+2025-04-29 11:32:33,577 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 11:42:50,183 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.28.232.212:5002
+2025-04-29 11:42:50,183 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 12:53:23,576 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-04-29 12:53:23,577 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 13:20:38,800 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 13:20:38,800 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 13:20:38,804 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-04-29 13:20:38,804 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 14:00:04,321 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 14:00:04,321 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 14:00:04,325 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-04-29 14:00:04,326 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 14:33:57,329 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 14:33:57,330 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 14:33:57,334 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-04-29 14:33:57,334 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 14:48:37,204 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 14:48:37,204 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 14:48:37,207 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-04-29 14:48:37,207 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 15:14:35,617 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:14:35,618 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:14:35,619 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:14:35,619 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:14:35,629 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-04-29 15:14:35,629 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 15:14:35,629 - werkzeug - INFO -  * Restarting with stat
+2025-04-29 15:14:35,758 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:14:35,758 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:14:35,759 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:14:35,759 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:14:35,768 - werkzeug - WARNING -  * Debugger is active!
+2025-04-29 15:14:35,770 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-29 15:14:50,440 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:14:50] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:14:50,446 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:14:50,446 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 82
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:14:50,446 - __main__ - INFO - Received command: tc qdisc change dev auto root netem delay 5000ms rate 10mbit loss 0%
+2025-04-29 15:14:50,447 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10mbit, loss=0%
+2025-04-29 15:14:50,447 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:14:50,447 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:14:50,451 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 10% rate 1Mbit
+, stderr: 
+2025-04-29 15:14:50,451 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10.0mbit loss 0.0%
+2025-04-29 15:14:50,462 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 178926332 bytes 282928 pkt (dropped 29035, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:14:50,462 - __main__ - INFO - Successfully changed netem qdisc to delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:14:50,463 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:14:50] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:14:50,469 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:14:50,472 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 178926332 bytes 282928 pkt (dropped 29035, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:14:50,472 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:14:50] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:15:25,480 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:15:25] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:15:25,485 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:15:25,485 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 84
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:15:25,486 - __main__ - INFO - Received command: tc qdisc change dev auto root netem delay 5000ms rate 10mbit loss 100%
+2025-04-29 15:15:25,486 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10mbit, loss=100%
+2025-04-29 15:15:25,486 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0mbit, loss=100.0%
+2025-04-29 15:15:25,486 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:15:25,488 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+, stderr: 
+2025-04-29 15:15:25,488 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10.0mbit loss 100.0%
+2025-04-29 15:15:25,500 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 10Mbit
+ Sent 178966836 bytes 283122 pkt (dropped 29035, overlimits 0 requeues 0) 
+ backlog 12902b 54p requeues 0
+
+2025-04-29 15:15:25,500 - __main__ - INFO - Successfully changed netem qdisc to delay=5000ms, rate=10.0mbit, loss=100.0%
+2025-04-29 15:15:25,501 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:15:25] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:15:25,506 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:15:25,509 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 10Mbit
+ Sent 178966836 bytes 283122 pkt (dropped 29035, overlimits 0 requeues 0) 
+ backlog 12902b 54p requeues 0
+
+2025-04-29 15:15:25,509 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:15:25] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:15:47,368 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:15:47] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:15:47,372 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:15:47,372 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 84
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:15:47,372 - __main__ - INFO - Received command: tc qdisc change dev auto root netem delay 5000ms rate 10kbit loss 100%
+2025-04-29 15:15:47,373 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10kbit, loss=100%
+2025-04-29 15:15:47,373 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0kbit, loss=100.0%
+2025-04-29 15:15:47,373 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:15:47,375 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 10Mbit
+, stderr: 
+2025-04-29 15:15:47,376 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10.0kbit loss 100.0%
+2025-04-29 15:15:47,388 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 10Kbit
+ Sent 178979738 bytes 283179 pkt (dropped 29227, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:15:47,388 - __main__ - INFO - Successfully changed netem qdisc to delay=5000ms, rate=10.0kbit, loss=100.0%
+2025-04-29 15:15:47,388 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:15:47] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:15:47,392 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:15:47,395 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 10Kbit
+ Sent 178979738 bytes 283179 pkt (dropped 29227, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:15:47,395 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:15:47] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:16:03,528 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:16:03] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:16:03,535 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:16:03,536 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 81
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:16:03,536 - __main__ - INFO - Received command: tc qdisc change dev auto root netem delay 0ms rate 10kbit loss 100%
+2025-04-29 15:16:03,536 - __main__ - INFO - Extracted parameters: delay=0ms, rate=10kbit, loss=100%
+2025-04-29 15:16:03,536 - __main__ - INFO - Validated parameters: delay=0ms, rate=10.0kbit, loss=100.0%
+2025-04-29 15:16:03,536 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:16:03,539 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 10Kbit
+, stderr: 
+2025-04-29 15:16:03,539 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 0ms rate 10.0kbit loss 100.0%
+2025-04-29 15:16:03,553 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 loss 100% rate 10Kbit
+ Sent 178979738 bytes 283179 pkt (dropped 29363, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:16:03,553 - __main__ - INFO - Successfully changed netem qdisc to delay=0ms, rate=10.0kbit, loss=100.0%
+2025-04-29 15:16:03,553 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:16:03] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:16:03,557 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:16:03,560 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 loss 100% rate 10Kbit
+ Sent 178979738 bytes 283179 pkt (dropped 29363, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:16:03,560 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:16:03] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:19:24,591 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:19:24] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:19:24,594 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:19:24,594 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 81
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:19:24,594 - __main__ - INFO - Received command: tc qdisc change dev auto root netem delay 0ms rate 10kbit loss 100%
+2025-04-29 15:19:24,594 - __main__ - INFO - Extracted parameters: delay=0ms, rate=10kbit, loss=100%
+2025-04-29 15:19:24,594 - __main__ - INFO - Validated parameters: delay=0ms, rate=10.0kbit, loss=100.0%
+2025-04-29 15:19:24,594 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:19:24,598 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 loss 100% rate 10Kbit
+, stderr: 
+2025-04-29 15:19:24,598 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 0ms rate 10.0kbit loss 100.0%
+2025-04-29 15:19:24,611 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 loss 100% rate 10Kbit
+ Sent 178979738 bytes 283179 pkt (dropped 30138, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:19:24,611 - __main__ - INFO - Successfully changed netem qdisc to delay=0ms, rate=10.0kbit, loss=100.0%
+2025-04-29 15:19:24,611 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:19:24] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:19:24,618 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:19:24,620 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 loss 100% rate 10Kbit
+ Sent 178979738 bytes 283179 pkt (dropped 30138, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:19:24,620 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:19:24] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:29:13,670 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:29:13,680 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:29:13,682 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:29:13,682 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:29:13,698 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.145.1:5002
+2025-04-29 15:29:13,698 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 15:29:13,699 - werkzeug - INFO -  * Restarting with stat
+2025-04-29 15:29:13,862 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:29:13,862 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:29:13,863 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:29:13,863 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:29:13,875 - werkzeug - WARNING -  * Debugger is active!
+2025-04-29 15:29:13,876 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-29 15:29:22,899 - werkzeug - INFO -  * Detected change in '/home/sattoutah/Bureau/mesurement_tc/receive_video.py', reloading
+2025-04-29 15:29:22,964 - werkzeug - INFO -  * Restarting with stat
+2025-04-29 15:29:23,169 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:29:23,169 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:29:23,171 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:29:23,171 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:29:23,185 - werkzeug - WARNING -  * Debugger is active!
+2025-04-29 15:29:23,186 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-29 15:29:25,080 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:29:25] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:29:25,083 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:29:25,084 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 81
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:29:25,084 - __main__ - INFO - Received command: tc qdisc change dev auto root netem delay 100ms rate 10mbit loss 0%
+2025-04-29 15:29:25,084 - __main__ - INFO - Extracted parameters: delay=100ms, rate=10mbit, loss=0%
+2025-04-29 15:29:25,084 - __main__ - INFO - Validated parameters: delay=100ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:29:25,084 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:29:25,090 - __main__ - DEBUG - Check command result: 1, stdout: , stderr: 
+2025-04-29 15:29:25,090 - __main__ - INFO - Adding new qdisc with command: sudo tc qdisc add dev wlp0s20f3 root netem delay 100ms rate 10.0mbit loss 0.0%
+2025-04-29 15:29:25,105 - __main__ - INFO - Successfully added netem qdisc with delay=100ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:29:25,107 - __main__ - DEBUG - Verification result after add: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:29:25,108 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:29:25] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:29:25,115 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:29:25,117 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:29:25,117 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:29:25] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:37:12,084 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:37:12,084 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:37:12,085 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:37:12,086 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:37:12,098 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.145.1:5002
+2025-04-29 15:37:12,098 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 15:37:12,098 - werkzeug - INFO -  * Restarting with stat
+2025-04-29 15:37:12,231 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:37:12,231 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:37:12,232 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:37:12,232 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:37:12,240 - werkzeug - WARNING -  * Debugger is active!
+2025-04-29 15:37:12,243 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-29 15:37:23,643 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:23] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:37:23,647 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:37:23,647 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 87
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:37:23,647 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10mbit loss 0%
+2025-04-29 15:37:23,648 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10mbit, loss=0%
+2025-04-29 15:37:23,648 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:37:23,648 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:37:23,651 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 10Mbit
+, stderr: 
+2025-04-29 15:37:23,651 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10.0mbit loss 0.0%
+2025-04-29 15:37:23,667 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 4497446 bytes 7353 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 66b 1p requeues 0
+
+2025-04-29 15:37:23,667 - __main__ - INFO - Successfully changed netem qdisc to delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:37:23,668 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:23] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:37:23,674 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:37:23,676 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 4497446 bytes 7353 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 66b 1p requeues 0
+
+2025-04-29 15:37:23,676 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:23] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:37:30,221 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:30] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:37:30,226 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:37:30,226 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 84
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:37:30,227 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 0ms rate 10mbit loss 0%
+2025-04-29 15:37:30,227 - __main__ - INFO - Extracted parameters: delay=0ms, rate=10mbit, loss=0%
+2025-04-29 15:37:30,227 - __main__ - INFO - Validated parameters: delay=0ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:37:30,227 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:37:30,231 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+, stderr: 
+2025-04-29 15:37:30,231 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 0ms rate 10.0mbit loss 0.0%
+2025-04-29 15:37:30,245 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 rate 10Mbit
+ Sent 4504183 bytes 7381 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 1422b 16p requeues 0
+
+2025-04-29 15:37:30,246 - __main__ - INFO - Successfully changed netem qdisc to delay=0ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:37:30,246 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:30] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:37:30,251 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:37:30,254 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 rate 10Mbit
+ Sent 4504183 bytes 7381 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 1422b 16p requeues 0
+
+2025-04-29 15:37:30,254 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:30] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:37:33,987 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:37:33,988 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 84
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:37:33,988 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 0ms rate 10mbit loss 0%
+2025-04-29 15:37:33,988 - __main__ - INFO - Extracted parameters: delay=0ms, rate=10mbit, loss=0%
+2025-04-29 15:37:33,988 - __main__ - INFO - Validated parameters: delay=0ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:37:33,988 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:37:33,991 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 rate 10Mbit
+, stderr: 
+2025-04-29 15:37:33,991 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 0ms rate 10.0mbit loss 0.0%
+2025-04-29 15:37:34,003 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 rate 10Mbit
+ Sent 4505030 bytes 7391 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 9540b 36p requeues 0
+
+2025-04-29 15:37:34,003 - __main__ - INFO - Successfully changed netem qdisc to delay=0ms, rate=10.0mbit, loss=0.0%
+2025-04-29 15:37:34,004 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:34] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:37:34,008 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:37:34,016 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 rate 10Mbit
+ Sent 4505030 bytes 7391 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 9540b 36p requeues 0
+
+2025-04-29 15:37:34,016 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:34] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:37:39,655 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:39] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:37:39,657 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:37:39,657 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 86
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:37:39,658 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 0ms rate 10mbit loss 100%
+2025-04-29 15:37:39,658 - __main__ - INFO - Extracted parameters: delay=0ms, rate=10mbit, loss=100%
+2025-04-29 15:37:39,658 - __main__ - INFO - Validated parameters: delay=0ms, rate=10.0mbit, loss=100.0%
+2025-04-29 15:37:39,658 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:37:39,661 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 rate 10Mbit
+, stderr: 
+2025-04-29 15:37:39,661 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 0ms rate 10.0mbit loss 100.0%
+2025-04-29 15:37:39,674 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 loss 100% rate 10Mbit
+ Sent 4562874 bytes 7570 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:37:39,674 - __main__ - INFO - Successfully changed netem qdisc to delay=0ms, rate=10.0mbit, loss=100.0%
+2025-04-29 15:37:39,675 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:39] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:37:39,680 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:37:39,683 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 loss 100% rate 10Mbit
+ Sent 4562874 bytes 7570 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:37:39,683 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:37:39] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:38:08,716 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:38:08] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:38:08,722 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:38:08,723 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 86
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:38:08,723 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 30ms rate 5mbit loss 0.1%
+2025-04-29 15:38:08,723 - __main__ - INFO - Extracted parameters: delay=30ms, rate=5mbit, loss=0.1%
+2025-04-29 15:38:08,723 - __main__ - INFO - Validated parameters: delay=30ms, rate=5.0mbit, loss=0.1%
+2025-04-29 15:38:08,723 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:38:08,727 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 loss 100% rate 10Mbit
+, stderr: 
+2025-04-29 15:38:08,727 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 30ms rate 5.0mbit loss 0.1%
+2025-04-29 15:38:08,742 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 30ms loss 0.1% rate 5Mbit
+ Sent 4562874 bytes 7570 pkt (dropped 201, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:38:08,742 - __main__ - INFO - Successfully changed netem qdisc to delay=30ms, rate=5.0mbit, loss=0.1%
+2025-04-29 15:38:08,742 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:38:08] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:38:08,748 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:38:08,751 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 30ms loss 0.1% rate 5Mbit
+ Sent 4562874 bytes 7570 pkt (dropped 201, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:38:08,751 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:38:08] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:38:09,677 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:38:09,677 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 86
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:38:09,678 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 30ms rate 5mbit loss 0.1%
+2025-04-29 15:38:09,678 - __main__ - INFO - Extracted parameters: delay=30ms, rate=5mbit, loss=0.1%
+2025-04-29 15:38:09,678 - __main__ - INFO - Validated parameters: delay=30ms, rate=5.0mbit, loss=0.1%
+2025-04-29 15:38:09,678 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:38:09,682 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 30ms loss 0.1% rate 5Mbit
+, stderr: 
+2025-04-29 15:38:09,682 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 30ms rate 5.0mbit loss 0.1%
+2025-04-29 15:38:09,695 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 30ms loss 0.1% rate 5Mbit
+ Sent 4571269 bytes 7593 pkt (dropped 201, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:38:09,695 - __main__ - INFO - Successfully changed netem qdisc to delay=30ms, rate=5.0mbit, loss=0.1%
+2025-04-29 15:38:09,695 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:38:09] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:38:09,699 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:38:09,702 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 30ms loss 0.1% rate 5Mbit
+ Sent 4571269 bytes 7593 pkt (dropped 201, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:38:09,702 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:38:09] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:38:17,406 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:38:17] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:38:17,410 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:38:17,411 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 89
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:38:17,411 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 1000ms rate 100kbit loss 10%
+2025-04-29 15:38:17,411 - __main__ - INFO - Extracted parameters: delay=1000ms, rate=100kbit, loss=10%
+2025-04-29 15:38:17,411 - __main__ - INFO - Validated parameters: delay=1000ms, rate=100.0kbit, loss=10.0%
+2025-04-29 15:38:17,411 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:38:17,414 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 30ms loss 0.1% rate 5Mbit
+, stderr: 
+2025-04-29 15:38:17,415 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 1000ms rate 100.0kbit loss 10.0%
+2025-04-29 15:38:17,428 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 10% rate 100Kbit
+ Sent 4748093 bytes 7899 pkt (dropped 201, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:38:17,428 - __main__ - INFO - Successfully changed netem qdisc to delay=1000ms, rate=100.0kbit, loss=10.0%
+2025-04-29 15:38:17,428 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:38:17] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:38:17,433 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:38:17,435 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 10% rate 100Kbit
+ Sent 4748093 bytes 7899 pkt (dropped 201, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:38:17,435 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:38:17] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:52:11,400 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:52:11,400 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:52:11,401 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:52:11,402 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:52:11,414 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.145.1:5002
+2025-04-29 15:52:11,414 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 15:52:11,415 - werkzeug - INFO -  * Restarting with stat
+2025-04-29 15:52:11,568 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 15:52:11,568 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:52:11,570 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 15:52:11,570 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 15:52:11,580 - werkzeug - WARNING -  * Debugger is active!
+2025-04-29 15:52:11,582 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-29 15:52:29,550 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:52:29] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:52:29,561 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:52:29,561 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 88
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:52:29,562 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 10mbit loss 100%
+2025-04-29 15:52:29,562 - __main__ - INFO - Extracted parameters: delay=100ms, rate=10mbit, loss=100%
+2025-04-29 15:52:29,562 - __main__ - INFO - Validated parameters: delay=100ms, rate=10.0mbit, loss=100.0%
+2025-04-29 15:52:29,562 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:52:29,566 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 10% rate 100Kbit
+, stderr: 
+2025-04-29 15:52:29,566 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 10.0mbit loss 100.0%
+2025-04-29 15:52:29,585 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+ Sent 9942633 bytes 18959 pkt (dropped 1331, overlimits 0 requeues 0) 
+ backlog 19481b 42p requeues 0
+
+2025-04-29 15:52:29,585 - __main__ - INFO - Successfully changed netem qdisc to delay=100ms, rate=10.0mbit, loss=100.0%
+2025-04-29 15:52:29,585 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:52:29] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:52:29,594 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:52:29,597 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+ Sent 9942763 bytes 18960 pkt (dropped 1331, overlimits 0 requeues 0) 
+ backlog 19351b 41p requeues 0
+
+2025-04-29 15:52:29,597 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:52:29] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:53:40,702 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:53:40] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:53:40,714 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:53:40,714 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 89
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:53:40,714 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 1000ms rate 10mbit loss 100%
+2025-04-29 15:53:40,714 - __main__ - INFO - Extracted parameters: delay=1000ms, rate=10mbit, loss=100%
+2025-04-29 15:53:40,714 - __main__ - INFO - Validated parameters: delay=1000ms, rate=10.0mbit, loss=100.0%
+2025-04-29 15:53:40,714 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:53:40,718 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+, stderr: 
+2025-04-29 15:53:40,718 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 1000ms rate 10.0mbit loss 100.0%
+2025-04-29 15:53:40,736 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 100% rate 10Mbit
+ Sent 9962114 bytes 19002 pkt (dropped 2122, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:53:40,736 - __main__ - INFO - Successfully changed netem qdisc to delay=1000ms, rate=10.0mbit, loss=100.0%
+2025-04-29 15:53:40,736 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:53:40] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:53:40,742 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:53:40,745 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 100% rate 10Mbit
+ Sent 9962114 bytes 19002 pkt (dropped 2122, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 15:53:40,745 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:53:40] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 15:53:52,879 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:53:52] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:53:52,884 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 15:53:52,884 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 89
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 15:53:52,886 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 1000ms rate 100kbit loss 10%
+2025-04-29 15:53:52,887 - __main__ - INFO - Extracted parameters: delay=1000ms, rate=100kbit, loss=10%
+2025-04-29 15:53:52,888 - __main__ - INFO - Validated parameters: delay=1000ms, rate=100.0kbit, loss=10.0%
+2025-04-29 15:53:52,888 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 15:53:52,892 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 100% rate 10Mbit
+, stderr: 
+2025-04-29 15:53:52,892 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 1000ms rate 100.0kbit loss 10.0%
+2025-04-29 15:53:52,907 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 10% rate 100Kbit
+ Sent 9962114 bytes 19002 pkt (dropped 2249, overlimits 0 requeues 0) 
+ backlog 42b 1p requeues 0
+
+2025-04-29 15:53:52,907 - __main__ - INFO - Successfully changed netem qdisc to delay=1000ms, rate=100.0kbit, loss=10.0%
+2025-04-29 15:53:52,907 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:53:52] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 15:53:52,912 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 15:53:52,915 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 10% rate 100Kbit
+ Sent 9962114 bytes 19002 pkt (dropped 2249, overlimits 0 requeues 0) 
+ backlog 42b 1p requeues 0
+
+2025-04-29 15:53:52,915 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 15:53:52] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 16:27:47,352 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 16:27:47,352 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:27:47,353 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:27:47,353 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 16:27:55,992 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:27:55] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 16:27:56,005 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 16:27:56,006 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 88
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 16:27:56,006 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 10mbit loss 100%
+2025-04-29 16:27:56,007 - __main__ - INFO - Extracted parameters: delay=100ms, rate=10mbit, loss=100%
+2025-04-29 16:27:56,007 - __main__ - INFO - Validated parameters: delay=100ms, rate=10.0mbit, loss=100.0%
+2025-04-29 16:27:56,007 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 16:27:56,011 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 1s loss 10% rate 100Kbit
+, stderr: 
+2025-04-29 16:27:56,012 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 10.0mbit loss 100.0%
+2025-04-29 16:27:56,031 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+ Sent 13906416 bytes 37871 pkt (dropped 4371, overlimits 0 requeues 0) 
+ backlog 3535b 27p requeues 0
+
+2025-04-29 16:27:56,031 - __main__ - INFO - Successfully changed netem qdisc to delay=100ms, rate=10.0mbit, loss=100.0%
+2025-04-29 16:27:56,032 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:27:56] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 16:27:56,040 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 16:27:56,042 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+ Sent 13906416 bytes 37871 pkt (dropped 4371, overlimits 0 requeues 0) 
+ backlog 3535b 27p requeues 0
+
+2025-04-29 16:27:56,043 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:27:56] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 16:28:04,593 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:28:04] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 16:28:04,600 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 16:28:04,600 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 89
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 16:28:04,600 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10mbit loss 100%
+2025-04-29 16:28:04,600 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10mbit, loss=100%
+2025-04-29 16:28:04,600 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0mbit, loss=100.0%
+2025-04-29 16:28:04,601 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 16:28:04,605 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+, stderr: 
+2025-04-29 16:28:04,605 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10.0mbit loss 100.0%
+2025-04-29 16:28:04,619 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 10Mbit
+ Sent 13909951 bytes 37898 pkt (dropped 4445, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:28:04,619 - __main__ - INFO - Successfully changed netem qdisc to delay=5000ms, rate=10.0mbit, loss=100.0%
+2025-04-29 16:28:04,620 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:28:04] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 16:28:04,626 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 16:28:04,629 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 10Mbit
+ Sent 13909951 bytes 37898 pkt (dropped 4447, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:28:04,629 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:28:04] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 16:43:48,647 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 16:43:48,647 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:43:48,649 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:43:48,649 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 16:43:48,660 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-04-29 16:43:48,660 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 16:43:48,660 - werkzeug - INFO -  * Restarting with stat
+2025-04-29 16:43:48,806 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 16:43:48,806 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:43:48,807 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:43:48,808 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 16:43:48,815 - werkzeug - WARNING -  * Debugger is active!
+2025-04-29 16:43:48,817 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-29 16:46:07,031 - werkzeug - INFO -  * Detected change in '/home/sattoutah/Bureau/mesurement_tc/tc_button_server.py', reloading
+2025-04-29 16:46:07,080 - werkzeug - INFO -  * Restarting with stat
+2025-04-29 16:46:07,283 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 16:46:07,283 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:46:07,285 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:46:07,285 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 16:46:07,301 - werkzeug - WARNING -  * Debugger is active!
+2025-04-29 16:46:07,304 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-29 16:46:09,730 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 16:46:09,735 - __main__ - INFO - Successfully retrieved tc status: qdisc noqueue 0: root refcnt 2 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:46:09,736 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:46:09] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 16:46:09,743 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 16:46:09,744 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:46:09] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 16:46:09,748 - __main__ - INFO - Successfully retrieved tc status: qdisc noqueue 0: root refcnt 2 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:46:09,748 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:46:09] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 16:46:09,749 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 16:46:09,749 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 85
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 16:46:09,749 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 10ms rate 10mbit loss 0%
+2025-04-29 16:46:09,750 - __main__ - INFO - Extracted parameters: delay=10ms, rate=10mbit, loss=0%
+2025-04-29 16:46:09,750 - __main__ - INFO - Validated parameters: delay=10ms, rate=10.0mbit, loss=0.0%
+2025-04-29 16:46:09,750 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 16:46:09,753 - __main__ - DEBUG - Check command result: 1, stdout: , stderr: 
+2025-04-29 16:46:09,753 - __main__ - INFO - Adding new qdisc with command: sudo tc qdisc add dev wlp0s20f3 root netem delay 10ms rate 10.0mbit loss 0.0%
+2025-04-29 16:46:09,766 - __main__ - INFO - Successfully added netem qdisc with delay=10ms, rate=10.0mbit, loss=0.0%
+2025-04-29 16:46:09,768 - __main__ - DEBUG - Verification result after add: qdisc netem 8001: root refcnt 2 limit 1000 delay 10ms rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:46:09,769 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:46:09] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 16:46:09,774 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 16:46:09,776 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 10ms rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:46:09,777 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:46:09] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 16:48:39,269 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 16:48:39,269 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:48:39,270 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:48:39,271 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 16:48:39,281 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-04-29 16:48:39,281 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-29 16:48:39,281 - werkzeug - INFO -  * Restarting with stat
+2025-04-29 16:48:39,420 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-29 16:48:39,420 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:48:39,422 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-29 16:48:39,422 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-29 16:48:39,433 - werkzeug - WARNING -  * Debugger is active!
+2025-04-29 16:48:39,435 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-29 16:48:47,470 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:48:47] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 16:48:47,473 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-29 16:48:47,473 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 88
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8001
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8001/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-29 16:48:47,474 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 10mbit loss 100%
+2025-04-29 16:48:47,474 - __main__ - INFO - Extracted parameters: delay=100ms, rate=10mbit, loss=100%
+2025-04-29 16:48:47,474 - __main__ - INFO - Validated parameters: delay=100ms, rate=10.0mbit, loss=100.0%
+2025-04-29 16:48:47,474 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-29 16:48:47,478 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 10ms rate 10Mbit
+, stderr: 
+2025-04-29 16:48:47,478 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 10.0mbit loss 100.0%
+2025-04-29 16:48:47,491 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+ Sent 2610699 bytes 5680 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:48:47,491 - __main__ - INFO - Successfully changed netem qdisc to delay=100ms, rate=10.0mbit, loss=100.0%
+2025-04-29 16:48:47,491 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:48:47] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-29 16:48:47,499 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 16:48:47,502 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+ Sent 2610699 bytes 5680 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:48:47,503 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:48:47] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-29 16:56:27,597 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-29 16:56:27,601 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 10Mbit
+ Sent 2610699 bytes 5680 pkt (dropped 5090, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-29 16:56:27,601 - werkzeug - INFO - 127.0.0.1 - - [29/Apr/2025 16:56:27] "GET /get_tc_status HTTP/1.1" 200 -
+2025-04-30 09:39:22,368 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-30 09:39:22,368 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-30 09:39:22,370 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-30 09:39:22,370 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-30 09:39:22,389 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.28.234.20:5002
+2025-04-30 09:39:22,389 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-30 09:39:22,390 - werkzeug - INFO -  * Restarting with stat
+2025-04-30 09:39:22,607 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-04-30 09:39:22,608 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-30 09:39:22,609 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-04-30 09:39:22,609 - __main__ - INFO - Starting tc API server on port 5002...
+2025-04-30 09:39:22,624 - werkzeug - WARNING -  * Debugger is active!
+2025-04-30 09:39:22,626 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-04-30 09:39:45,805 - werkzeug - INFO - 127.0.0.1 - - [30/Apr/2025 09:39:45] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-04-30 09:39:45,815 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-04-30 09:39:45,816 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 87
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-04-30 09:39:45,817 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10mbit loss 0%
+2025-04-30 09:39:45,818 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10mbit, loss=0%
+2025-04-30 09:39:45,818 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-04-30 09:39:45,818 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-04-30 09:39:45,826 - __main__ - DEBUG - Check command result: 1, stdout: , stderr: 
+2025-04-30 09:39:45,827 - __main__ - INFO - Adding new qdisc with command: sudo tc qdisc add dev wlp0s20f3 root netem delay 5000ms rate 10.0mbit loss 0.0%
+2025-04-30 09:39:45,851 - __main__ - INFO - Successfully added netem qdisc with delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-04-30 09:39:45,854 - __main__ - DEBUG - Verification result after add: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-30 09:39:45,855 - werkzeug - INFO - 127.0.0.1 - - [30/Apr/2025 09:39:45] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-04-30 09:39:45,861 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-04-30 09:39:45,864 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-04-30 09:39:45,864 - werkzeug - INFO - 127.0.0.1 - - [30/Apr/2025 09:39:45] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-02 10:02:42,280 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-02 10:02:42,290 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-02 10:02:42,292 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-02 10:02:42,292 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-02 10:02:42,307 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-05-02 10:02:42,307 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-02 10:02:42,308 - werkzeug - INFO -  * Restarting with stat
+2025-05-02 10:02:42,511 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-02 10:02:42,511 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-02 10:02:42,512 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-02 10:02:42,512 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-02 10:02:42,524 - werkzeug - WARNING -  * Debugger is active!
+2025-05-02 10:02:42,526 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-05-02 10:03:16,756 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 10:03:16] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-05-02 10:03:16,774 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-05-02 10:03:16,774 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 87
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-05-02 10:03:16,775 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10mbit loss 0%
+2025-05-02 10:03:16,776 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10mbit, loss=0%
+2025-05-02 10:03:16,776 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-05-02 10:03:16,776 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-05-02 10:03:16,788 - __main__ - DEBUG - Check command result: 1, stdout: , stderr: 
+2025-05-02 10:03:16,788 - __main__ - INFO - Adding new qdisc with command: sudo tc qdisc add dev wlp0s20f3 root netem delay 5000ms rate 10.0mbit loss 0.0%
+2025-05-02 10:03:16,811 - __main__ - INFO - Successfully added netem qdisc with delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-05-02 10:03:16,814 - __main__ - DEBUG - Verification result after add: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-02 10:03:16,815 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 10:03:16] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-05-02 10:03:16,824 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-02 10:03:16,829 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 5212b 6p requeues 0
+
+2025-05-02 10:03:16,829 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 10:03:16] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-02 10:12:01,866 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 10:12:01] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-05-02 10:12:01,879 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-05-02 10:12:01,880 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 87
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-05-02 10:12:01,880 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10mbit loss 0%
+2025-05-02 10:12:01,880 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10mbit, loss=0%
+2025-05-02 10:12:01,880 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-05-02 10:12:01,880 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-05-02 10:12:01,887 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+, stderr: 
+2025-05-02 10:12:01,888 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10.0mbit loss 0.0%
+2025-05-02 10:12:01,905 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 15536981 bytes 59080 pkt (dropped 559, overlimits 0 requeues 0) 
+ backlog 151396b 541p requeues 0
+
+2025-05-02 10:12:01,905 - __main__ - INFO - Successfully changed netem qdisc to delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-05-02 10:12:01,906 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 10:12:01] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-05-02 10:12:01,913 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-02 10:12:01,916 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 15536981 bytes 59080 pkt (dropped 559, overlimits 0 requeues 0) 
+ backlog 151907b 546p requeues 0
+
+2025-05-02 10:12:01,917 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 10:12:01] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-02 12:11:43,139 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-02 12:11:43,144 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 24111112 bytes 120938 pkt (dropped 559, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-02 12:11:43,144 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 12:11:43] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-02 12:11:43,153 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-02 12:11:43,161 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 24111112 bytes 120938 pkt (dropped 559, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-02 12:11:43,161 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 12:11:43] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-02 12:11:43,177 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 12:11:43] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-05-02 12:11:43,187 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-05-02 12:11:43,188 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 85
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-05-02 12:11:43,188 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 10ms rate 10mbit loss 0%
+2025-05-02 12:11:43,188 - __main__ - INFO - Extracted parameters: delay=10ms, rate=10mbit, loss=0%
+2025-05-02 12:11:43,188 - __main__ - INFO - Validated parameters: delay=10ms, rate=10.0mbit, loss=0.0%
+2025-05-02 12:11:43,189 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-05-02 12:11:43,194 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+, stderr: 
+2025-05-02 12:11:43,195 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 10ms rate 10.0mbit loss 0.0%
+2025-05-02 12:11:43,216 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 10ms rate 10Mbit
+ Sent 24111112 bytes 120938 pkt (dropped 559, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-02 12:11:43,216 - __main__ - INFO - Successfully changed netem qdisc to delay=10ms, rate=10.0mbit, loss=0.0%
+2025-05-02 12:11:43,217 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 12:11:43] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-05-02 12:11:43,235 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-02 12:11:43,453 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 10ms rate 10Mbit
+ Sent 24111112 bytes 120938 pkt (dropped 559, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-02 12:11:43,453 - werkzeug - INFO - 127.0.0.1 - - [02/May/2025 12:11:43] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 10:40:46,357 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 10:40:46,368 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:40:46,369 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:40:46,369 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 10:40:46,378 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-05-05 10:40:46,378 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-05 10:40:46,379 - werkzeug - INFO -  * Restarting with stat
+2025-05-05 10:40:46,488 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 10:40:46,488 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:40:46,489 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:40:46,490 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 10:40:46,497 - werkzeug - WARNING -  * Debugger is active!
+2025-05-05 10:40:46,498 - werkzeug - INFO -  * Debugger PIN: 779-007-337
+2025-05-05 10:45:21,502 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 10:45:21,503 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:45:21,504 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:45:21,504 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 10:45:29,096 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 10:45:29] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 10:45:29,099 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-05-05 10:45:29,099 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 87
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8001
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8001/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
+
+
+2025-05-05 10:45:29,099 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10mbit loss 0%
+2025-05-05 10:45:29,100 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=10mbit, loss=0%
+2025-05-05 10:45:29,100 - __main__ - INFO - Validated parameters: delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-05-05 10:45:29,100 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-05-05 10:45:29,104 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8003: root refcnt 2 limit 1000 delay 100ms loss 1% rate 2Mbit
+, stderr: 
+2025-05-05 10:45:29,105 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 10.0mbit loss 0.0%
+2025-05-05 10:45:29,115 - __main__ - DEBUG - Verification result after change: qdisc netem 8003: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 3528479 bytes 5568 pkt (dropped 54, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 10:45:29,116 - __main__ - INFO - Successfully changed netem qdisc to delay=5000ms, rate=10.0mbit, loss=0.0%
+2025-05-05 10:45:29,116 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 10:45:29] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 10:45:29,120 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 10:45:29,122 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8003: root refcnt 2 limit 1000 delay 5s rate 10Mbit
+ Sent 3528479 bytes 5568 pkt (dropped 54, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 10:45:29,123 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 10:45:29] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 10:54:06,975 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 10:54:06,976 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:54:06,977 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:54:06,977 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 10:54:06,990 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-05-05 10:54:06,990 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-05 10:54:06,991 - werkzeug - INFO -  * Restarting with stat
+2025-05-05 10:54:07,169 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 10:54:07,169 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:54:07,170 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 10:54:07,170 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 10:54:07,181 - werkzeug - WARNING -  * Debugger is active!
+2025-05-05 10:54:07,183 - werkzeug - INFO -  * Debugger PIN: 779-007-337
+2025-05-05 10:54:09,194 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 10:54:09] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 10:54:09,202 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-05-05 10:54:09,202 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 88
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+2025-05-05 10:54:09,202 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 5000ms rate 1mbit loss 100%
+2025-05-05 10:54:09,203 - __main__ - INFO - Extracted parameters: delay=5000ms, rate=1mbit, loss=100%
+2025-05-05 10:54:09,203 - __main__ - INFO - Validated parameters: delay=5000ms, rate=1.0mbit, loss=100.0%
+2025-05-05 10:54:09,203 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-05-05 10:54:09,214 - __main__ - DEBUG - Check command result: 1, stdout: , stderr: 
+2025-05-05 10:54:09,214 - __main__ - INFO - Adding new qdisc with command: sudo tc qdisc add dev wlp0s20f3 root netem delay 5000ms rate 1.0mbit loss 100.0%
+2025-05-05 10:54:09,232 - __main__ - INFO - Successfully added netem qdisc with delay=5000ms, rate=1.0mbit, loss=100.0%
+2025-05-05 10:54:09,235 - __main__ - DEBUG - Verification result after add: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 1Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 10:54:09,236 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 10:54:09] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 10:54:09,243 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 10:54:09,245 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 5s loss 100% rate 1Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 10:54:09,246 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 10:54:09] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:14:52,156 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:14:52,167 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:14:52,168 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:14:52,168 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:14:52,178 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-05-05 11:14:52,178 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-05 11:14:52,178 - werkzeug - INFO -  * Restarting with stat
+2025-05-05 11:14:52,312 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:14:52,313 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:14:52,314 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:14:52,314 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:14:52,322 - werkzeug - WARNING -  * Debugger is active!
+2025-05-05 11:14:52,324 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-05-05 11:14:59,996 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:14:59] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 11:15:00,001 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-05-05 11:15:00,001 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 86
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
+
+
+2025-05-05 11:15:00,001 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 10mbit loss 0%
+2025-05-05 11:15:00,002 - __main__ - INFO - Extracted parameters: delay=100ms, rate=10mbit, loss=0%
+2025-05-05 11:15:00,002 - __main__ - INFO - Validated parameters: delay=100ms, rate=10.0mbit, loss=0.0%
+2025-05-05 11:15:00,002 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-05-05 11:15:00,011 - __main__ - DEBUG - Check command result: 1, stdout: , stderr: 
+2025-05-05 11:15:00,011 - __main__ - INFO - Adding new qdisc with command: sudo tc qdisc add dev wlp0s20f3 root netem delay 100ms rate 10.0mbit loss 0.0%
+2025-05-05 11:15:00,030 - __main__ - INFO - Successfully added netem qdisc with delay=100ms, rate=10.0mbit, loss=0.0%
+2025-05-05 11:15:00,036 - __main__ - DEBUG - Verification result after add: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 11:15:00,036 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:15:00] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 11:15:00,046 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:15:00,049 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 10Mbit
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 11:15:00,049 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:15:00] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:15:06,231 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:15:06] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 11:15:06,234 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-05-05 11:15:06,234 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 85
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
+
+
+2025-05-05 11:15:06,234 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 1mbit loss 0%
+2025-05-05 11:15:06,234 - __main__ - INFO - Extracted parameters: delay=100ms, rate=1mbit, loss=0%
+2025-05-05 11:15:06,234 - __main__ - INFO - Validated parameters: delay=100ms, rate=1.0mbit, loss=0.0%
+2025-05-05 11:15:06,234 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-05-05 11:15:06,237 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 10Mbit
+, stderr: 
+2025-05-05 11:15:06,237 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 1.0mbit loss 0.0%
+2025-05-05 11:15:06,248 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 1Mbit
+ Sent 11840 bytes 78 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 66b 1p requeues 0
+
+2025-05-05 11:15:06,249 - __main__ - INFO - Successfully changed netem qdisc to delay=100ms, rate=1.0mbit, loss=0.0%
+2025-05-05 11:15:06,249 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:15:06] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 11:15:06,251 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:15:06,253 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 1Mbit
+ Sent 11840 bytes 78 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 66b 1p requeues 0
+
+2025-05-05 11:15:06,253 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:15:06] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:15:13,059 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:15:13] "OPTIONS /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 11:15:13,062 - __main__ - INFO - Received execute_tc_command request from 127.0.0.1
+2025-05-05 11:15:13,062 - __main__ - DEBUG - Request headers: Host: localhost:5002
+Connection: keep-alive
+Content-Length: 87
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"
+Content-Type: application/json
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Origin: http://localhost:8000
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: http://localhost:8000/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
+
+
+2025-05-05 11:15:13,063 - __main__ - INFO - Received command: tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 1mbit loss 100%
+2025-05-05 11:15:13,063 - __main__ - INFO - Extracted parameters: delay=100ms, rate=1mbit, loss=100%
+2025-05-05 11:15:13,063 - __main__ - INFO - Validated parameters: delay=100ms, rate=1.0mbit, loss=100.0%
+2025-05-05 11:15:13,063 - __main__ - DEBUG - Executing check command: tc qdisc show dev wlp0s20f3 | grep netem
+2025-05-05 11:15:13,065 - __main__ - DEBUG - Check command result: 0, stdout: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms rate 1Mbit
+, stderr: 
+2025-05-05 11:15:13,065 - __main__ - INFO - Changing existing qdisc with command: sudo tc qdisc change dev wlp0s20f3 root netem delay 100ms rate 1.0mbit loss 100.0%
+2025-05-05 11:15:13,078 - __main__ - DEBUG - Verification result after change: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 1Mbit
+ Sent 17430 bytes 127 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 132b 2p requeues 0
+
+2025-05-05 11:15:13,078 - __main__ - INFO - Successfully changed netem qdisc to delay=100ms, rate=1.0mbit, loss=100.0%
+2025-05-05 11:15:13,078 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:15:13] "POST /execute_tc_command HTTP/1.1" 200 -
+2025-05-05 11:15:13,081 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:15:13,084 - __main__ - INFO - Successfully retrieved tc status: qdisc netem 8001: root refcnt 2 limit 1000 delay 100ms loss 100% rate 1Mbit
+ Sent 17430 bytes 127 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 132b 2p requeues 0
+
+2025-05-05 11:15:13,084 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:15:13] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:22:27,459 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:22:27,460 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:22:27,461 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:22:27,461 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:22:27,477 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-05-05 11:22:27,477 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-05 11:22:27,478 - werkzeug - INFO -  * Restarting with stat
+2025-05-05 11:22:27,655 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:22:27,655 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:22:27,657 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:22:27,657 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:22:27,672 - werkzeug - WARNING -  * Debugger is active!
+2025-05-05 11:22:27,674 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-05-05 11:31:19,187 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:31:19,191 - __main__ - INFO - Successfully retrieved tc status: qdisc noqueue 0: root refcnt 2 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 11:31:19,192 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:31:19] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:31:19,196 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:31:19,198 - __main__ - INFO - Successfully retrieved tc status: qdisc noqueue 0: root refcnt 2 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 11:31:19,199 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:31:19] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:31:36,322 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:31:36,322 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:31:36,323 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:31:36,323 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:31:36,340 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-05-05 11:31:36,340 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-05 11:31:36,341 - werkzeug - INFO -  * Restarting with stat
+2025-05-05 11:31:36,495 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:31:36,495 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:31:36,497 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:31:36,497 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:31:36,505 - werkzeug - WARNING -  * Debugger is active!
+2025-05-05 11:31:36,508 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-05-05 11:34:09,137 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:34:09,139 - __main__ - INFO - Successfully retrieved tc status: qdisc noqueue 0: root refcnt 2 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 11:34:09,140 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:34:09] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:34:09,143 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:34:09,145 - __main__ - INFO - Successfully retrieved tc status: qdisc noqueue 0: root refcnt 2 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 11:34:09,146 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:34:09] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:34:31,049 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:34:31,049 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:34:31,051 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:34:31,051 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:34:31,064 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-05-05 11:34:31,064 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-05 11:34:31,065 - werkzeug - INFO -  * Restarting with stat
+2025-05-05 11:34:31,212 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:34:31,212 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:34:31,213 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:34:31,213 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:34:31,223 - werkzeug - WARNING -  * Debugger is active!
+2025-05-05 11:34:31,225 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-05-05 11:38:41,007 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:38:41,007 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:38:41,008 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:38:41,008 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:38:41,021 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.2.120:5002
+2025-05-05 11:38:41,022 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-05 11:38:41,022 - werkzeug - INFO -  * Restarting with stat
+2025-05-05 11:38:41,165 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-05 11:38:41,165 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:38:41,167 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-05 11:38:41,167 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-05 11:38:41,176 - werkzeug - WARNING -  * Debugger is active!
+2025-05-05 11:38:41,177 - werkzeug - INFO -  * Debugger PIN: 457-608-116
+2025-05-05 11:39:55,009 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:39:55,012 - __main__ - INFO - Successfully retrieved tc status: qdisc noqueue 0: root refcnt 2 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 11:39:55,013 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:39:55] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-05 11:39:55,018 - __main__ - INFO - Getting tc status with command: tc -s qdisc show dev wlp0s20f3
+2025-05-05 11:39:55,023 - __main__ - INFO - Successfully retrieved tc status: qdisc noqueue 0: root refcnt 2 
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0
+
+2025-05-05 11:39:55,023 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:39:55] "GET /get_tc_status HTTP/1.1" 200 -

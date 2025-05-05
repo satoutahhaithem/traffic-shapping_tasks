@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TC Control Buttons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Traffic Control Settings</h1>
+    
+    <div class="button-container">
+        <button onclick="applyTC(0)">No Packet Loss (0%)</button>
+        <button onclick="applyTC(50)">Medium Packet Loss (50%)</button>
+        <button onclick="applyTC(100)">Full Packet Loss (100%)</button>
+    </div>
+    
+    <div class="status" id="status">Status: Ready to apply TC settings</div>
+    
+    <script>
+        function applyTC(lossPercent) {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = `Status: Applying ${lossPercent}% packet loss...`;
+            
+            // Execute the command using fetch to our server
+            const command = `./apply_tc_both.sh 0 10mbit ${lossPercent}`;
+            
+            statusElement.textContent = `Status: Executing command: ${command}...`;
+            
+            fetch('/execute_command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                statusElement.textContent = `Status: ${data.message}\n\n`;
+                statusElement.textContent += `Output:\n${data.output}\n\n`;
+                statusElement.textContent += `Packet loss set to ${lossPercent}%\n`;
+                statusElement.textContent += `Check the video stream to see the effects.`;
+            })
+            .catch(error => {
+                statusElement.textContent = `Status: Error - ${error.message}`;
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

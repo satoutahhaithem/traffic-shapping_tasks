@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Streaming Control Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .video-container {
+            flex: 1;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .controls {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .network-controls {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .custom-delay {
+            flex: 1;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f4e8;
+            border-radius: 5px;
+            min-width: 200px;
+        }
+        input[type="number"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Streaming Control Panel</h1>
+    
+    <div class="controls">
+        <h2>Network Parameters Control</h2>
+        <p>Adjust the network conditions to simulate different scenarios:</p>
+        
+        <div class="network-controls">
+            <div class="custom-delay">
+                <h4>Delay (Latency)</h4>
+                <p>Set the network delay in milliseconds:</p>
+                <input type="number" id="customDelay" min="0" step="10" value="100">
+                <span>ms</span>
+                <button onclick="setCustomDelay()">Apply Delay</button>
+                <p><small>You can enter any positive value. No upper limit.</small></p>
+            </div>
+            
+            <div class="custom-delay">
+                <h4>Bandwidth (Rate)</h4>
+                <p>Set the bandwidth limit:</p>
+                <input type="number" id="bandwidthValue" min="0.1" step="0.1" value="10">
+                <select id="bandwidthUnit" style="padding: 8px;">
+                    <option value="kbit">Kbit/s</option>
+                    <option value="mbit" selected>Mbit/s</option>
+                    <option value="gbit">Gbit/s</option>
+                </select>
+                <button onclick="setBandwidth()">Apply Bandwidth</button>
+                <p><small>You can enter any positive value. No upper limit.</small></p>
+            </div>
+            
+            <div class="custom-delay">
+                <h4>Packet Loss</h4>
+                <p>Set the packet loss percentage:</p>
+                <input type="number" id="packetLossValue" min="0" max="100" step="0.1" value="0">
+                <span>%</span>
+                <button onclick="setPacketLoss()">Apply Loss</button>
+                <p><small>You can enter any non-negative value. No upper limit.</small></p>
+            </div>
+        </div>
+        
+        <div class="status" id="status">Status: Ready</div>
+    </div>
+    
+    <div class="container">
+        <div class="video-container">
+            <h2>Transmitter Side</h2>
+            <iframe src="http://localhost:5000/tx_video_feed" width="100%" height="300" frameborder="0"></iframe>
+        </div>
+        <div class="video-container">
+            <h2>Receiver Side</h2>
+            <iframe src="http://localhost:5001/rx_video_feed" width="100%" height="300" frameborder="0"></iframe>
+        </div>
+    </div>
+    
+    <script>
+        // Current network parameters
+        let currentParams = {
+            delay: 0.033,  // seconds
+            rate: 10,      // value
+            rateUnit: 'mbit', // unit (kbit, mbit, gbit)
+            loss: 0,       // percentage
+            interface: 'wlp0s20f3' // Default interface, will be updated if possible
+        };
+
+        function setCustomDelay() {
+            const statusElement = document.getElementById('status');
+            const customDelayInput = document.getElementById('customDelay');
+            
+            try {
+                const delayMs = parseInt(customDelayInput.value);
+                
+                // Validate the input
+                if (isNaN(delayMs) || delayMs < 0) {
+                    statusElement.textContent = 'Status: Error - Please enter a valid non-negative number for the delay';
+                    return;
+                }
+                
+                // Update current parameters
+                currentParams.delay = delayMs;
+                
+                // Convert to seconds for the video streamer
+                const delaySec = delayMs / 1000;
+                
+                statusElement.textContent = `Status: Setting delay to ${delayMs}ms (${delaySec} seconds)...`;
+                
+                // Check if video streamer is running
+                fetch('http://localhost:5000/start_stream')
+                    .then(response => {
+                        if (response.ok) {
+                            // Video streamer is running, now set the delay
+                            return fetch(`http://localhost:5000/set_delay/${delaySec}`);
+                        } else {
+                            throw new Error('Video streamer is not running on port 5000. Please start it first.');
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                        }
+                    })
+                    .then(data => {
+                        statusElement.textContent = `Status: ${data}`;
+                        
+                        // Apply to tc
+                        const command = `tc qdisc change dev ${currentParams.interface} root netem delay ${delayMs}ms rate ${currentParams.rate}${currentParams.rateUnit} loss ${currentParams.loss}%`;
+                        executeTcCommand(command);
+                    })
+                    .catch(error => {
+                        statusElement.textContent = `Status: Error - ${error.message}`;
+                        console.error('Error:', error);
+                    });
+            } catch (error) {
+                statusElement.textContent = `Status: Error - ${error.message}`;
+                console.error('Error in setCustomDelay:', error);
+            }
+        }
+        
+        function setBandwidth() {
+            const statusElement = document.getElementById('status');
+            const bandwidthValue = document.getElementById('bandwidthValue').value;
+            const bandwidthUnit = document.getElementById('bandwidthUnit').value;
+            
+            // Validate input
+            if (isNaN(bandwidthValue) || bandwidthValue <= 0) {
+                statusElement.textContent = 'Status: Error - Please enter a valid positive number for bandwidth';
+                return;
+            }
+            
+            // Update current parameters
+            currentParams.rate = parseFloat(bandwidthValue);
+            currentParams.rateUnit = bandwidthUnit;
+            
+            statusElement.textContent = `Status: Setting bandwidth to ${bandwidthValue} ${bandwidthUnit}...`;
+            
+            // Execute TC command via API
+            const command = `tc qdisc change dev ${currentParams.interface} root netem delay ${currentParams.delay * 1000}ms rate ${bandwidthValue}${bandwidthUnit} loss ${currentParams.loss}%`;
+            
+            executeTcCommand(command);
+        }
+        
+        function setPacketLoss() {
+            const statusElement = document.getElementById('status');
+            const packetLossValue = document.getElementById('packetLossValue').value;
+            
+            // Validate input
+            if (isNaN(packetLossValue) || packetLossValue < 0 || packetLossValue > 100) {
+                statusElement.textContent = 'Status: Error - Please enter a valid packet loss percentage (0-100)';
+                return;
+            }
+            
+            // Update current parameters
+            currentParams.loss = parseFloat(packetLossValue);
+            
+            statusElement.textContent = `Status: Setting packet loss to ${packetLossValue}%...`;
+            
+            // Execute TC command via API
+            const command = `tc qdisc change dev ${currentParams.interface} root netem delay ${currentParams.delay * 1000}ms rate ${currentParams.rate}${currentParams.rateUnit} loss ${packetLossValue}%`;
+            
+            executeTcCommand(command);
+        }
+        
+        function executeTcCommand(command) {
+            const statusElement = document.getElementById('status');
+            
+            // Make an API call to execute the command
+            fetch('http://localhost:5002/execute_tc_command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Update status
+                statusElement.textContent = `Status: ${data.message}`;
+            })
+            .catch(error => {
+                statusElement.textContent = `Status: Error - ${error.message}`;
+                console.error('Error:', error);
+            });
+        }
+        
+        // Check if services are running on page load
+        window.addEventListener('load', function() {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = 'Status: Checking if services are running...';
+            
+            // Check video streamer
+            fetch('http://localhost:5000/start_stream')
+                .then(response => {
+                    if (response.ok) {
+                        statusElement.textContent = 'Status: Video streamer is running. Ready to use.';
+                        
+                        // Check TC API server and get interface
+                        return fetch('http://localhost:5002/get_tc_status')
+                            .catch(error => {
+                                console.error('TC API server not running:', error);
+                                statusElement.textContent += ' Warning: TC API server not detected. Bandwidth and packet loss controls will not work.';
+                                throw error;
+                            });
+                    } else {
+                        statusElement.textContent = 'Status: Warning - Video streamer not detected on port 5000.';
+                        throw new Error('Video streamer not detected');
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status) {
+                        // Extract interface from status output
+                        const match = data.status.match(/dev\s+(\w+)/);
+                        if (match && match[1]) {
+                            currentParams.interface = match[1];
+                            console.log(`Detected interface: ${currentParams.interface}`);
+                            statusElement.textContent += ` Using network interface: ${currentParams.interface}`;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC-to-PC Video Streaming Control Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .video-container {
+            flex: 1;
+            min-width: 45%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .controls {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .network-controls {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .control-panel {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            background-color: #e8f4e8;
+            border-radius: 5px;
+        }
+        input[type="number"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border-radius: 4px;
+        }
+        .metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .metric {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            text-align: center;
+        }
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+        }
+        @media (max-width: 768px) {
+            .network-controls {
+                flex-direction: column;
+            }
+            .control-panel {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>PC-to-PC Video Streaming Control Panel</h1>
+    
+    <div class="controls">
+        <h2>Network Quality Control</h2>
+        
+        <div class="network-controls">
+            <div class="control-panel">
+                <h3>Delay (Latency)</h3>
+                <p>Set the network delay in milliseconds:</p>
+                <input type="number" id="delayValue" min="0" step="10" value="0">
+                <span>ms</span>
+                <button onclick="setDelay()">Apply Delay</button>
+                <p><small>You can enter any positive value. No upper limit.</small></p>
+            </div>
+            
+            <div class="control-panel">
+                <h3>Bandwidth (Rate)</h3>
+                <p>Set the bandwidth limit:</p>
+                <input type="number" id="bandwidthValue" min="0.1" step="0.1" value="10">
+                <select id="bandwidthUnit">
+                    <option value="kbit">Kbit/s</option>
+                    <option value="mbit" selected>Mbit/s</option>
+                    <option value="gbit">Gbit/s</option>
+                </select>
+                <button onclick="setBandwidth()">Apply Bandwidth</button>
+                <p><small>You can enter any positive value. No upper limit.</small></p>
+            </div>
+            
+            <div class="control-panel">
+                <h3>Packet Loss</h3>
+                <p>Set the packet loss percentage:</p>
+                <input type="number" id="packetLossValue" min="0" max="100" step="0.1" value="0">
+                <span>%</span>
+                <button onclick="setPacketLoss()">Apply Loss</button>
+                <p><small>You can enter any non-negative value. No upper limit.</small></p>
+            </div>
+        </div>
+        
+        <h3>Network Presets</h3>
+        <div>
+            <button onclick="applyPreset('perfect')">Perfect Connection</button>
+            <button onclick="applyPreset('good')">Good Broadband</button>
+            <button onclick="applyPreset('average')">Average Mobile</button>
+            <button onclick="applyPreset('poor')">Poor Mobile</button>
+            <button onclick="applyPreset('satellite')">Satellite Internet</button>
+        </div>
+        
+        <div class="status" id="status">Status: Ready</div>
+    </div>
+    
+    <h2>Video Streams</h2>
+    <div class="container">
+        <div class="video-container">
+            <h3>Transmitter Side (Original)</h3>
+            <iframe id="tx-video" src="" width="100%" height="300" frameborder="0"></iframe>
+        </div>
+        <div class="video-container">
+            <h3>Receiver Side (Affected)</h3>
+            <iframe id="rx-video" src="" width="100%" height="300" frameborder="0"></iframe>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration
+        const config = {
+            senderIp: '127.0.0.1',
+            senderPort: 5000,
+            receiverIp: '127.0.0.1',
+            receiverPort: 5001
+        };
+        
+        // Initialize video streams
+        document.getElementById('tx-video').src = `http://${config.senderIp}:${config.senderPort}/tx_video_feed`;
+        document.getElementById('rx-video').src = `http://${config.receiverIp}:${config.receiverPort}/video_feed`;
+        
+        // Network presets
+        const presets = {
+            'perfect': { delay: 0, bandwidth: 0, bandwidthUnit: 'mbit', packetLoss: 0 },
+            'good': { delay: 30, bandwidth: 10, bandwidthUnit: 'mbit', packetLoss: 0 },
+            'average': { delay: 100, bandwidth: 2, bandwidthUnit: 'mbit', packetLoss: 1 },
+            'poor': { delay: 200, bandwidth: 500, bandwidthUnit: 'kbit', packetLoss: 5 },
+            'satellite': { delay: 500, bandwidth: 1, bandwidthUnit: 'mbit', packetLoss: 2 }
+        };
+        
+        // Function to set delay
+        function setDelay() {
+            const delayValue = document.getElementById('delayValue').value;
+            const statusElement = document.getElementById('status');
+            
+            if (isNaN(delayValue) || delayValue < 0) {
+                statusElement.textContent = 'Status: Error - Please enter a valid non-negative number for delay';
+                return;
+            }
+            
+            statusElement.textContent = `Status: Setting delay to ${delayValue}ms...`;
+            
+            // Convert to seconds for the video streamer
+            const delaySec = delayValue / 1000;
+            
+            // Apply to video streamer
+            fetch(`http://${config.senderIp}:${config.senderPort}/set_delay/${delaySec}`)
+                .then(response => response.text())
+                .then(data => {
+                    statusElement.textContent = `Status: ${data}`;
+                })
+                .catch(error => {
+                    statusElement.textContent = `Status: Error - ${error.message}`;
+                    console.error('Error:', error);
+                });
+        }
+        
+        // Function to set bandwidth
+        function setBandwidth() {
+            const bandwidthValue = document.getElementById('bandwidthValue').value;
+            const bandwidthUnit = document.getElementById('bandwidthUnit').value;
+            const statusElement = document.getElementById('status');
+            
+            if (isNaN(bandwidthValue) || bandwidthValue <= 0) {
+                statusElement.textContent = 'Status: Error - Please enter a valid positive number for bandwidth';
+                return;
+            }
+            
+            statusElement.textContent = `Status: Setting bandwidth to ${bandwidthValue} ${bandwidthUnit}...`;
+            
+            // Apply to sender via config
+            const params = {
+                bandwidth_limit: bandwidthUnit === 'kbit' ? bandwidthValue * 125 : 
+                                bandwidthUnit === 'mbit' ? bandwidthValue * 125000 : 
+                                bandwidthValue * 125000000
+            };
+            
+            fetch(`http://${config.senderIp}:${config.senderPort}/config`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(params)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    statusElement.textContent = `Status: Bandwidth set to ${bandwidthValue} ${bandwidthUnit}`;
+                })
+                .catch(error => {
+                    statusElement.textContent = `Status: Error - ${error.message}`;
+                    console.error('Error:', error);
+                });
+        }
+        
+        // Function to set packet loss
+        function setPacketLoss() {
+            const packetLossValue = document.getElementById('packetLossValue').value;
+            const statusElement = document.getElementById('status');
+            
+            if (isNaN(packetLossValue) || packetLossValue < 0 || packetLossValue > 100) {
+                statusElement.textContent = 'Status: Error - Please enter a valid packet loss percentage (0-100)';
+                return;
+            }
+            
+            statusElement.textContent = `Status: Setting packet loss to ${packetLossValue}%...`;
+            
+            // Apply to sender via config
+            const params = {
+                packet_loss: parseFloat(packetLossValue)
+            };
+            
+            fetch(`http://${config.senderIp}:${config.senderPort}/config`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(params)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    statusElement.textContent = `Status: Packet loss set to ${packetLossValue}%`;
+                })
+                .catch(error => {
+                    statusElement.textContent = `Status: Error - ${error.message}`;
+                    console.error('Error:', error);
+                });
+        }
+        
+        // Function to apply preset
+        function applyPreset(presetName) {
+            const preset = presets[presetName];
+            const statusElement = document.getElementById('status');
+            
+            if (!preset) {
+                statusElement.textContent = `Status: Error - Unknown preset: ${presetName}`;
+                return;
+            }
+            
+            // Update UI
+            document.getElementById('delayValue').value = preset.delay;
+            document.getElementById('bandwidthValue').value = preset.bandwidth;
+            document.getElementById('bandwidthUnit').value = preset.bandwidthUnit;
+            document.getElementById('packetLossValue').value = preset.packetLoss;
+            
+            statusElement.textContent = `Status: Applying ${presetName} preset...`;
+            
+            // Apply delay
+            const delaySec = preset.delay / 1000;
+            fetch(`http://${config.senderIp}:${config.senderPort}/set_delay/${delaySec}`)
+                .then(response => response.text())
+                .then(data => {
+                    // Apply bandwidth and packet loss
+                    const params = {
+                        bandwidth_limit: preset.bandwidthUnit === 'kbit' ? preset.bandwidth * 125 : 
+                                        preset.bandwidthUnit === 'mbit' ? preset.bandwidth * 125000 : 
+                                        preset.bandwidth * 125000000,
+                        packet_loss: preset.packetLoss
+                    };
+                    
+                    return fetch(`http://${config.senderIp}:${config.senderPort}/config`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(params)
+                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    statusElement.textContent = `Status: Applied ${presetName} preset`;
+                })
+                .catch(error => {
+                    statusElement.textContent = `Status: Error - ${error.message}`;
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
