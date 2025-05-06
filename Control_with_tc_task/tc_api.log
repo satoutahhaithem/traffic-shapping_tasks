@@ -1499,3 +1499,19 @@ Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
  backlog 0b 0p requeues 0
 
 2025-05-05 11:39:55,023 - werkzeug - INFO - 127.0.0.1 - - [05/May/2025 11:39:55] "GET /get_tc_status HTTP/1.1" 200 -
+2025-05-06 14:15:24,583 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-06 14:15:24,593 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-06 14:15:24,594 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-06 14:15:24,594 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-06 14:15:24,603 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://172.28.233.44:5002
+2025-05-06 14:15:24,603 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-06 14:15:24,604 - werkzeug - INFO -  * Restarting with stat
+2025-05-06 14:15:24,735 - __main__ - INFO - Auto-detected default interface: wlp0s20f3
+2025-05-06 14:15:24,735 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-06 14:15:24,736 - __main__ - INFO - Using network interface: wlp0s20f3
+2025-05-06 14:15:24,736 - __main__ - INFO - Starting tc API server on port 5002...
+2025-05-06 14:15:24,745 - werkzeug - WARNING -  * Debugger is active!
+2025-05-06 14:15:24,746 - werkzeug - INFO -  * Debugger PIN: 457-608-116
