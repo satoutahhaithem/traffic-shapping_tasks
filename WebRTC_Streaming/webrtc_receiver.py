@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import ssl
+import sys
 import uuid
 import cv2
 import time
@@ -156,7 +157,17 @@ async def run_server(host, port):
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, host, port)
-    await site.start()
+    
+    try:
+        await site.start()
+    except OSError as e:
+        if "address already in use" in str(e):
+            print(f"\nERROR: Port {port} is already in use.")
+            print(f"Try using a different port with the --port option:")
+            print(f"python3 {os.path.basename(sys.argv[0])} --port {port + 1}")
+            return 1
+        else:
+            raise
     
     print(f"WebRTC receiver server running at http://{host}:{port}")
     print("Open this URL in your browser to establish the connection")
@@ -178,7 +189,7 @@ async def run_server(host, port):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="WebRTC video receiver")
     parser.add_argument("--host", default="0.0.0.0", help="Host for HTTP server (default: 0.0.0.0)")
-    parser.add_argument("--port", type=int, default=8081, help="Port for HTTP server (default: 8081)")
+    parser.add_argument("--port", type=int, default=8091, help="Port for HTTP server (default: 8091)")
     parser.add_argument("--verbose", "-v", action="count")
     args = parser.parse_args()
 
@@ -188,4 +199,6 @@ if __name__ == "__main__":
         logging.basicConfig(level=logging.INFO)
 
     # Run the asyncio event loop
-    asyncio.run(run_server(args.host, args.port))
+    result = asyncio.run(run_server(args.host, args.port))
+    if result == 1:
+        sys.exit(1)

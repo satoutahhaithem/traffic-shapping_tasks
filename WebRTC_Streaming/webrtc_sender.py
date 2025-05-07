@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import ssl
+import sys
 import uuid
 import cv2
 import time
@@ -131,7 +132,7 @@ async def on_shutdown(app):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="WebRTC video streaming server")
     parser.add_argument("--host", default="0.0.0.0", help="Host for HTTP server (default: 0.0.0.0)")
-    parser.add_argument("--port", type=int, default=8080, help="Port for HTTP server (default: 8080)")
+    parser.add_argument("--port", type=int, default=8090, help="Port for HTTP server (default: 8090)")
     parser.add_argument("--verbose", "-v", action="count")
     args = parser.parse_args()
 
@@ -148,4 +149,14 @@ if __name__ == "__main__":
 
     print(f"Starting WebRTC video streaming server at http://{args.host}:{args.port}")
     print(f"Open this URL in your browser to view the stream")
-    web.run_app(app, host=args.host, port=args.port)
+    
+    try:
+        web.run_app(app, host=args.host, port=args.port)
+    except OSError as e:
+        if "address already in use" in str(e):
+            print(f"\nERROR: Port {args.port} is already in use.")
+            print(f"Try using a different port with the --port option:")
+            print(f"python3 {os.path.basename(__file__)} --port {args.port + 1}")
+            sys.exit(1)
+        else:
+            raise

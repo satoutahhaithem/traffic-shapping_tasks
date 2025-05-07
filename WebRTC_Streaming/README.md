@@ -38,24 +38,24 @@ sudo apt-get install -y iproute2
 
 ```bash
 cd WebRTC_Streaming
-python3 webrtc_sender.py --port 8080
+python3 webrtc_sender.py
 ```
 
-This will start the WebRTC sender server on port 8080. The server will read the video file and make it available for streaming.
+This will start the WebRTC sender server on port 8090 (default). The server will read the video file and make it available for streaming.
 
 ### Step 2: Start the Receiver
 
 ```bash
 cd WebRTC_Streaming
-python3 webrtc_receiver.py --port 8081
+python3 webrtc_receiver.py
 ```
 
 This will start the WebRTC receiver server on port 8081. The receiver will display the video in an OpenCV window and also make it available in a web browser.
 
 ### Step 3: Connect to the Streams
 
-1. **Sender Web Interface**: Open a browser and go to `http://localhost:8080`
-2. **Receiver Web Interface**: Open a browser and go to `http://localhost:8081`
+1. **Sender Web Interface**: Open a browser and go to `http://localhost:8090`
+2. **Receiver Web Interface**: Open a browser and go to `http://localhost:8091`
 
 On the receiver web interface, enter the IP address of the sender machine and click "Connect".
 
@@ -95,6 +95,12 @@ WebRTC provides several advantages over the HTTP-based streaming in the From_oyu
 4. **More Metrics**: Provides detailed statistics about the connection quality
 
 ## Troubleshooting
+
+- **Port Already in Use Error**: If you see "address already in use" error, try using a different port:
+  ```bash
+  python3 webrtc_sender.py --port 8092
+  python3 webrtc_receiver.py --port 8093
+  ```
 
 - **Connection Issues**: Make sure both machines can reach each other (check firewalls)
 - **Video Not Appearing**: Check the console output for errors
