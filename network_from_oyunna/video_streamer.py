@@ -129,30 +129,44 @@ def generate():
             if frame_count % 5 == 0:  # Only print every 5th frame to reduce console spam
                 print(f"Processing frame #{frame_count} at {adaptive_fps} FPS")
             
-            # Resize the frame to 75% for better performance while maintaining good quality
-            new_width = int(frame_width * 0.75)
-            new_height = int(frame_height * 0.75)
-            frame = cv2.resize(frame, (new_width, new_height))
+            # SEPARATE PROCESSING FOR LOCAL VIEW AND NETWORK TRANSMISSION
             
-            # Encode the frame in JPEG format with quality parameter (0-100)
-            # Lower value = smaller file size but lower quality
-            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 80]  # 80% quality for good balance
-            ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
-            if not ret:
-                print("Error: Failed to encode frame.")
+            # 1. Process frame for local viewing (full quality)
+            local_frame = frame.copy()  # Make a copy for local viewing
+            # Encode the local frame with high quality for local viewing
+            local_encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 95]  # 95% quality for local view
+            ret_local, local_jpeg = cv2.imencode('.jpg', local_frame, local_encode_params)
+            if not ret_local:
+                print("Error: Failed to encode local frame.")
                 consecutive_failures += 1
                 continue
             
-            jpeg_bytes = jpeg.tobytes()
+            local_jpeg_bytes = local_jpeg.tobytes()
             
-            # Send frame to receiver (not in a separate thread to avoid thread safety issues)
-            if send_frame_to_receiver(jpeg_bytes):
+            # 2. Process frame for network transmission (optimized)
+            # Resize the frame for network transmission
+            new_width = int(frame_width * 0.75)
+            new_height = int(frame_height * 0.75)
+            network_frame = cv2.resize(frame, (new_width, new_height))
+            
+            # Encode the network frame with optimized quality
+            network_encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 80]  # 80% quality for network
+            ret_network, network_jpeg = cv2.imencode('.jpg', network_frame, network_encode_params)
+            if not ret_network:
+                print("Error: Failed to encode network frame.")
+                consecutive_failures += 1
+                continue
+            
+            network_jpeg_bytes = network_jpeg.tobytes()
+            
+            # Send optimized frame to receiver
+            if send_frame_to_receiver(network_jpeg_bytes):
                 consecutive_failures = 0  # Reset on success
             else:
                 consecutive_failures += 1
             
-            # Yield the frame to stream to browser
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + jpeg_bytes + b'\r\n\r\n')
+            # Yield the HIGH QUALITY frame to local browser
+            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + local_jpeg_bytes + b'\r\n\r\n')
             
             # Use adaptive frame rate based on network conditions
             time.sleep(1 / adaptive_fps)  # Adaptive FPS based on network conditions
@@ -185,7 +199,8 @@ def home():
         </ul>
         <p>Current video file: {}</p>
         <p>Original Resolution: {}x{}</p>
-        <p>Streaming Resolution: {}x{} (75% of original)</p>
+        <p>Local View: Full resolution, 95% quality</p>
+        <p>Network Transmission: {}x{} (75% of original), 80% quality</p>
         <p>Sending frames to receiver at: <strong>http://{}:{}/receive_video</strong></p>
         <p>To view the received video, visit: <strong>http://{}:{}/rx_video_feed</strong> in a browser</p>
     </body>
@@ -237,7 +252,8 @@ def status():
             <h2>Video Information</h2>
             <p>Video File: {video_path}</p>
             <p>Original Resolution: {frame_width}x{frame_height}</p>
-            <p>Streaming Resolution: {int(frame_width * 0.75)}x{int(frame_height * 0.75)} (75% of original)</p>
+            <p>Local View: Full resolution, 95% quality</p>
+            <p>Network Transmission: {int(frame_width * 0.75)}x{int(frame_height * 0.75)} (75% of original), 80% quality</p>
         </div>
         
         <div class="status-box good">
