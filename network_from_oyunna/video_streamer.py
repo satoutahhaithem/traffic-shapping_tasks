@@ -30,7 +30,7 @@ test_cap.release()
 # Network condition tracking
 network_error_count = 0
 last_successful_send = time.time()
-adaptive_fps = 30  # Start with 30 fps, will be reduced if network issues occur
+adaptive_fps = 60  # Start with 60 fps, will be reduced if network issues occur
 
 # Global frame counter for logging
 frame_count = 0
@@ -64,8 +64,8 @@ def send_frame_to_receiver(jpeg_bytes):
             last_successful_send = time.time()
             
             # If we've been successful for a while, gradually increase FPS back up
-            if time.time() - last_successful_send > 10 and adaptive_fps < 30:
-                adaptive_fps += 2
+            if time.time() - last_successful_send > 10 and adaptive_fps < 60:
+                adaptive_fps += 5
                 print(f"Network conditions improving, increasing FPS to {adaptive_fps}")
                 
             return True
@@ -225,7 +225,7 @@ def status():
         <div class="status-box {'good' if network_error_count == 0 else 'warning' if network_error_count < 5 else 'error'}">
             <h2>Network Status</h2>
             <p>Error Count: {network_error_count}</p>
-            <p>Current FPS: {adaptive_fps} (Target: 30)</p>
+            <p>Current FPS: {adaptive_fps} (Target: 60)</p>
             <p>Frames Processed: {frame_count}</p>
             <p>Last Successful Send: {time.strftime('%H:%M:%S', time.localtime(last_successful_send))}</p>
             <p>Running for: {int(time.time() - last_successful_send)} seconds since last success</p>

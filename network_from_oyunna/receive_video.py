@@ -51,7 +51,7 @@ def generate():
                 print("Waiting for frames from streamer...")
                 last_log_time = time.time()
             
-            time.sleep(0.1)  # Check more frequently but log less
+            time.sleep(0.01)  # Check very frequently (100Hz) for better responsiveness at 60 FPS
 
 @app.route('/status')
 def status():
@@ -123,10 +123,10 @@ def receive_video():
     if frames_received % 10 == 0:
         print(f"Received frame #{frames_received}")
         
-        # Update FPS estimate (with smoothing)
+        # Update FPS estimate (with less smoothing for better responsiveness to 60 FPS)
         if time_diff > 0:
             new_fps = 1.0 / time_diff
-            fps_estimate = 0.7 * fps_estimate + 0.3 * new_fps  # Smoothed average
+            fps_estimate = 0.5 * fps_estimate + 0.5 * new_fps  # More responsive smoothing
             print(f"Current FPS estimate: {fps_estimate:.1f}")
 
     # Get the base64-encoded frame from the POST request
