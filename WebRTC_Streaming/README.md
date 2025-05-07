@@ -117,15 +117,44 @@ WebRTC provides several advantages over the HTTP-based streaming in the From_oyu
 
 ## Troubleshooting
 
+### Debugging Tools
+
+The package includes several debugging tools to help identify and fix issues:
+
+1. **Connection Tester**:
+   ```bash
+   ./test_connection.py --host <sender-ip> --port <sender-port>
+   ```
+   This tool checks if the receiver can connect to the sender.
+
+2. **Receiver Debugger**:
+   ```bash
+   ./debug_receiver.py
+   ```
+   This tool checks for missing dependencies, required files, and tests the display.
+
+### Common Issues
+
 - **Port Already in Use Error**: If you see "address already in use" error, try using a different port:
   ```bash
   python3 webrtc_sender.py --port 8092
   python3 webrtc_receiver.py --port 8093
   ```
 
+- **Missing Dependencies**: Make sure all required dependencies are installed:
+  ```bash
+  ./install_dependencies.sh
+  ```
+
 - **Connection Issues**: Make sure both machines can reach each other (check firewalls)
-- **Video Not Appearing**: Check the console output for errors
+  
+- **Video Not Appearing**:
+  - Check the console output for errors
+  - Run with verbose logging: `python3 webrtc_receiver.py --verbose`
+  - Make sure the sender is running and accessible
+
 - **Poor Performance**: Try running on machines with better hardware
+
 - **Traffic Control Not Working**: Make sure you're using the correct network interface
 
 ## Advanced Configuration
