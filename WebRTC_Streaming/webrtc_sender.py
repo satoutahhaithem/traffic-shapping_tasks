@@ -8,6 +8,7 @@ import sys
 import uuid
 import cv2
 import time
+from fractions import Fraction
 from aiohttp import web
 from aiortc import MediaStreamTrack, RTCPeerConnection, RTCSessionDescription
 from aiortc.contrib.media import MediaBlackhole, MediaPlayer, MediaRecorder, MediaRelay
@@ -65,7 +66,7 @@ class VideoTransformTrack(MediaStreamTrack):
         # Create VideoFrame
         video_frame = VideoFrame.from_ndarray(frame, format="rgb24")
         video_frame.pts = self.frame_count
-        video_frame.time_base = f"1/{self.fps}"
+        video_frame.time_base = Fraction(1, int(self.fps))  # Use Fraction for time_base
         
         self.frame_count += 1
         self.last_frame_time = time.time()

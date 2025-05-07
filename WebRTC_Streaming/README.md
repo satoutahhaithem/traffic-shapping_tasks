@@ -20,9 +20,23 @@ This folder contains a complete WebRTC-based video streaming solution with netwo
 
 Before running the system, make sure you have the following installed:
 
+### Option 1: Using the Installation Script (Recommended)
+
 ```bash
-# Install Python dependencies
-pip install aiortc opencv-python aiohttp numpy
+cd WebRTC_Streaming
+# For Python dependencies only
+./install_dependencies.sh
+
+# For all dependencies (including system packages)
+sudo ./install_dependencies.sh
+```
+
+### Option 2: Manual Installation
+
+```bash
+# Install Python dependencies using requirements.txt
+cd WebRTC_Streaming
+pip install -r requirements.txt
 
 # Install system dependencies (for Ubuntu/Debian)
 sudo apt-get update
@@ -30,6 +44,13 @@ sudo apt-get install -y libavdevice-dev libavfilter-dev libopus-dev libvpx-dev p
 
 # For traffic control
 sudo apt-get install -y iproute2
+```
+
+If you encounter import errors, make sure all dependencies are properly installed:
+
+```bash
+# Alternative manual installation of Python dependencies
+pip install aiortc>=1.3.2 aiohttp>=3.8.1 opencv-python>=4.5.5 numpy>=1.22.3 av>=9.2.0
 ```
 
 ## Running the System
