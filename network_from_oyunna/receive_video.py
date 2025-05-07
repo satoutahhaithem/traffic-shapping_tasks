@@ -29,8 +29,8 @@ def generate():
                 print(f"Streaming frame #{local_frame_count} with shape: {current_frame.shape}")
                 last_log_time = current_time
             
-            # Encode the frame as JPEG with very low quality parameter for maximum performance
-            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 50]
+            # Encode the frame as JPEG with quality parameter
+            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 85]
             ret, jpeg = cv2.imencode('.jpg', current_frame, encode_params)
             if not ret:
                 print("Failed to encode frame for streaming!")
@@ -51,7 +51,7 @@ def generate():
                 print("Waiting for frames from streamer...")
                 last_log_time = time.time()
             
-            time.sleep(0.06)  # Check less frequently (16Hz) for better performance at 15 FPS
+            time.sleep(0.01)  # Check very frequently (100Hz) for better responsiveness at 60 FPS
 
 @app.route('/status')
 def status():
@@ -118,9 +118,9 @@ def receive_video():
     time_diff = current_time - last_frame_time
     last_frame_time = current_time
     
-    # Minimize logging to reduce processing overhead
+    # Only log every 10th frame to reduce console output
     frames_received += 1
-    if frames_received % 60 == 0:  # Only log every 60th frame
+    if frames_received % 10 == 0:
         print(f"Received frame #{frames_received}")
         
         # Update FPS estimate (with less smoothing for better responsiveness to 60 FPS)
