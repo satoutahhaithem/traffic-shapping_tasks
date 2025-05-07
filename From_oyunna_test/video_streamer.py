@@ -7,7 +7,9 @@ import threading
 
 app = Flask(__name__)
 
-# Video file path
+# Configuration
+receiver_ip = "127.0.0.1"  # Change this to the IP address of the machine running receive_video.py
+receiver_port = 8081       # Port of the receiver
 video_path = '/home/sattoutah/Bureau/git_mesurement_tc/Video_test/BigBuckBunny.mp4'
 
 # Check if the video file exists and can be opened
@@ -29,8 +31,9 @@ test_cap.release()
 def send_frame_to_receiver(jpeg_bytes):
     encoded_frame = base64.b64encode(jpeg_bytes).decode('utf-8')
     try:
-        print("Sending frame to receiver...")
-        response = requests.post('http://127.0.0.1:8081/receive_video', json={'frame': encoded_frame}, timeout=10)
+        receiver_url = f"http://{receiver_ip}:{receiver_port}/receive_video"
+        print(f"Sending frame to receiver at {receiver_url}...")
+        response = requests.post(receiver_url, json={'frame': encoded_frame}, timeout=10)
         print(f"Response from receiver: {response.status_code} - {response.text}")
         return True
     except requests.exceptions.RequestException as e:
@@ -109,9 +112,11 @@ def home():
         </ul>
         <p>Current video file: {}</p>
         <p>Resolution: {}x{}</p>
+        <p>Sending frames to receiver at: <strong>http://{}:{}/receive_video</strong></p>
+        <p>To view the received video, visit: <strong>http://{}:{}/rx_video_feed</strong> in a browser</p>
     </body>
     </html>
-    """.format(video_path, frame_width, frame_height)
+    """.format(video_path, frame_width, frame_height, receiver_ip, receiver_port, receiver_ip, receiver_port)
 
 @app.route('/start_stream', methods=['GET'])
 def start_stream():

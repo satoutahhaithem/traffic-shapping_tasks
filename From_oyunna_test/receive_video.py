@@ -37,7 +37,20 @@ def generate():
 
 @app.route('/')
 def home():
-    return "Welcome to the Video Receiver! Visit /rx_video_feed to view the stream."
+    return """
+    <html>
+    <head><title>Video Receiver</title></head>
+    <body>
+        <h1>Video Receiver</h1>
+        <p>This application receives video frames and displays them as a stream.</p>
+        <ul>
+            <li><a href="/rx_video_feed" target="_blank">View the received video stream</a></li>
+        </ul>
+        <p>Listening for frames on: <strong>0.0.0.0:8081/receive_video</strong></p>
+        <p>Current status: {}</p>
+    </body>
+    </html>
+    """.format("Received frames" if current_frame is not None else "Waiting for frames...")
 
 @app.route('/receive_video', methods=['POST'])
 def receive_video():
@@ -69,5 +82,5 @@ def video_feed():
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    # Run the Flask app on all interfaces and port 5001
-    app.run(host='127.0.0.1', port=8081)
+    # Run the Flask app on all interfaces (0.0.0.0) to allow external connections
+    app.run(host='0.0.0.0', port=8081)
