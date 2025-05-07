@@ -84,6 +84,21 @@ python3 headless_receiver.py
 
 This version doesn't use OpenCV for display, avoiding QT/Wayland issues. The video will only be visible in the browser, not in a separate window.
 
+#### Option C: Simple Receiver (with debugging information)
+
+If you're having trouble seeing the video in the browser, use the simple receiver with enhanced debugging:
+
+```bash
+cd WebRTC_Streaming
+python3 simple_receiver.py
+```
+
+This version includes:
+- Simplified HTML interface
+- Detailed connection debugging information
+- Video element status monitoring
+- No OpenCV dependencies
+
 This will start the WebRTC receiver server on port 8081. The receiver will display the video in an OpenCV window and also make it available in a web browser.
 
 ### Step 3: Connect to the Streams
@@ -162,7 +177,8 @@ The package includes several debugging tools to help identify and fix issues:
 - **Connection Issues**: Make sure both machines can reach each other (check firewalls)
   
 - **Video Not Appearing**:
-  - Check the console output for errors
+  - Try the simple receiver with debugging: `python3 simple_receiver.py`
+  - Check the debug information in the browser for connection status
   - Run with verbose logging: `python3 webrtc_receiver.py --verbose`
   - Make sure the sender is running and accessible
 
