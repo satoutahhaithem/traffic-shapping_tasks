@@ -51,7 +51,7 @@ def generate():
                 print("Waiting for frames from streamer...")
                 last_log_time = time.time()
             
-            time.sleep(0.01)  # Check very frequently (100Hz) for better responsiveness at 60 FPS
+            time.sleep(0.03)  # Check frequently (33Hz) for better responsiveness at 30 FPS
 
 @app.route('/status')
 def status():

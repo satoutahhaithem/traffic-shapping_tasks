@@ -10,7 +10,10 @@ app = Flask(__name__)
 # Configuration
 receiver_ip = "192.168.2.169"  # Change this to the IP address of the machine running receive_video.py
 receiver_port = 8081       # Port of the receiver
+# Try a smaller video file if available
 video_path = '/home/sattoutah/Bureau/git_mesurement_tc/Video_test/BigBuckBunny.mp4'
+# Uncomment the line below and change to a smaller video file if available
+# video_path = '/home/sattoutah/Bureau/git_mesurement_tc/Video_test/small_test_video.mp4'
 
 # Check if the video file exists and can be opened
 test_cap = cv2.VideoCapture(video_path)
@@ -30,7 +33,7 @@ test_cap.release()
 # Network condition tracking
 network_error_count = 0
 last_successful_send = time.time()
-adaptive_fps = 60  # Start with 60 fps, will be reduced if network issues occur
+adaptive_fps = 30  # Start with 30 fps for better performance on most hardware
 
 # Global frame counter for logging
 frame_count = 0
@@ -64,8 +67,8 @@ def send_frame_to_receiver(jpeg_bytes):
             last_successful_send = time.time()
             
             # If we've been successful for a while, gradually increase FPS back up
-            if time.time() - last_successful_send > 10 and adaptive_fps < 60:
-                adaptive_fps += 5
+            if time.time() - last_successful_send > 10 and adaptive_fps < 30:
+                adaptive_fps += 2
                 print(f"Network conditions improving, increasing FPS to {adaptive_fps}")
                 
             return True
@@ -129,10 +132,10 @@ def generate():
             if frame_count % 5 == 0:  # Only print every 5th frame to reduce console spam
                 print(f"Processing frame #{frame_count} at {adaptive_fps} FPS")
             
-            # Resize the frame to reduce bandwidth for 60 FPS streaming
-            # Using 3/4 of original size for better balance between quality and performance
-            new_width = int(frame_width * 0.75)
-            new_height = int(frame_height * 0.75)
+            # Resize the frame to reduce bandwidth for better performance
+            # Using 1/2 of original size for faster processing and transmission
+            new_width = int(frame_width * 0.5)
+            new_height = int(frame_height * 0.5)
             frame = cv2.resize(frame, (new_width, new_height))
             
             # Encode the frame in JPEG format with quality parameter (0-100)
@@ -187,12 +190,12 @@ def home():
         </ul>
         <p>Current video file: {}</p>
         <p>Original Resolution: {}x{}</p>
-        <p>Streaming Resolution: {}x{} (75% of original)</p>
+        <p>Streaming Resolution: {}x{} (50% of original)</p>
         <p>Sending frames to receiver at: <strong>http://{}:{}/receive_video</strong></p>
         <p>To view the received video, visit: <strong>http://{}:{}/rx_video_feed</strong> in a browser</p>
     </body>
     </html>
-    """.format(video_path, frame_width, frame_height, int(frame_width * 0.75), int(frame_height * 0.75), receiver_ip, receiver_port, receiver_ip, receiver_port)
+    """.format(video_path, frame_width, frame_height, int(frame_width * 0.5), int(frame_height * 0.5), receiver_ip, receiver_port, receiver_ip, receiver_port)
 
 @app.route('/start_stream', methods=['GET'])
 def start_stream():
@@ -229,7 +232,7 @@ def status():
         <div class="status-box {'good' if network_error_count == 0 else 'warning' if network_error_count < 5 else 'error'}">
             <h2>Network Status</h2>
             <p>Error Count: {network_error_count}</p>
-            <p>Current FPS: {adaptive_fps} (Target: 60)</p>
+            <p>Current FPS: {adaptive_fps} (Target: 30)</p>
             <p>Frames Processed: {frame_count}</p>
             <p>Last Successful Send: {time.strftime('%H:%M:%S', time.localtime(last_successful_send))}</p>
             <p>Running for: {int(time.time() - last_successful_send)} seconds since last success</p>
@@ -239,7 +242,7 @@ def status():
             <h2>Video Information</h2>
             <p>Video File: {video_path}</p>
             <p>Original Resolution: {frame_width}x{frame_height}</p>
-            <p>Streaming Resolution: {int(frame_width * 0.75)}x{int(frame_height * 0.75)} (75% of original)</p>
+            <p>Streaming Resolution: {int(frame_width * 0.5)}x{int(frame_height * 0.5)} (50% of original)</p>
         </div>
         
         <div class="status-box good">
