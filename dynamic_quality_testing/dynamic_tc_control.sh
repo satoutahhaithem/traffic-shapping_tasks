@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the network interface
-INTERFACE="wlp0s20f3"  # WiFi interface as specified
+INTERFACE="lo"  # network interface (e.g., eth0, wlan0, etc.)
 
 # Function to show the current network performance stats
 show_stats() {
