@@ -66,10 +66,23 @@ This will start the WebRTC sender server on port 8090 (default). The server will
 
 ### Step 2: Start the Receiver
 
+#### Option A: Standard Receiver (with OpenCV display)
+
 ```bash
 cd WebRTC_Streaming
 python3 webrtc_receiver.py
 ```
+
+#### Option B: Headless Receiver (for systems with Wayland or display issues)
+
+If you encounter QT/Wayland errors or other display-related issues, use the headless receiver:
+
+```bash
+cd WebRTC_Streaming
+python3 headless_receiver.py
+```
+
+This version doesn't use OpenCV for display, avoiding QT/Wayland issues. The video will only be visible in the browser, not in a separate window.
 
 This will start the WebRTC receiver server on port 8081. The receiver will display the video in an OpenCV window and also make it available in a web browser.
 
@@ -152,6 +165,14 @@ The package includes several debugging tools to help identify and fix issues:
   - Check the console output for errors
   - Run with verbose logging: `python3 webrtc_receiver.py --verbose`
   - Make sure the sender is running and accessible
+
+- **QT/Wayland Errors**:
+  - If you see errors like `Could not find the Qt platform plugin "wayland"`, use the headless receiver:
+    ```bash
+    python3 headless_receiver.py
+    ```
+  - This version doesn't use OpenCV's GUI functionality, avoiding display-related issues
+  - The video will only be visible in the browser, not in a separate window
 
 - **Poor Performance**: Try running on machines with better hardware
 
