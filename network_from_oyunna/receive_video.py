@@ -30,7 +30,7 @@ def generate():
                 last_log_time = current_time
             
             # Encode the frame as JPEG with quality parameter
-            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 85]
+            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
             ret, jpeg = cv2.imencode('.jpg', current_frame, encode_params)
             if not ret:
                 print("Failed to encode frame for streaming!")
@@ -51,7 +51,7 @@ def generate():
                 print("Waiting for frames from streamer...")
                 last_log_time = time.time()
             
-            time.sleep(0.01)  # Check very frequently (100Hz) for better responsiveness at 60 FPS
+            time.sleep(0.03)  # Check frequently (33Hz) for better responsiveness at 30 FPS
 
 @app.route('/status')
 def status():
