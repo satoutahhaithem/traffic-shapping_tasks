@@ -30,7 +30,7 @@ echo "To run the system on a network:"
 echo ""
 echo "1. On the receiver machine:"
 echo "   cd ~/Bureau/git_mesurement_tc"
-echo "   python3 From_oyunna_test/receive_video.py"
+echo "   python3 network_from_oyunna/receive_video.py"
 echo ""
 echo "2. On the streamer machine, edit video_streamer.py:"
 echo "   Change 'receiver_ip = \"127.0.0.1\"' to 'receiver_ip = \"$IP_ADDRESS\"'"
@@ -38,11 +38,11 @@ echo "   (This has been done automatically if you're running this on the receive
 echo ""
 echo "3. On the streamer machine:"
 echo "   cd ~/Bureau/git_mesurement_tc"
-echo "   python3 From_oyunna_test/video_streamer.py"
+echo "   python3 network_from_oyunna/video_streamer.py"
 echo ""
 echo "4. To test network conditions (on either machine):"
 echo "   cd ~/Bureau/git_mesurement_tc"
-echo "   sudo bash From_oyunna_test/dynamic_tc_control.sh"
+echo "   sudo bash network_from_oyunna/dynamic_tc_control.sh"
 echo ""
 echo "5. Access the streams in a web browser:"
 echo "   Receiver stream: http://$IP_ADDRESS:8081/rx_video_feed"
@@ -50,9 +50,9 @@ echo "   Streamer local view: http://[streamer-ip]:5000/tx_video_feed"
 echo "=========================================================="
 
 # Update the receiver_ip in video_streamer.py if this is the receiver machine
-if [ -f "From_oyunna_test/video_streamer.py" ]; then
+if [ -f "network_from_oyunna/video_streamer.py" ]; then
     echo "Updating receiver_ip in video_streamer.py to $IP_ADDRESS..."
-    sed -i "s/receiver_ip = \"127.0.0.1\"/receiver_ip = \"$IP_ADDRESS\"/" From_oyunna_test/video_streamer.py
+    sed -i "s/receiver_ip = \"127.0.0.1\"/receiver_ip = \"$IP_ADDRESS\"/" network_from_oyunna/video_streamer.py
     echo "Done!"
 fi
 

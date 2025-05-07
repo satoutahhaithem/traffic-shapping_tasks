@@ -13,7 +13,7 @@ This system allows you to stream video between two computers and simulate differ
 
 ### Preparing Both PCs
 
-1. Copy the `From_oyunna_test` folder to both the sender and receiver PCs
+1. Copy the `network_from_oyunna` folder to both the sender and receiver PCs
 2. Make sure both PCs have the required Python packages installed:
    ```bash
    pip install flask opencv-python numpy requests
@@ -25,7 +25,7 @@ This system allows you to stream video between two computers and simulate differ
 1. Run the sender setup script:
    ```bash
    cd /path/to/git_mesurement_tc
-   ./From_oyunna_test/sender_setup.sh
+   ./network_from_oyunna/sender_setup.sh
    ```
 2. When prompted, enter the IP address of the receiver PC
 3. The script will configure the system for sending video frames
@@ -35,7 +35,7 @@ This system allows you to stream video between two computers and simulate differ
 1. Run the receiver setup script:
    ```bash
    cd /path/to/git_mesurement_tc
-   ./From_oyunna_test/receiver_setup.sh
+   ./network_from_oyunna/receiver_setup.sh
    ```
 2. The script will configure the system for receiving video frames
 
@@ -45,7 +45,7 @@ This system allows you to stream video between two computers and simulate differ
 
 1. Start the video receiver:
    ```bash
-   python3 From_oyunna_test/receive_video.py
+   python3 network_from_oyunna/receive_video.py
    ```
 2. The receiver will listen for frames on port 8081
 
@@ -53,7 +53,7 @@ This system allows you to stream video between two computers and simulate differ
 
 1. Start the video streamer:
    ```bash
-   python3 From_oyunna_test/video_streamer.py
+   python3 network_from_oyunna/video_streamer.py
    ```
 2. The streamer will read the video file and send frames to the receiver
 
@@ -76,14 +76,14 @@ You can apply traffic control on either the sender or receiver PC to simulate di
 
 Running traffic control on the sender affects outgoing traffic (frames being sent to the receiver):
 ```bash
-sudo bash From_oyunna_test/dynamic_tc_control.sh
+sudo bash network_from_oyunna/dynamic_tc_control.sh
 ```
 
 ### On the Receiver PC
 
 Running traffic control on the receiver affects incoming traffic (frames being received):
 ```bash
-sudo bash From_oyunna_test/dynamic_tc_control.sh
+sudo bash network_from_oyunna/dynamic_tc_control.sh
 ```
 
 ## Testing Different Network Scenarios

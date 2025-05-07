@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Setup script for the receiver PC
+# Setup script for the sender PC
 
 # Get the IP address of the WiFi interface
 WIFI_INTERFACE="wlp0s20f3"  # Change this if your interface has a different name
@@ -21,35 +21,43 @@ if [ -z "$IP_ADDRESS" ]; then
 fi
 
 echo "=========================================================="
-echo "Receiver PC Setup for Video Streaming System"
+echo "Sender PC Setup for Video Streaming System"
 echo "=========================================================="
 echo "Your WiFi interface: $WIFI_INTERFACE"
 echo "Your IP address: $IP_ADDRESS"
 echo ""
 
+# Ask for the receiver's IP address
+read -p "Enter the IP address of the receiver PC: " RECEIVER_IP
+
+# Update the receiver_ip in video_streamer.py
+if [ -f "network_from_oyunna/video_streamer.py" ]; then
+    echo "Updating receiver_ip in video_streamer.py to $RECEIVER_IP..."
+    sed -i "s/receiver_ip = \"[0-9.]*\"/receiver_ip = \"$RECEIVER_IP\"/" network_from_oyunna/video_streamer.py
+    echo "Done!"
+fi
+
 # Update the interface in dynamic_tc_control.sh
-if [ -f "From_oyunna_test/dynamic_tc_control.sh" ]; then
+if [ -f "network_from_oyunna/dynamic_tc_control.sh" ]; then
     echo "Updating network interface in dynamic_tc_control.sh to $WIFI_INTERFACE..."
-    sed -i "s/INTERFACE=\"[^\"]*\"/INTERFACE=\"$WIFI_INTERFACE\"/" From_oyunna_test/dynamic_tc_control.sh
+    sed -i "s/INTERFACE=\"[^\"]*\"/INTERFACE=\"$WIFI_INTERFACE\"/" network_from_oyunna/dynamic_tc_control.sh
     echo "Done!"
 fi
 
 echo ""
 echo "=========================================================="
-echo "Receiver PC Setup Complete!"
+echo "Sender PC Setup Complete!"
 echo "=========================================================="
 echo ""
-echo "To run the video receiver:"
-echo "  python3 From_oyunna_test/receive_video.py"
+echo "To run the video streamer:"
+echo "  python3 network_from_oyunna/video_streamer.py"
 echo ""
 echo "To apply traffic control (network conditions):"
-echo "  sudo bash From_oyunna_test/dynamic_tc_control.sh"
+echo "  sudo bash network_from_oyunna/dynamic_tc_control.sh"
 echo ""
-echo "Your video receiver will be listening at:"
-echo "  http://$IP_ADDRESS:8081/receive_video"
+echo "Your video stream will be available at:"
+echo "  http://$IP_ADDRESS:5000/tx_video_feed"
 echo ""
-echo "You can view the received video stream at:"
-echo "  http://$IP_ADDRESS:8081/rx_video_feed"
-echo ""
-echo "Make sure the sender PC is configured to send frames to your IP address: $IP_ADDRESS"
+echo "The receiver should be able to view the stream at:"
+echo "  http://$RECEIVER_IP:8081/rx_video_feed"
 echo "=========================================================="
