@@ -52,8 +52,8 @@ def send_frame_to_receiver(jpeg_bytes):
             if frame_count % 10 == 0:
                 print(f"Sending frame to receiver at {receiver_url}...")
             
-            # Increased timeout from 10 to 20 seconds
-            response = requests.post(receiver_url, json={'frame': encoded_frame}, timeout=20)
+            # Reduced timeout for faster error detection at high frame rates
+            response = requests.post(receiver_url, json={'frame': encoded_frame}, timeout=5)
             
             # Only print every 10th frame to reduce console output
             if frame_count % 10 == 0:
@@ -86,7 +86,7 @@ def send_frame_to_receiver(jpeg_bytes):
                 return False
             else:
                 print(f"Retry {retry_count}/{max_retries} after error: {e}")
-                time.sleep(1)  # Wait a bit before retrying
+                time.sleep(0.2)  # Shorter retry delay for 60 FPS operation
 
 # Function to encode and send frames
 def generate():
@@ -129,13 +129,14 @@ def generate():
             if frame_count % 5 == 0:  # Only print every 5th frame to reduce console spam
                 print(f"Processing frame #{frame_count} at {adaptive_fps} FPS")
             
-            # Resize the frame to reduce bandwidth (optional)
-            # Uncomment the next line to resize the frame to half the original size
-            # frame = cv2.resize(frame, (frame_width // 2, frame_height // 2))
+            # Resize the frame to reduce bandwidth for 60 FPS streaming
+            # Smaller frame size allows for faster transmission at high frame rates
+            frame = cv2.resize(frame, (frame_width // 2, frame_height // 2))
             
             # Encode the frame in JPEG format with quality parameter (0-100)
             # Lower value = smaller file size but lower quality
-            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 85]  # 85% quality
+            # Reduced quality for better performance at 60 FPS
+            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 70]  # 70% quality for faster transmission
             ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
             if not ret:
                 print("Error: Failed to encode frame.")

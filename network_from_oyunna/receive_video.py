@@ -29,8 +29,8 @@ def generate():
                 print(f"Streaming frame #{local_frame_count} with shape: {current_frame.shape}")
                 last_log_time = current_time
             
-            # Encode the frame as JPEG with quality parameter
-            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 85]
+            # Encode the frame as JPEG with reduced quality parameter for better performance
+            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 70]
             ret, jpeg = cv2.imencode('.jpg', current_frame, encode_params)
             if not ret:
                 print("Failed to encode frame for streaming!")
@@ -38,8 +38,8 @@ def generate():
             
             jpeg_bytes = jpeg.tobytes()
             
-            # Only log size occasionally
-            if local_frame_count % 30 == 0:
+            # Only log size very occasionally to reduce processing overhead
+            if local_frame_count % 60 == 0:
                 print(f"Encoded JPEG size: {len(jpeg_bytes)} bytes")
             
             # Yield the frame in MJPEG format
@@ -118,9 +118,9 @@ def receive_video():
     time_diff = current_time - last_frame_time
     last_frame_time = current_time
     
-    # Only log every 10th frame to reduce console output
+    # Minimize logging to reduce processing overhead at 60 FPS
     frames_received += 1
-    if frames_received % 10 == 0:
+    if frames_received % 30 == 0:  # Only log every 30th frame
         print(f"Received frame #{frames_received}")
         
         # Update FPS estimate (with less smoothing for better responsiveness to 60 FPS)
@@ -133,8 +133,8 @@ def receive_video():
     data = request.json
     frame_data = data['frame']
     
-    # Only log data length occasionally
-    if frames_received % 30 == 0:
+    # Minimize logging to reduce processing overhead
+    if frames_received % 60 == 0:  # Only log every 60th frame
         print(f"Frame data length: {len(frame_data)}")
 
     # Decode the frame from base64 format
@@ -144,8 +144,8 @@ def receive_video():
         frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
         if frame is not None:
-            # Only log occasionally
-            if frames_received % 30 == 0:
+            # Minimize logging to reduce processing overhead
+            if frames_received % 60 == 0:  # Only log every 60th frame
                 print(f"Successfully decoded frame with shape: {frame.shape}")
             
             # Set the current frame to be used in the MJPEG stream
