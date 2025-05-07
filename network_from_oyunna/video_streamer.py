@@ -130,8 +130,10 @@ def generate():
                 print(f"Processing frame #{frame_count} at {adaptive_fps} FPS")
             
             # Resize the frame to reduce bandwidth for 60 FPS streaming
-            # Smaller frame size allows for faster transmission at high frame rates
-            frame = cv2.resize(frame, (frame_width // 2, frame_height // 2))
+            # Using 3/4 of original size for better balance between quality and performance
+            new_width = int(frame_width * 0.75)
+            new_height = int(frame_height * 0.75)
+            frame = cv2.resize(frame, (new_width, new_height))
             
             # Encode the frame in JPEG format with quality parameter (0-100)
             # Lower value = smaller file size but lower quality
@@ -184,12 +186,13 @@ def home():
             <li><a href="/start_stream" target="_blank">Get information about streaming</a></li>
         </ul>
         <p>Current video file: {}</p>
-        <p>Resolution: {}x{}</p>
+        <p>Original Resolution: {}x{}</p>
+        <p>Streaming Resolution: {}x{} (75% of original)</p>
         <p>Sending frames to receiver at: <strong>http://{}:{}/receive_video</strong></p>
         <p>To view the received video, visit: <strong>http://{}:{}/rx_video_feed</strong> in a browser</p>
     </body>
     </html>
-    """.format(video_path, frame_width, frame_height, receiver_ip, receiver_port, receiver_ip, receiver_port)
+    """.format(video_path, frame_width, frame_height, int(frame_width * 0.75), int(frame_height * 0.75), receiver_ip, receiver_port, receiver_ip, receiver_port)
 
 @app.route('/start_stream', methods=['GET'])
 def start_stream():
@@ -235,7 +238,8 @@ def status():
         <div class="status-box good">
             <h2>Video Information</h2>
             <p>Video File: {video_path}</p>
-            <p>Resolution: {frame_width}x{frame_height}</p>
+            <p>Original Resolution: {frame_width}x{frame_height}</p>
+            <p>Streaming Resolution: {int(frame_width * 0.75)}x{int(frame_height * 0.75)} (75% of original)</p>
         </div>
         
         <div class="status-box good">
