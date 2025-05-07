@@ -33,7 +33,7 @@ test_cap.release()
 # Network condition tracking
 network_error_count = 0
 last_successful_send = time.time()
-adaptive_fps = 30  # Start with 30 fps for better performance on most hardware
+adaptive_fps = 15  # Start with 15 fps for much better performance on all hardware
 
 # Global frame counter for logging
 frame_count = 0
@@ -51,15 +51,15 @@ def send_frame_to_receiver(jpeg_bytes):
     
     while retry_count <= max_retries:
         try:
-            # Only print every 10th frame to reduce console output
-            if frame_count % 10 == 0:
+            # Only print every 30th frame to minimize console output
+            if frame_count % 30 == 0:
                 print(f"Sending frame to receiver at {receiver_url}...")
             
             # Reduced timeout for faster error detection at high frame rates
             response = requests.post(receiver_url, json={'frame': encoded_frame}, timeout=5)
             
-            # Only print every 10th frame to reduce console output
-            if frame_count % 10 == 0:
+            # Only print every 30th frame to minimize console output
+            if frame_count % 30 == 0:
                 print(f"Response from receiver: {response.status_code} - {response.text}")
             
             # Reset error count on success and update last successful time
@@ -67,8 +67,8 @@ def send_frame_to_receiver(jpeg_bytes):
             last_successful_send = time.time()
             
             # If we've been successful for a while, gradually increase FPS back up
-            if time.time() - last_successful_send > 10 and adaptive_fps < 30:
-                adaptive_fps += 2
+            if time.time() - last_successful_send > 10 and adaptive_fps < 15:
+                adaptive_fps += 1
                 print(f"Network conditions improving, increasing FPS to {adaptive_fps}")
                 
             return True
@@ -129,19 +129,19 @@ def generate():
                 continue
             
             frame_count += 1
-            if frame_count % 5 == 0:  # Only print every 5th frame to reduce console spam
+            if frame_count % 15 == 0:  # Only print every 15th frame to minimize console output
                 print(f"Processing frame #{frame_count} at {adaptive_fps} FPS")
             
             # Resize the frame to reduce bandwidth for better performance
-            # Using 1/2 of original size for faster processing and transmission
-            new_width = int(frame_width * 0.5)
-            new_height = int(frame_height * 0.5)
+            # Using 1/4 of original size for much faster processing and transmission
+            new_width = int(frame_width * 0.25)
+            new_height = int(frame_height * 0.25)
             frame = cv2.resize(frame, (new_width, new_height))
             
             # Encode the frame in JPEG format with quality parameter (0-100)
             # Lower value = smaller file size but lower quality
-            # Reduced quality for better performance at 60 FPS
-            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 70]  # 70% quality for faster transmission
+            # Very low quality for maximum performance
+            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 50]  # 50% quality for much faster transmission
             ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
             if not ret:
                 print("Error: Failed to encode frame.")
@@ -190,12 +190,12 @@ def home():
         </ul>
         <p>Current video file: {}</p>
         <p>Original Resolution: {}x{}</p>
-        <p>Streaming Resolution: {}x{} (50% of original)</p>
+        <p>Streaming Resolution: {}x{} (25% of original)</p>
         <p>Sending frames to receiver at: <strong>http://{}:{}/receive_video</strong></p>
         <p>To view the received video, visit: <strong>http://{}:{}/rx_video_feed</strong> in a browser</p>
     </body>
     </html>
-    """.format(video_path, frame_width, frame_height, int(frame_width * 0.5), int(frame_height * 0.5), receiver_ip, receiver_port, receiver_ip, receiver_port)
+    """.format(video_path, frame_width, frame_height, int(frame_width * 0.25), int(frame_height * 0.25), receiver_ip, receiver_port, receiver_ip, receiver_port)
 
 @app.route('/start_stream', methods=['GET'])
 def start_stream():
@@ -232,7 +232,7 @@ def status():
         <div class="status-box {'good' if network_error_count == 0 else 'warning' if network_error_count < 5 else 'error'}">
             <h2>Network Status</h2>
             <p>Error Count: {network_error_count}</p>
-            <p>Current FPS: {adaptive_fps} (Target: 30)</p>
+            <p>Current FPS: {adaptive_fps} (Target: 15)</p>
             <p>Frames Processed: {frame_count}</p>
             <p>Last Successful Send: {time.strftime('%H:%M:%S', time.localtime(last_successful_send))}</p>
             <p>Running for: {int(time.time() - last_successful_send)} seconds since last success</p>
@@ -242,7 +242,7 @@ def status():
             <h2>Video Information</h2>
             <p>Video File: {video_path}</p>
             <p>Original Resolution: {frame_width}x{frame_height}</p>
-            <p>Streaming Resolution: {int(frame_width * 0.5)}x{int(frame_height * 0.5)} (50% of original)</p>
+            <p>Streaming Resolution: {int(frame_width * 0.25)}x{int(frame_height * 0.25)} (25% of original)</p>
         </div>
         
         <div class="status-box good">
