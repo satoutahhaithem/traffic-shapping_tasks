@@ -5,9 +5,18 @@ import time
 import json
 import subprocess
 import requests
-import matplotlib.pyplot as plt
-import numpy as np
 from datetime import datetime
+
+# Try to import matplotlib and numpy, but provide graceful fallback if not available
+try:
+    import matplotlib.pyplot as plt
+    import numpy as np
+    PLOTTING_AVAILABLE = True
+except ImportError:
+    print("Warning: matplotlib and/or numpy not installed. Plotting functionality will be disabled.")
+    print("To enable plotting, install the required packages:")
+    print("  pip install matplotlib numpy")
+    PLOTTING_AVAILABLE = False
 
 # Configuration
 SENDER_IP = "localhost"  # Change if running on different machines
@@ -224,6 +233,145 @@ def run_test(resolution, quality, fps, network):
     # Wait before next test
     time.sleep(2)
 
+def generate_plots(timestamp):
+    """Generate plots from the test results."""
+    if not PLOTTING_AVAILABLE:
+        print("Skipping plot generation because matplotlib/numpy is not available.")
+        print("Install the required packages with: pip install matplotlib numpy")
+        return
+    
+    try:
+        print("Generating plots...")
+        
+        # Extract data for plotting
+        resolutions = []
+        qualities = []
+        fps_values = []
+        networks = []
+        bandwidth = []
+        visual_quality = []
+        smoothness = []
+        
+        for result in results:
+            resolutions.append(result["resolution_scale"])
+            qualities.append(result["jpeg_quality"])
+            fps_values.append(result["frame_rate"])
+            networks.append(result["network_condition"])
+            bandwidth.append(result["metrics"]["bandwidth_usage"] / 1000000)  # Convert to Mbps
+            visual_quality.append(result["metrics"]["visual_quality_score"])
+            smoothness.append(result["metrics"]["smoothness_score"])
+        
+        # Create figure with subplots
+        plt.figure(figsize=(15, 10))
+        
+        # Plot 1: Bandwidth usage by resolution and network
+        plt.subplot(2, 2, 1)
+        for network in NETWORK_CONDITIONS:
+            network_name = network["name"]
+            indices = [i for i, n in enumerate(networks) if n == network_name]
+            plt.plot([resolutions[i] for i in indices], 
+                    [bandwidth[i] for i in indices], 
+                    'o-', label=network_name)
+        
+        plt.xlabel('Resolution Scale')
+        plt.ylabel('Bandwidth (Mbps)')
+        plt.title('Bandwidth Usage by Resolution and Network')
+        plt.legend()
+        plt.grid(True)
+        
+        # Plot 2: Visual quality by resolution and quality
+        plt.subplot(2, 2, 2)
+        for quality in JPEG_QUALITIES:
+            indices = [i for i, q in enumerate(qualities) if q == quality]
+            plt.plot([resolutions[i] for i in indices], 
+                    [visual_quality[i] for i in indices], 
+                    'o-', label=f'Quality {quality}%')
+        
+        plt.xlabel('Resolution Scale')
+        plt.ylabel('Visual Quality Score')
+        plt.title('Visual Quality by Resolution and JPEG Quality')
+        plt.legend()
+        plt.grid(True)
+        
+        # Plot 3: Smoothness by FPS and network
+        plt.subplot(2, 2, 3)
+        for network in NETWORK_CONDITIONS:
+            network_name = network["name"]
+            indices = [i for i, n in enumerate(networks) if n == network_name]
+            plt.plot([fps_values[i] for i in indices], 
+                    [smoothness[i] for i in indices], 
+                    'o-', label=network_name)
+        
+        plt.xlabel('Frame Rate (FPS)')
+        plt.ylabel('Smoothness Score')
+        plt.title('Smoothness by Frame Rate and Network')
+        plt.legend()
+        plt.grid(True)
+        
+        # Plot 4: Quality-bandwidth tradeoff
+        plt.subplot(2, 2, 4)
+        plt.scatter(bandwidth, visual_quality, c=np.array(fps_values), cmap='viridis', 
+                   s=100, alpha=0.7)
+        plt.colorbar(label='Frame Rate (FPS)')
+        plt.xlabel('Bandwidth (Mbps)')
+        plt.ylabel('Visual Quality Score')
+        plt.title('Quality-Bandwidth Tradeoff')
+        plt.grid(True)
+        
+        # Save the figure
+        plot_filename = f"quality_test_plots_{timestamp}.png"
+        plt.tight_layout()
+        plt.savefig(plot_filename)
+        print(f"Plots saved to {plot_filename}")
+        
+        # Close the figure
+        plt.close()
+    except Exception as e:
+        print(f"Error generating plots: {e}")
+        print("Continuing without plots...")
+
+def check_dependencies():
+    """Check if all dependencies are installed."""
+    print_header("Checking Dependencies")
+    
+    all_dependencies_met = True
+    
+    # Check if matplotlib and numpy are installed
+    if PLOTTING_AVAILABLE:
+        print("✓ matplotlib and numpy are installed")
+    else:
+        print("✗ matplotlib and/or numpy are not installed")
+        print("  Install with: pip install matplotlib numpy")
+        print("  Plotting will be disabled, but testing can still proceed")
+    
+    # Check if tc is installed
+    result = subprocess.run(["which", "tc"], capture_output=True)
+    if result.returncode == 0:
+        print("✓ tc is installed")
+    else:
+        print("✗ tc is not installed. Install with: sudo apt install iproute2")
+        all_dependencies_met = False
+    
+    # Check if video streamer is running
+    try:
+        response = requests.get(f"http://{SENDER_IP}:{SENDER_PORT}/", timeout=2)
+        print("✓ Video streamer is running")
+    except:
+        print("✗ Video streamer is not running")
+        print(f"  Start with: python3 dynamic_quality_testing/video_streamer.py")
+        all_dependencies_met = False
+    
+    # Check if video receiver is running
+    try:
+        response = requests.get(f"http://{RECEIVER_IP}:{RECEIVER_PORT}/", timeout=2)
+        print("✓ Video receiver is running")
+    except:
+        print("✗ Video receiver is not running")
+        print(f"  Start with: python3 dynamic_quality_testing/receive_video.py")
+        all_dependencies_met = False
+    
+    return all_dependencies_met
+
 def generate_report():
     """Generate a report of the test results."""
     print_header("Generating Test Report")
@@ -237,145 +385,41 @@ def generate_report():
     
     print(f"Results saved to {filename}")
     
-    # Generate plots
-    try:
-        generate_plots(timestamp)
-    except Exception as e:
-        print(f"Error generating plots: {e}")
-
-def generate_plots(timestamp):
-    """Generate plots from the test results."""
-    print("Generating plots...")
+    # Generate plots if matplotlib is available
+    generate_plots(timestamp)
     
-    # Extract data for plotting
-    resolutions = []
-    qualities = []
-    fps_values = []
-    networks = []
-    bandwidth = []
-    visual_quality = []
-    smoothness = []
+    # Generate a text report
+    text_report = f"quality_test_report_{timestamp}.txt"
+    with open(text_report, "w") as f:
+        f.write("=================================================\n")
+        f.write("DYNAMIC QUALITY TESTING REPORT\n")
+        f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write("=================================================\n\n")
+        
+        f.write("SUMMARY\n")
+        f.write(f"Total tests run: {len(results)}\n")
+        f.write(f"Resolution scales tested: {', '.join(str(r) for r in RESOLUTION_SCALES)}\n")
+        f.write(f"JPEG qualities tested: {', '.join(str(q) for q in JPEG_QUALITIES)}\n")
+        f.write(f"Frame rates tested: {', '.join(str(fps) for fps in FRAME_RATES)}\n")
+        f.write(f"Network conditions tested: {', '.join(n['name'] for n in NETWORK_CONDITIONS)}\n\n")
+        
+        f.write("DETAILED RESULTS\n")
+        for i, result in enumerate(results):
+            f.write(f"Test #{i+1}:\n")
+            f.write(f"  Time: {result['timestamp']}\n")
+            f.write(f"  Resolution Scale: {result['resolution_scale']}\n")
+            f.write(f"  JPEG Quality: {result['jpeg_quality']}\n")
+            f.write(f"  Frame Rate: {result['frame_rate']}\n")
+            f.write(f"  Network: {result['network_condition']} ({result['network_rate']}, {result['network_delay']}, {result['network_loss']})\n")
+            f.write("  Metrics:\n")
+            for metric, value in result['metrics'].items():
+                if isinstance(value, float):
+                    f.write(f"    {metric}: {value:.2f}\n")
+                else:
+                    f.write(f"    {metric}: {value}\n")
+            f.write("\n")
     
-    for result in results:
-        resolutions.append(result["resolution_scale"])
-        qualities.append(result["jpeg_quality"])
-        fps_values.append(result["frame_rate"])
-        networks.append(result["network_condition"])
-        bandwidth.append(result["metrics"]["bandwidth_usage"] / 1000000)  # Convert to Mbps
-        visual_quality.append(result["metrics"]["visual_quality_score"])
-        smoothness.append(result["metrics"]["smoothness_score"])
-    
-    # Create figure with subplots
-    plt.figure(figsize=(15, 10))
-    
-    # Plot 1: Bandwidth usage by resolution and network
-    plt.subplot(2, 2, 1)
-    for network in NETWORK_CONDITIONS:
-        network_name = network["name"]
-        indices = [i for i, n in enumerate(networks) if n == network_name]
-        plt.plot([resolutions[i] for i in indices], 
-                [bandwidth[i] for i in indices], 
-                'o-', label=network_name)
-    
-    plt.xlabel('Resolution Scale')
-    plt.ylabel('Bandwidth (Mbps)')
-    plt.title('Bandwidth Usage by Resolution and Network')
-    plt.legend()
-    plt.grid(True)
-    
-    # Plot 2: Visual quality by resolution and quality
-    plt.subplot(2, 2, 2)
-    for quality in JPEG_QUALITIES:
-        indices = [i for i, q in enumerate(qualities) if q == quality]
-        plt.plot([resolutions[i] for i in indices], 
-                [visual_quality[i] for i in indices], 
-                'o-', label=f'Quality {quality}%')
-    
-    plt.xlabel('Resolution Scale')
-    plt.ylabel('Visual Quality Score')
-    plt.title('Visual Quality by Resolution and JPEG Quality')
-    plt.legend()
-    plt.grid(True)
-    
-    # Plot 3: Smoothness by FPS and network
-    plt.subplot(2, 2, 3)
-    for network in NETWORK_CONDITIONS:
-        network_name = network["name"]
-        indices = [i for i, n in enumerate(networks) if n == network_name]
-        plt.plot([fps_values[i] for i in indices], 
-                [smoothness[i] for i in indices], 
-                'o-', label=network_name)
-    
-    plt.xlabel('Frame Rate (FPS)')
-    plt.ylabel('Smoothness Score')
-    plt.title('Smoothness by Frame Rate and Network')
-    plt.legend()
-    plt.grid(True)
-    
-    # Plot 4: Quality-bandwidth tradeoff
-    plt.subplot(2, 2, 4)
-    plt.scatter(bandwidth, visual_quality, c=np.array(fps_values), cmap='viridis', 
-               s=100, alpha=0.7)
-    plt.colorbar(label='Frame Rate (FPS)')
-    plt.xlabel('Bandwidth (Mbps)')
-    plt.ylabel('Visual Quality Score')
-    plt.title('Quality-Bandwidth Tradeoff')
-    plt.grid(True)
-    
-    # Save the figure
-    plot_filename = f"quality_test_plots_{timestamp}.png"
-    plt.tight_layout()
-    plt.savefig(plot_filename)
-    print(f"Plots saved to {plot_filename}")
-    
-    # Close the figure
-    plt.close()
-
-def check_dependencies():
-    """Check if all dependencies are installed."""
-    print_header("Checking Dependencies")
-    
-    # Check if matplotlib is installed
-    try:
-        import matplotlib
-        print("✓ matplotlib is installed")
-    except ImportError:
-        print("✗ matplotlib is not installed. Install with: pip install matplotlib")
-        return False
-    
-    # Check if numpy is installed
-    try:
-        import numpy
-        print("✓ numpy is installed")
-    except ImportError:
-        print("✗ numpy is not installed. Install with: pip install numpy")
-        return False
-    
-    # Check if tc is installed
-    result = subprocess.run(["which", "tc"], capture_output=True)
-    if result.returncode == 0:
-        print("✓ tc is installed")
-    else:
-        print("✗ tc is not installed. Install with: sudo apt install iproute2")
-        return False
-    
-    # Check if video streamer is running
-    try:
-        response = requests.get(f"http://{SENDER_IP}:{SENDER_PORT}/", timeout=2)
-        print("✓ Video streamer is running")
-    except:
-        print("✗ Video streamer is not running. Start with: python3 video_streamer.py")
-        return False
-    
-    # Check if video receiver is running
-    try:
-        response = requests.get(f"http://{RECEIVER_IP}:{RECEIVER_PORT}/", timeout=2)
-        print("✓ Video receiver is running")
-    except:
-        print("✗ Video receiver is not running. Start with: python3 receive_video.py")
-        return False
-    
-    return True
+    print(f"Text report saved to {text_report}")
 
 def main():
     """Main function to run the quality tests."""

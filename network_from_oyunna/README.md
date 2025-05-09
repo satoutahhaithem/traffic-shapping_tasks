@@ -46,7 +46,8 @@ This system allows you to stream video between two computers and simulate differ
 
 1. Start the video receiver:
    ```bash
-   python3 network_from_oyunna/receive_video.py
+   python3 netwoThe visual impact may be slightly different depending on where you apply the traffic control. Try both approaches to see which produces more noticeable effects for your specific testing needs.
+rk_from_oyunna/receive_video.py
    ```
 2. The receiver will listen for frames on port 8081
 
@@ -131,7 +132,7 @@ For optimal testing of network conditions and their effects on video quality, us
    - Delay: `20ms`
    - Loss: `0%`
    - Expected Result: Smooth 60 FPS video with full quality
-
+Vous êtes désormais authentifié avec la CLI gcloud.
 2. **Mild Network Stress**:
    - Rate: `5mbit`
    - Delay: `50ms`
