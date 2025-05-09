@@ -13,6 +13,10 @@ app = Flask(__name__)
 # Video file path
 video_path = '/home/sattoutah/Bureau/git_mesurement_tc/Video_test/BigBuckBunny.mp4'
 
+# Receiver configuration
+receiver_ip = "192.168.2.169"  # Change this to the IP address of your receiver
+receiver_port = 8081
+
 # Quality parameters
 resolution_scale = 1.0  # Scale factor for resolution (1.0 = original, 0.5 = half, etc.)
 jpeg_quality = 85       # JPEG quality (0-100)
@@ -49,7 +53,7 @@ def send_frame_to_receiver(jpeg_bytes):
     
     try:
         print("Sending frame to receiver...")
-        response = requests.post('http://127.0.0.1:8081/receive_video', json={'frame': encoded_frame}, timeout=10)
+        response = requests.post(f'http://{receiver_ip}:{receiver_port}/receive_video', json={'frame': encoded_frame}, timeout=10)
         
         # Record transmission time
         end_time = time.time()

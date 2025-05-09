@@ -55,7 +55,7 @@ echo "=========================================================="
 # Update the video_streamer.py to send frames to this IP address if this is the receiver machine
 if [ -f "dynamic_quality_testing/video_streamer.py" ]; then
     echo "Updating video_streamer.py to send frames to $IP_ADDRESS..."
-    sed -i "s/'http:\/\/127.0.0.1:8081\/receive_video'/'http:\/\/$IP_ADDRESS:8081\/receive_video'/" dynamic_quality_testing/video_streamer.py
+    sed -i "s/receiver_ip = \"[0-9.]*\"/receiver_ip = \"$IP_ADDRESS\"/" dynamic_quality_testing/video_streamer.py
     echo "Done!"
 fi
 

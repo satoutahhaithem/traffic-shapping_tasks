@@ -33,7 +33,7 @@ read -p "Enter the IP address of the receiver PC: " RECEIVER_IP
 # Update the receiver_ip in video_streamer.py
 if [ -f "dynamic_quality_testing/video_streamer.py" ]; then
     echo "Updating receiver_ip in video_streamer.py to $RECEIVER_IP..."
-    sed -i "s/'http:\/\/127.0.0.1:8081\/receive_video'/'http:\/\/$RECEIVER_IP:8081\/receive_video'/" dynamic_quality_testing/video_streamer.py
+    sed -i "s/receiver_ip = \"[0-9.]*\"/receiver_ip = \"$RECEIVER_IP\"/" dynamic_quality_testing/video_streamer.py
     echo "Done!"
 fi
 
