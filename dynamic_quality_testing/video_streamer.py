@@ -148,13 +148,13 @@ def home():
     <head>
         <title>Dynamic Quality Testing - Video Streamer</title>
         <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            .container { max-width: 800px; margin: 0 auto; }
-            h1 { color: #333; }
-            .info-box { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-            .button { display: inline-block; padding: 8px 16px; background-color: #007bff; color: white; 
-                     text-decoration: none; border-radius: 4px; margin-right: 10px; }
-            .button:hover { background-color: #0056b3; }
+            body {{ font-family: Arial, sans-serif; margin: 20px; }}
+            .container {{ max-width: 800px; margin: 0 auto; }}
+            h1 {{ color: #333; }}
+            .info-box {{ background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }}
+            .button {{ display: inline-block; padding: 8px 16px; background-color: #007bff; color: white;
+                     text-decoration: none; border-radius: 4px; margin-right: 10px; }}
+            .button:hover {{ background-color: #0056b3; }}
         </style>
     </head>
     <body>

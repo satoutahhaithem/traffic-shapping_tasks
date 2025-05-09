@@ -67,13 +67,13 @@ def home():
     <head>
         <title>Dynamic Quality Testing - Video Receiver</title>
         <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            .container { max-width: 800px; margin: 0 auto; }
-            h1 { color: #333; }
-            .info-box { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-            .button { display: inline-block; padding: 8px 16px; background-color: #007bff; color: white; 
-                     text-decoration: none; border-radius: 4px; margin-right: 10px; }
-            .button:hover { background-color: #0056b3; }
+            body {{ font-family: Arial, sans-serif; margin: 20px; }}
+            .container {{ max-width: 800px; margin: 0 auto; }}
+            h1 {{ color: #333; }}
+            .info-box {{ background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }}
+            .button {{ display: inline-block; padding: 8px 16px; background-color: #007bff; color: white;
+                     text-decoration: none; border-radius: 4px; margin-right: 10px; }}
+            .button:hover {{ background-color: #0056b3; }}
         </style>
     </head>
     <body>
@@ -198,7 +198,7 @@ def status():
             
             <div class="status-box">
                 <h2>Frame Information</h2>
-                <p>Current Frame Resolution: {current_frame.shape[1]}x{current_frame.shape[0] if current_frame is not None else 'Unknown'}</p>
+                <p>Current Frame Resolution: {f"{current_frame.shape[1]}x{current_frame.shape[0]}" if current_frame is not None else "Unknown"}</p>
             </div>
             
             <p><a href="/rx_video_feed" class="button">View Video Stream</a></p>
