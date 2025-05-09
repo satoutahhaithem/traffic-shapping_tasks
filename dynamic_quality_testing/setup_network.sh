@@ -66,10 +66,13 @@ if [ -f "dynamic_quality_testing/dynamic_tc_control.sh" ]; then
     echo "Done!"
 fi
 
-# Update the interface in run_quality_tests.py
+# Update the interface and receiver IP in run_quality_tests.py
 if [ -f "dynamic_quality_testing/run_quality_tests.py" ]; then
     echo "Updating network interface in run_quality_tests.py to $WIFI_INTERFACE..."
     sed -i "s/INTERFACE = \"[^\"]*\"/INTERFACE = \"$WIFI_INTERFACE\"/" dynamic_quality_testing/run_quality_tests.py
+    
+    echo "Updating receiver IP in run_quality_tests.py to $IP_ADDRESS..."
+    sed -i "s/RECEIVER_IP = \"[0-9.]*\"/RECEIVER_IP = \"$IP_ADDRESS\"/" dynamic_quality_testing/run_quality_tests.py
     echo "Done!"
 fi
 

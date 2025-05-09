@@ -19,9 +19,9 @@ except ImportError:
     PLOTTING_AVAILABLE = False
 
 # Configuration
-SENDER_IP = "localhost"  # Change if running on different machines
+SENDER_IP = "localhost"  # Local machine for sender
 SENDER_PORT = 5000
-RECEIVER_IP = "localhost"  # Change if running on different machines
+RECEIVER_IP = "192.168.2.169"  # Change to match the IP address of your receiver
 RECEIVER_PORT = 8081
 INTERFACE = "wlp0s20f3"  # Change to match your network interface
 
