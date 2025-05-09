@@ -1,0 +1,302 @@
+
+        <html>
+        <head>
+            <title>Controlled vs Measured Metrics Comparison</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                .container { max-width: 1200px; margin: 0 auto; }
+                h1, h2, h3 { color: #333; }
+                .command {
+                    background-color: #f5f5f5;
+                    padding: 10px;
+                    border-left: 4px solid #007bff;
+                    font-family: monospace;
+                    margin-bottom: 20px;
+                }
+                .metrics-summary {
+                    margin: 20px 0;
+                }
+                .metrics-summary table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 10px;
+                }
+                .metrics-summary th {
+                    background-color: #f0f0f0;
+                    text-align: left;
+                }
+                .metrics-summary td, .metrics-summary th {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                }
+                .graph-container {
+                    margin-top: 20px;
+                    margin-bottom: 40px;
+                }
+                .graph-container img {
+                    max-width: 100%;
+                    height: auto;
+                    border: 1px solid #ddd;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                .note {
+                    background-color: #f8f9fa;
+                    padding: 15px;
+                    border-left: 4px solid #28a745;
+                    margin-bottom: 20px;
+                }
+                hr {
+                    margin: 30px 0;
+                    border: 0;
+                    border-top: 1px solid #eee;
+                }
+                code {
+                    background-color: #f8f9fa;
+                    padding: 2px 4px;
+                    border-radius: 3px;
+                    font-family: monospace;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Controlled vs Measured Metrics Comparison</h1>
+                <div class="note">
+                    <p>This report compares the controlled network parameters (set using tc) with the measured metrics.</p>
+                    <p>For each network condition, you can see:</p>
+                    <ul>
+                        <li>The tc command used to set the network condition</li>
+                        <li>Graphs comparing controlled and measured bandwidth</li>
+                        <li>Graphs comparing controlled and measured delay</li>
+                        <li>Graphs comparing controlled and measured packet loss</li>
+                    </ul>
+                </div>
+        
+                <h2>Excellent Network Condition</h2>
+                
+                <div class="command">
+                    <h3>Command Used:</h3>
+                    <code>sudo tc qdisc change dev wlp0s20f3 root netem rate 10mbit delay 20ms loss 0%</code>
+                </div>
+                
+                <div class="metrics-summary">
+                    <h3>Metrics Summary:</h3>
+                    <table border="1" cellpadding="5" cellspacing="0">
+                        <tr>
+                            <th>Metric</th>
+                            <th>Controlled Value</th>
+                            <th>Measured Value</th>
+                            <th>Difference</th>
+                        </tr>
+                        <tr>
+                            <td>Bandwidth</td>
+                            <td>10.00 Mbps</td>
+                            <td>2.48 Mbps</td>
+                            <td>-7.52 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td>Delay</td>
+                            <td>20.00 ms</td>
+                            <td>17.23 ms</td>
+                            <td>-2.77 ms</td>
+                        </tr>
+                        <tr>
+                            <td>Packet Loss</td>
+                            <td>0.00%</td>
+                            <td>0.00%</td>
+                            <td>0.00%</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <h3>Bandwidth Comparison</h3>
+                <p>Command: <code>rate 10mbit</code> | Controlled: <b>10.00 Mbps</b> | Measured: <b>2.48 Mbps</b></p>
+                <div class="graph-container">
+                    <img src="excellent_bandwidth_comparison.png" alt="Bandwidth Comparison">
+                </div>
+                
+                <h3>Delay Comparison</h3>
+                <p>Command: <code>delay 20ms</code> | Controlled: <b>20.00 ms</b> | Measured: <b>17.23 ms</b></p>
+                <div class="graph-container">
+                    <img src="excellent_delay_comparison.png" alt="Delay Comparison">
+                </div>
+                
+                <h3>Packet Loss Comparison</h3>
+                <p>Command: <code>loss 0%</code> | Controlled: <b>0.00%</b> | Measured: <b>0.00%</b></p>
+                <div class="graph-container">
+                    <img src="excellent_loss_comparison.png" alt="Loss Comparison">
+                </div>
+                
+                <hr>
+            
+                <h2>Good Network Condition</h2>
+                
+                <div class="command">
+                    <h3>Command Used:</h3>
+                    <code>sudo tc qdisc change dev wlp0s20f3 root netem rate 6mbit delay 40ms loss 0.5%</code>
+                </div>
+                
+                <div class="metrics-summary">
+                    <h3>Metrics Summary:</h3>
+                    <table border="1" cellpadding="5" cellspacing="0">
+                        <tr>
+                            <th>Metric</th>
+                            <th>Controlled Value</th>
+                            <th>Measured Value</th>
+                            <th>Difference</th>
+                        </tr>
+                        <tr>
+                            <td>Bandwidth</td>
+                            <td>6.00 Mbps</td>
+                            <td>2.05 Mbps</td>
+                            <td>-3.95 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td>Delay</td>
+                            <td>40.00 ms</td>
+                            <td>34.74 ms</td>
+                            <td>-5.26 ms</td>
+                        </tr>
+                        <tr>
+                            <td>Packet Loss</td>
+                            <td>0.50%</td>
+                            <td>0.44%</td>
+                            <td>-0.06%</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <h3>Bandwidth Comparison</h3>
+                <p>Command: <code>rate 6mbit</code> | Controlled: <b>6.00 Mbps</b> | Measured: <b>2.05 Mbps</b></p>
+                <div class="graph-container">
+                    <img src="good_bandwidth_comparison.png" alt="Bandwidth Comparison">
+                </div>
+                
+                <h3>Delay Comparison</h3>
+                <p>Command: <code>delay 40ms</code> | Controlled: <b>40.00 ms</b> | Measured: <b>34.74 ms</b></p>
+                <div class="graph-container">
+                    <img src="good_delay_comparison.png" alt="Delay Comparison">
+                </div>
+                
+                <h3>Packet Loss Comparison</h3>
+                <p>Command: <code>loss 0.5%</code> | Controlled: <b>0.50%</b> | Measured: <b>0.44%</b></p>
+                <div class="graph-container">
+                    <img src="good_loss_comparison.png" alt="Loss Comparison">
+                </div>
+                
+                <hr>
+            
+                <h2>Fair Network Condition</h2>
+                
+                <div class="command">
+                    <h3>Command Used:</h3>
+                    <code>sudo tc qdisc change dev wlp0s20f3 root netem rate 4mbit delay 80ms loss 1%</code>
+                </div>
+                
+                <div class="metrics-summary">
+                    <h3>Metrics Summary:</h3>
+                    <table border="1" cellpadding="5" cellspacing="0">
+                        <tr>
+                            <th>Metric</th>
+                            <th>Controlled Value</th>
+                            <th>Measured Value</th>
+                            <th>Difference</th>
+                        </tr>
+                        <tr>
+                            <td>Bandwidth</td>
+                            <td>4.00 Mbps</td>
+                            <td>3.21 Mbps</td>
+                            <td>-0.79 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td>Delay</td>
+                            <td>80.00 ms</td>
+                            <td>96.79 ms</td>
+                            <td>16.79 ms</td>
+                        </tr>
+                        <tr>
+                            <td>Packet Loss</td>
+                            <td>1.00%</td>
+                            <td>1.18%</td>
+                            <td>0.18%</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <h3>Bandwidth Comparison</h3>
+                <p>Command: <code>rate 4mbit</code> | Controlled: <b>4.00 Mbps</b> | Measured: <b>3.21 Mbps</b></p>
+                <div class="graph-container">
+                    <img src="fair_bandwidth_comparison.png" alt="Bandwidth Comparison">
+                </div>
+                
+                <h3>Delay Comparison</h3>
+                <p>Command: <code>delay 80ms</code> | Controlled: <b>80.00 ms</b> | Measured: <b>96.79 ms</b></p>
+                <div class="graph-container">
+                    <img src="fair_delay_comparison.png" alt="Delay Comparison">
+                </div>
+                
+                <h3>Packet Loss Comparison</h3>
+                <p>Command: <code>loss 1%</code> | Controlled: <b>1.00%</b> | Measured: <b>1.18%</b></p>
+                <div class="graph-container">
+                    <img src="fair_loss_comparison.png" alt="Loss Comparison">
+                </div>
+                
+                <hr>
+            
+                <h2>Poor Network Condition</h2>
+                
+                <div class="command">
+                    <h3>Command Used:</h3>
+                    <code>sudo tc qdisc change dev wlp0s20f3 root netem rate 2mbit delay 150ms loss 3%</code>
+                </div>
+                
+                <div class="metrics-summary">
+                    <h3>Metrics Summary:</h3>
+                    <table border="1" cellpadding="5" cellspacing="0">
+                        <tr>
+                            <th>Metric</th>
+                            <th>Controlled Value</th>
+                            <th>Measured Value</th>
+                            <th>Difference</th>
+                        </tr>
+                        <tr>
+                            <td>Bandwidth</td>
+                            <td>2.00 Mbps</td>
+                            <td>1.98 Mbps</td>
+                            <td>-0.02 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td>Delay</td>
+                            <td>150.00 ms</td>
+                            <td>134.75 ms</td>
+                            <td>-15.25 ms</td>
+                        </tr>
+                        <tr>
+                            <td>Packet Loss</td>
+                            <td>3.00%</td>
+                            <td>2.68%</td>
+                            <td>-0.32%</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <h3>Bandwidth Comparison</h3>
+                <p>Command: <code>rate 2mbit</code> | Controlled: <b>2.00 Mbps</b> | Measured: <b>1.98 Mbps</b></p>
+                <div class="graph-container">
+                    <img src="poor_bandwidth_comparison.png" alt="Bandwidth Comparison">
+                </div>
+                
+                <h3>Delay Comparison</h3>
+                <p>Command: <code>delay 150ms</code> | Controlled: <b>150.00 ms</b> | Measured: <b>134.75 ms</b></p>
+                <div class="graph-container">
+                    <img src="poor_delay_comparison.png" alt="Delay Comparison">
+                </div>
+                
+                <h3>Packet Loss Comparison</h3>
+                <p>Command: <code>loss 3%</code> | Controlled: <b>3.00%</b> | Measured: <b>2.68%</b></p>
+                <div class="graph-container">
+                    <img src="poor_loss_comparison.png" alt="Loss Comparison">
+                </div>
+                
+                <hr>
+            </div></body></html>

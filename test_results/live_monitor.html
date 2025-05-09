@@ -1,0 +1,99 @@
+
+        <html>
+        <head>
+            <title>Live Quality Monitoring</title>
+            <meta http-equiv="refresh" content="1">
+            <script>
+                // Auto-refresh the image every 1 seconds
+                function refreshImage() {
+                    var img = document.getElementById('liveGraph');
+                    if (img) {
+                        img.src = 'live_graphs.png?t=' + new Date().getTime();
+                    }
+                    setTimeout(refreshImage, 1000);
+                }
+                
+                // Start refreshing when page loads
+                window.onload = function() {
+                    setTimeout(refreshImage, 1000);
+                };
+            </script>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                .container { max-width: 1200px; margin: 0 auto; }
+                h1, h2 { color: #333; }
+                .live-indicator {
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background-color: #32CD32;
+                    border-radius: 50%;
+                    margin-right: 8px;
+                    animation: pulse 1.5s infinite;
+                }
+                @keyframes pulse {
+                    0% { opacity: 1; }
+                    50% { opacity: 0.3; }
+                    100% { opacity: 1; }
+                }
+                .timestamp {
+                    color: #666;
+                    font-size: 14px;
+                    margin-bottom: 20px;
+                }
+                .graph-container {
+                    margin-top: 20px;
+                    text-align: center;
+                }
+                .graph-container img {
+                    max-width: 100%;
+                    height: auto;
+                    border: 1px solid #ddd;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                .note {
+                    background-color: #f8f9fa;
+                    padding: 15px;
+                    border-left: 4px solid #007bff;
+                    margin-bottom: 20px;
+                }
+                .refresh-button {
+                    background-color: #4CAF50;
+                    border: none;
+                    color: white;
+                    padding: 10px 20px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 10px 2px;
+                    cursor: pointer;
+                    border-radius: 4px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1><div class="live-indicator"></div> Live Quality Monitoring</h1>
+                <div class="timestamp">Last updated: 2025-05-09 18:13:03</div>
+                
+                <div class="note">
+                    <p>This page automatically refreshes every 1 second to show the latest data.</p>
+                    <p>The graphs show how performance metrics change in real-time as network conditions are modified.</p>
+                </div>
+                
+                <button class="refresh-button" onclick="document.getElementById('liveGraph').src='live_graphs.png?t='+new Date().getTime();">
+                    Refresh Graphs Now
+                </button>
+                
+                <div class="graph-container">
+                    <img id="liveGraph" src="live_graphs.png?t=1746807183.1418808" alt="Live Graphs">
+                </div>
+                
+                <div class="timestamp" style="margin-top: 20px;">
+                    Data points: 37
+                </div>
+            </div>
+        </body>
+        </html>
+        

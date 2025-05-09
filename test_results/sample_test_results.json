@@ -1,0 +1,4354 @@
+[
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 165000.0,
+      "frame_delivery_time": 151.2375,
+      "frame_drop_rate": 3.02475,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 250000.0,
+      "frame_delivery_time": 151.875,
+      "frame_drop_rate": 3.0374999999999996,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 335000.0,
+      "frame_delivery_time": 152.51250000000002,
+      "frame_drop_rate": 3.05025,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 500000.0,
+      "frame_delivery_time": 153.75,
+      "frame_drop_rate": 3.0749999999999997,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 247500.0,
+      "frame_delivery_time": 151.85625000000002,
+      "frame_drop_rate": 3.037125,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 375000.0,
+      "frame_delivery_time": 152.8125,
+      "frame_drop_rate": 3.0562500000000004,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 502500.00000000006,
+      "frame_delivery_time": 153.76875,
+      "frame_drop_rate": 3.075375,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 750000.0,
+      "frame_delivery_time": 155.625,
+      "frame_drop_rate": 3.1125000000000003,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 330000.0,
+      "frame_delivery_time": 152.475,
+      "frame_drop_rate": 3.0495,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 500000.0,
+      "frame_delivery_time": 153.75,
+      "frame_drop_rate": 3.0749999999999997,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 670000.0,
+      "frame_delivery_time": 155.025,
+      "frame_drop_rate": 3.1005000000000003,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1000000.0,
+      "frame_delivery_time": 157.5,
+      "frame_drop_rate": 3.1500000000000004,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 412500.0,
+      "frame_delivery_time": 153.09374999999997,
+      "frame_drop_rate": 3.0618749999999997,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 625000.0,
+      "frame_delivery_time": 154.6875,
+      "frame_drop_rate": 3.09375,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 837500.0,
+      "frame_delivery_time": 156.28125000000003,
+      "frame_drop_rate": 3.1256250000000003,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1250000.0,
+      "frame_delivery_time": 159.375,
+      "frame_drop_rate": 3.1875,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 371250.0,
+      "frame_delivery_time": 152.784375,
+      "frame_drop_rate": 3.0556875000000003,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 562500.0,
+      "frame_delivery_time": 154.21875,
+      "frame_drop_rate": 3.0843749999999996,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 753750.0,
+      "frame_delivery_time": 155.65312500000002,
+      "frame_drop_rate": 3.1130625000000003,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1125000.0,
+      "frame_delivery_time": 158.4375,
+      "frame_drop_rate": 3.1687499999999997,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 556875.0,
+      "frame_delivery_time": 154.1765625,
+      "frame_drop_rate": 3.08353125,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 843750.0,
+      "frame_delivery_time": 156.328125,
+      "frame_drop_rate": 3.1265625000000004,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1130625.0,
+      "frame_delivery_time": 158.47968749999998,
+      "frame_drop_rate": 3.1695937499999998,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1687500.0,
+      "frame_delivery_time": 162.65625,
+      "frame_drop_rate": 3.2531250000000003,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 742500.0,
+      "frame_delivery_time": 155.56875000000002,
+      "frame_drop_rate": 3.1113750000000002,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1125000.0,
+      "frame_delivery_time": 158.4375,
+      "frame_drop_rate": 3.1687499999999997,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1507500.0,
+      "frame_delivery_time": 161.30625,
+      "frame_drop_rate": 3.2261249999999997,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2250000.0,
+      "frame_delivery_time": 166.875,
+      "frame_drop_rate": 3.3375000000000004,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 928125.0,
+      "frame_delivery_time": 156.9609375,
+      "frame_drop_rate": 3.13921875,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1406250.0,
+      "frame_delivery_time": 160.546875,
+      "frame_drop_rate": 3.2109375,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1884375.0,
+      "frame_delivery_time": 164.1328125,
+      "frame_drop_rate": 3.28265625,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2812500.0,
+      "frame_delivery_time": 171.09375,
+      "frame_drop_rate": 3.421875,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 534600.0000000001,
+      "frame_delivery_time": 154.00949999999997,
+      "frame_drop_rate": 3.08019,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 810000.0000000001,
+      "frame_delivery_time": 156.075,
+      "frame_drop_rate": 3.1215,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1085400.0000000002,
+      "frame_delivery_time": 158.1405,
+      "frame_drop_rate": 3.1628100000000003,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1620000.0000000002,
+      "frame_delivery_time": 162.15,
+      "frame_drop_rate": 3.243,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 801900.0,
+      "frame_delivery_time": 156.01425,
+      "frame_drop_rate": 3.120285,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1215000.0,
+      "frame_delivery_time": 159.1125,
+      "frame_drop_rate": 3.1822500000000002,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1628100.0,
+      "frame_delivery_time": 162.21075,
+      "frame_drop_rate": 3.2442149999999996,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2430000.0,
+      "frame_delivery_time": 168.225,
+      "frame_drop_rate": 3.3644999999999996,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1069200.0000000002,
+      "frame_delivery_time": 158.019,
+      "frame_drop_rate": 3.16038,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1620000.0000000002,
+      "frame_delivery_time": 162.15,
+      "frame_drop_rate": 3.243,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2170800.0000000005,
+      "frame_delivery_time": 166.281,
+      "frame_drop_rate": 3.3256200000000002,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 3240000.0000000005,
+      "frame_delivery_time": 174.29999999999998,
+      "frame_drop_rate": 3.4859999999999998,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1336500.0000000002,
+      "frame_delivery_time": 160.02374999999998,
+      "frame_drop_rate": 3.200475,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2025000.0000000002,
+      "frame_delivery_time": 165.1875,
+      "frame_drop_rate": 3.30375,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2713500.0000000005,
+      "frame_delivery_time": 170.35125,
+      "frame_drop_rate": 3.407025,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 4050000.0000000005,
+      "frame_delivery_time": 180.37500000000003,
+      "frame_drop_rate": 3.6075000000000004,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 660000.0,
+      "frame_delivery_time": 154.95,
+      "frame_drop_rate": 3.0989999999999998,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1000000.0,
+      "frame_delivery_time": 157.5,
+      "frame_drop_rate": 3.1500000000000004,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1340000.0,
+      "frame_delivery_time": 160.04999999999998,
+      "frame_drop_rate": 3.2009999999999996,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2000000.0,
+      "frame_delivery_time": 165.0,
+      "frame_drop_rate": 3.3000000000000003,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 990000.0,
+      "frame_delivery_time": 157.425,
+      "frame_drop_rate": 3.1485000000000003,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1500000.0,
+      "frame_delivery_time": 161.25,
+      "frame_drop_rate": 3.2249999999999996,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2010000.0000000002,
+      "frame_delivery_time": 165.07500000000002,
+      "frame_drop_rate": 3.3015,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 3000000.0,
+      "frame_delivery_time": 172.5,
+      "frame_drop_rate": 3.4499999999999997,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1320000.0,
+      "frame_delivery_time": 159.9,
+      "frame_drop_rate": 3.1980000000000004,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2000000.0,
+      "frame_delivery_time": 165.0,
+      "frame_drop_rate": 3.3000000000000003,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2680000.0,
+      "frame_delivery_time": 170.1,
+      "frame_drop_rate": 3.4019999999999997,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 4000000.0,
+      "frame_delivery_time": 180.0,
+      "frame_drop_rate": 3.5999999999999996,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 1650000.0,
+      "frame_delivery_time": 162.375,
+      "frame_drop_rate": 3.2475,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 30.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 2500000.0,
+      "frame_delivery_time": 168.75,
+      "frame_drop_rate": 3.375,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 44.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 3350000.0,
+      "frame_delivery_time": 175.125,
+      "frame_drop_rate": 3.5025,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 58.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Poor",
+    "network_rate": "2mbit",
+    "network_delay": "150ms",
+    "network_loss": "3%",
+    "metrics": {
+      "bandwidth_usage": 5000000.0,
+      "frame_delivery_time": 187.5,
+      "frame_drop_rate": 3.75,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 165000.0,
+      "frame_delivery_time": 80.66000000000001,
+      "frame_drop_rate": 1.00825,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 250000.0,
+      "frame_delivery_time": 81.0,
+      "frame_drop_rate": 1.0125,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 335000.0,
+      "frame_delivery_time": 81.34,
+      "frame_drop_rate": 1.01675,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 500000.0,
+      "frame_delivery_time": 82.0,
+      "frame_drop_rate": 1.025,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 247500.0,
+      "frame_delivery_time": 80.99000000000001,
+      "frame_drop_rate": 1.012375,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 375000.0,
+      "frame_delivery_time": 81.5,
+      "frame_drop_rate": 1.01875,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 502500.00000000006,
+      "frame_delivery_time": 82.01,
+      "frame_drop_rate": 1.025125,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 750000.0,
+      "frame_delivery_time": 83.0,
+      "frame_drop_rate": 1.0375,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 330000.0,
+      "frame_delivery_time": 81.32,
+      "frame_drop_rate": 1.0165,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 500000.0,
+      "frame_delivery_time": 82.0,
+      "frame_drop_rate": 1.025,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 670000.0,
+      "frame_delivery_time": 82.68,
+      "frame_drop_rate": 1.0335,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1000000.0,
+      "frame_delivery_time": 84.0,
+      "frame_drop_rate": 1.05,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 412500.0,
+      "frame_delivery_time": 81.64999999999999,
+      "frame_drop_rate": 1.020625,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 625000.0,
+      "frame_delivery_time": 82.5,
+      "frame_drop_rate": 1.03125,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 837500.0,
+      "frame_delivery_time": 83.35000000000001,
+      "frame_drop_rate": 1.041875,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1250000.0,
+      "frame_delivery_time": 85.0,
+      "frame_drop_rate": 1.0625,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 371250.0,
+      "frame_delivery_time": 81.485,
+      "frame_drop_rate": 1.0185625,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 562500.0,
+      "frame_delivery_time": 82.25,
+      "frame_drop_rate": 1.028125,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 753750.0,
+      "frame_delivery_time": 83.01500000000001,
+      "frame_drop_rate": 1.0376875,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1125000.0,
+      "frame_delivery_time": 84.5,
+      "frame_drop_rate": 1.05625,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 556875.0,
+      "frame_delivery_time": 82.22749999999999,
+      "frame_drop_rate": 1.02784375,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 843750.0,
+      "frame_delivery_time": 83.375,
+      "frame_drop_rate": 1.0421875,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1130625.0,
+      "frame_delivery_time": 84.5225,
+      "frame_drop_rate": 1.05653125,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1687500.0,
+      "frame_delivery_time": 86.75,
+      "frame_drop_rate": 1.084375,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 742500.0,
+      "frame_delivery_time": 82.97,
+      "frame_drop_rate": 1.037125,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1125000.0,
+      "frame_delivery_time": 84.5,
+      "frame_drop_rate": 1.05625,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1507500.0,
+      "frame_delivery_time": 86.03,
+      "frame_drop_rate": 1.075375,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2250000.0,
+      "frame_delivery_time": 89.0,
+      "frame_drop_rate": 1.1125,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 928125.0,
+      "frame_delivery_time": 83.7125,
+      "frame_drop_rate": 1.04640625,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1406250.0,
+      "frame_delivery_time": 85.625,
+      "frame_drop_rate": 1.0703125,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1884375.0,
+      "frame_delivery_time": 87.5375,
+      "frame_drop_rate": 1.09421875,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2812500.0,
+      "frame_delivery_time": 91.25,
+      "frame_drop_rate": 1.140625,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 534600.0000000001,
+      "frame_delivery_time": 82.13839999999999,
+      "frame_drop_rate": 1.02673,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 810000.0000000001,
+      "frame_delivery_time": 83.24,
+      "frame_drop_rate": 1.0405,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1085400.0000000002,
+      "frame_delivery_time": 84.3416,
+      "frame_drop_rate": 1.05427,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1620000.0000000002,
+      "frame_delivery_time": 86.47999999999999,
+      "frame_drop_rate": 1.081,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 801900.0,
+      "frame_delivery_time": 83.2076,
+      "frame_drop_rate": 1.040095,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1215000.0,
+      "frame_delivery_time": 84.86000000000001,
+      "frame_drop_rate": 1.06075,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1628100.0,
+      "frame_delivery_time": 86.5124,
+      "frame_drop_rate": 1.081405,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2430000.0,
+      "frame_delivery_time": 89.72,
+      "frame_drop_rate": 1.1215,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1069200.0000000002,
+      "frame_delivery_time": 84.27680000000001,
+      "frame_drop_rate": 1.05346,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1620000.0000000002,
+      "frame_delivery_time": 86.47999999999999,
+      "frame_drop_rate": 1.081,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2170800.0000000005,
+      "frame_delivery_time": 88.6832,
+      "frame_drop_rate": 1.10854,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 3240000.0000000005,
+      "frame_delivery_time": 92.96,
+      "frame_drop_rate": 1.162,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1336500.0000000002,
+      "frame_delivery_time": 85.34599999999999,
+      "frame_drop_rate": 1.066825,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2025000.0000000002,
+      "frame_delivery_time": 88.10000000000001,
+      "frame_drop_rate": 1.10125,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2713500.0000000005,
+      "frame_delivery_time": 90.854,
+      "frame_drop_rate": 1.135675,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 4050000.0000000005,
+      "frame_delivery_time": 96.20000000000002,
+      "frame_drop_rate": 1.2025000000000001,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 660000.0,
+      "frame_delivery_time": 82.63999999999999,
+      "frame_drop_rate": 1.033,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1000000.0,
+      "frame_delivery_time": 84.0,
+      "frame_drop_rate": 1.05,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1340000.0,
+      "frame_delivery_time": 85.36,
+      "frame_drop_rate": 1.067,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2000000.0,
+      "frame_delivery_time": 88.0,
+      "frame_drop_rate": 1.1,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 990000.0,
+      "frame_delivery_time": 83.96000000000001,
+      "frame_drop_rate": 1.0495,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1500000.0,
+      "frame_delivery_time": 86.0,
+      "frame_drop_rate": 1.075,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2010000.0000000002,
+      "frame_delivery_time": 88.04,
+      "frame_drop_rate": 1.1005,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 3000000.0,
+      "frame_delivery_time": 92.0,
+      "frame_drop_rate": 1.15,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1320000.0,
+      "frame_delivery_time": 85.28,
+      "frame_drop_rate": 1.066,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2000000.0,
+      "frame_delivery_time": 88.0,
+      "frame_drop_rate": 1.1,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2680000.0,
+      "frame_delivery_time": 90.72,
+      "frame_drop_rate": 1.134,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 4000000.0,
+      "frame_delivery_time": 96.0,
+      "frame_drop_rate": 1.2,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 1650000.0,
+      "frame_delivery_time": 86.6,
+      "frame_drop_rate": 1.0825,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 39.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 2500000.0,
+      "frame_delivery_time": 90.0,
+      "frame_drop_rate": 1.125,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 53.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 3350000.0,
+      "frame_delivery_time": 93.4,
+      "frame_drop_rate": 1.1675,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 67.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Fair",
+    "network_rate": "4mbit",
+    "network_delay": "80ms",
+    "network_loss": "1%",
+    "metrics": {
+      "bandwidth_usage": 5000000.0,
+      "frame_delivery_time": 100.0,
+      "frame_drop_rate": 1.25,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 88.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 165000.0,
+      "frame_delivery_time": 40.330000000000005,
+      "frame_drop_rate": 0.504125,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 250000.0,
+      "frame_delivery_time": 40.5,
+      "frame_drop_rate": 0.50625,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 335000.0,
+      "frame_delivery_time": 40.67,
+      "frame_drop_rate": 0.508375,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 500000.0,
+      "frame_delivery_time": 41.0,
+      "frame_drop_rate": 0.5125,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 247500.0,
+      "frame_delivery_time": 40.495000000000005,
+      "frame_drop_rate": 0.5061875,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 375000.0,
+      "frame_delivery_time": 40.75,
+      "frame_drop_rate": 0.509375,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 502500.00000000006,
+      "frame_delivery_time": 41.005,
+      "frame_drop_rate": 0.5125625,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 750000.0,
+      "frame_delivery_time": 41.5,
+      "frame_drop_rate": 0.51875,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 330000.0,
+      "frame_delivery_time": 40.66,
+      "frame_drop_rate": 0.50825,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 500000.0,
+      "frame_delivery_time": 41.0,
+      "frame_drop_rate": 0.5125,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 670000.0,
+      "frame_delivery_time": 41.34,
+      "frame_drop_rate": 0.51675,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1000000.0,
+      "frame_delivery_time": 42.0,
+      "frame_drop_rate": 0.525,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 412500.0,
+      "frame_delivery_time": 40.824999999999996,
+      "frame_drop_rate": 0.5103125,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 625000.0,
+      "frame_delivery_time": 41.25,
+      "frame_drop_rate": 0.515625,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 837500.0,
+      "frame_delivery_time": 41.675000000000004,
+      "frame_drop_rate": 0.5209375,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1250000.0,
+      "frame_delivery_time": 42.5,
+      "frame_drop_rate": 0.53125,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 371250.0,
+      "frame_delivery_time": 40.7425,
+      "frame_drop_rate": 0.50928125,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 562500.0,
+      "frame_delivery_time": 41.125,
+      "frame_drop_rate": 0.5140625,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 753750.0,
+      "frame_delivery_time": 41.50750000000001,
+      "frame_drop_rate": 0.51884375,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1125000.0,
+      "frame_delivery_time": 42.25,
+      "frame_drop_rate": 0.528125,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 556875.0,
+      "frame_delivery_time": 41.113749999999996,
+      "frame_drop_rate": 0.513921875,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 843750.0,
+      "frame_delivery_time": 41.6875,
+      "frame_drop_rate": 0.52109375,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1130625.0,
+      "frame_delivery_time": 42.26125,
+      "frame_drop_rate": 0.528265625,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1687500.0,
+      "frame_delivery_time": 43.375,
+      "frame_drop_rate": 0.5421875,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 742500.0,
+      "frame_delivery_time": 41.485,
+      "frame_drop_rate": 0.5185625,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1125000.0,
+      "frame_delivery_time": 42.25,
+      "frame_drop_rate": 0.528125,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1507500.0,
+      "frame_delivery_time": 43.015,
+      "frame_drop_rate": 0.5376875,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2250000.0,
+      "frame_delivery_time": 44.5,
+      "frame_drop_rate": 0.55625,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 928125.0,
+      "frame_delivery_time": 41.85625,
+      "frame_drop_rate": 0.523203125,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1406250.0,
+      "frame_delivery_time": 42.8125,
+      "frame_drop_rate": 0.53515625,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1884375.0,
+      "frame_delivery_time": 43.76875,
+      "frame_drop_rate": 0.547109375,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2812500.0,
+      "frame_delivery_time": 45.625,
+      "frame_drop_rate": 0.5703125,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 534600.0000000001,
+      "frame_delivery_time": 41.069199999999995,
+      "frame_drop_rate": 0.513365,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 810000.0000000001,
+      "frame_delivery_time": 41.62,
+      "frame_drop_rate": 0.52025,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1085400.0000000002,
+      "frame_delivery_time": 42.1708,
+      "frame_drop_rate": 0.527135,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1620000.0000000002,
+      "frame_delivery_time": 43.239999999999995,
+      "frame_drop_rate": 0.5405,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 801900.0,
+      "frame_delivery_time": 41.6038,
+      "frame_drop_rate": 0.5200475,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1215000.0,
+      "frame_delivery_time": 42.43000000000001,
+      "frame_drop_rate": 0.530375,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1628100.0,
+      "frame_delivery_time": 43.2562,
+      "frame_drop_rate": 0.5407025,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2430000.0,
+      "frame_delivery_time": 44.86,
+      "frame_drop_rate": 0.56075,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1069200.0000000002,
+      "frame_delivery_time": 42.138400000000004,
+      "frame_drop_rate": 0.52673,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1620000.0000000002,
+      "frame_delivery_time": 43.239999999999995,
+      "frame_drop_rate": 0.5405,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2170800.0000000005,
+      "frame_delivery_time": 44.3416,
+      "frame_drop_rate": 0.55427,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 3240000.0000000005,
+      "frame_delivery_time": 46.48,
+      "frame_drop_rate": 0.581,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1336500.0000000002,
+      "frame_delivery_time": 42.672999999999995,
+      "frame_drop_rate": 0.5334125,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2025000.0000000002,
+      "frame_delivery_time": 44.050000000000004,
+      "frame_drop_rate": 0.550625,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2713500.0000000005,
+      "frame_delivery_time": 45.427,
+      "frame_drop_rate": 0.5678375,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 4050000.0000000005,
+      "frame_delivery_time": 48.10000000000001,
+      "frame_drop_rate": 0.6012500000000001,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 660000.0,
+      "frame_delivery_time": 41.31999999999999,
+      "frame_drop_rate": 0.5165,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1000000.0,
+      "frame_delivery_time": 42.0,
+      "frame_drop_rate": 0.525,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1340000.0,
+      "frame_delivery_time": 42.68,
+      "frame_drop_rate": 0.5335,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2000000.0,
+      "frame_delivery_time": 44.0,
+      "frame_drop_rate": 0.55,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 990000.0,
+      "frame_delivery_time": 41.980000000000004,
+      "frame_drop_rate": 0.52475,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1500000.0,
+      "frame_delivery_time": 43.0,
+      "frame_drop_rate": 0.5375,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2010000.0000000002,
+      "frame_delivery_time": 44.02,
+      "frame_drop_rate": 0.55025,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 3000000.0,
+      "frame_delivery_time": 46.0,
+      "frame_drop_rate": 0.575,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1320000.0,
+      "frame_delivery_time": 42.64,
+      "frame_drop_rate": 0.533,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2000000.0,
+      "frame_delivery_time": 44.0,
+      "frame_drop_rate": 0.55,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2680000.0,
+      "frame_delivery_time": 45.36,
+      "frame_drop_rate": 0.567,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 4000000.0,
+      "frame_delivery_time": 48.0,
+      "frame_drop_rate": 0.6,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 1650000.0,
+      "frame_delivery_time": 43.3,
+      "frame_drop_rate": 0.54125,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 45.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 2500000.0,
+      "frame_delivery_time": 45.0,
+      "frame_drop_rate": 0.5625,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 59.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 3350000.0,
+      "frame_delivery_time": 46.7,
+      "frame_drop_rate": 0.58375,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 73.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "metrics": {
+      "bandwidth_usage": 5000000.0,
+      "frame_delivery_time": 50.0,
+      "frame_drop_rate": 0.625,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 94.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 165000.0,
+      "frame_delivery_time": 20.165000000000003,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 250000.0,
+      "frame_delivery_time": 20.25,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 335000.0,
+      "frame_delivery_time": 20.335,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 500000.0,
+      "frame_delivery_time": 20.5,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 54.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 247500.0,
+      "frame_delivery_time": 20.247500000000002,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 375000.0,
+      "frame_delivery_time": 20.375,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 502500.00000000006,
+      "frame_delivery_time": 20.5025,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 750000.0,
+      "frame_delivery_time": 20.75,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 60.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 330000.0,
+      "frame_delivery_time": 20.33,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 500000.0,
+      "frame_delivery_time": 20.5,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 670000.0,
+      "frame_delivery_time": 20.67,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1000000.0,
+      "frame_delivery_time": 21.0,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 64.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 412500.0,
+      "frame_delivery_time": 20.412499999999998,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 625000.0,
+      "frame_delivery_time": 20.625,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 837500.0,
+      "frame_delivery_time": 20.837500000000002,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.5,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1250000.0,
+      "frame_delivery_time": 21.25,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 68.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 371250.0,
+      "frame_delivery_time": 20.37125,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 562500.0,
+      "frame_delivery_time": 20.5625,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 753750.0,
+      "frame_delivery_time": 20.753750000000004,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1125000.0,
+      "frame_delivery_time": 21.125,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 69.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 556875.0,
+      "frame_delivery_time": 20.556874999999998,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 843750.0,
+      "frame_delivery_time": 20.84375,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1130625.0,
+      "frame_delivery_time": 21.130625,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1687500.0,
+      "frame_delivery_time": 21.6875,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 75.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 742500.0,
+      "frame_delivery_time": 20.7425,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1125000.0,
+      "frame_delivery_time": 21.125,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1507500.0,
+      "frame_delivery_time": 21.5075,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2250000.0,
+      "frame_delivery_time": 22.25,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 79.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 928125.0,
+      "frame_delivery_time": 20.928125,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1406250.0,
+      "frame_delivery_time": 21.40625,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1884375.0,
+      "frame_delivery_time": 21.884375,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2812500.0,
+      "frame_delivery_time": 22.8125,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 83.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 534600.0000000001,
+      "frame_delivery_time": 20.534599999999998,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 810000.0000000001,
+      "frame_delivery_time": 20.81,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1085400.0000000002,
+      "frame_delivery_time": 21.0854,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1620000.0000000002,
+      "frame_delivery_time": 21.619999999999997,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 78.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 801900.0,
+      "frame_delivery_time": 20.8019,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1215000.0,
+      "frame_delivery_time": 21.215000000000003,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1628100.0,
+      "frame_delivery_time": 21.6281,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2430000.0,
+      "frame_delivery_time": 22.43,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1069200.0000000002,
+      "frame_delivery_time": 21.069200000000002,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1620000.0000000002,
+      "frame_delivery_time": 21.619999999999997,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2170800.0000000005,
+      "frame_delivery_time": 22.1708,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 3240000.0000000005,
+      "frame_delivery_time": 23.24,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 88.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1336500.0000000002,
+      "frame_delivery_time": 21.336499999999997,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2025000.0000000002,
+      "frame_delivery_time": 22.025000000000002,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2713500.0000000005,
+      "frame_delivery_time": 22.7135,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 0.9,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 4050000.0000000005,
+      "frame_delivery_time": 24.050000000000004,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 92.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 660000.0,
+      "frame_delivery_time": 20.659999999999997,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1000000.0,
+      "frame_delivery_time": 21.0,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1340000.0,
+      "frame_delivery_time": 21.34,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 60,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2000000.0,
+      "frame_delivery_time": 22.0,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 84.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 990000.0,
+      "frame_delivery_time": 20.990000000000002,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1500000.0,
+      "frame_delivery_time": 21.5,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2010000.0000000002,
+      "frame_delivery_time": 22.01,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 75,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 3000000.0,
+      "frame_delivery_time": 23.0,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 90.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1320000.0,
+      "frame_delivery_time": 21.32,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2000000.0,
+      "frame_delivery_time": 22.0,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2680000.0,
+      "frame_delivery_time": 22.68,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 85,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 4000000.0,
+      "frame_delivery_time": 24.0,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 94.0,
+      "smoothness_score": 100.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 10,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 1650000.0,
+      "frame_delivery_time": 21.65,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 51.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 15,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 2500000.0,
+      "frame_delivery_time": 22.5,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 65.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 20,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 3350000.0,
+      "frame_delivery_time": 23.35,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 79.0
+    }
+  },
+  {
+    "timestamp": "2025-05-09 16:00:00",
+    "resolution_scale": 1.0,
+    "jpeg_quality": 95,
+    "frame_rate": 30,
+    "network_condition": "Excellent",
+    "network_rate": "10mbit",
+    "network_delay": "20ms",
+    "network_loss": "0%",
+    "metrics": {
+      "bandwidth_usage": 5000000.0,
+      "frame_delivery_time": 25.0,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 98.0,
+      "smoothness_score": 100.0
+    }
+  }
+]

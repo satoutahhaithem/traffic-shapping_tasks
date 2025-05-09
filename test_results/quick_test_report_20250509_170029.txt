@@ -1,0 +1,301 @@
+=================================================
+DYNAMIC QUALITY TESTING - QUICK TEST REPORT
+Generated: 2025-05-09 17:00:29
+=================================================
+
+SUMMARY
+Total tests run: 16
+Resolution scales tested: 0.5, 1.0
+JPEG qualities tested: 60, 95
+Frame rates tested: 15, 30
+Network conditions tested: Good, Poor
+
+DETAILED RESULTS
+Test #1:
+  Time: 2025-05-09 16:56:22
+  Resolution Scale: 0.5
+  JPEG Quality: 60
+  Frame Rate: 15
+  Network: Good (6mbit, 40ms, 0.5%)
+  Metrics:
+    bandwidth_usage: 37107.69
+    frame_delivery_time: 21.12
+    frame_drop_rate: 0.00
+    visual_quality_score: 15.63
+    smoothness_score: 50.55
+    actual_fps: 0.05
+    avg_frame_size: 26174.67
+    avg_process_time: 0.03
+    total_frames: 25
+    frames_received: 2079
+
+Test #2:
+  Time: 2025-05-09 16:56:38
+  Resolution Scale: 0.5
+  JPEG Quality: 60
+  Frame Rate: 30
+  Network: Good (6mbit, 40ms, 0.5%)
+  Metrics:
+    bandwidth_usage: 104248.82
+    frame_delivery_time: 0.16
+    frame_drop_rate: 0.00
+    visual_quality_score: 14.58
+    smoothness_score: 20.26
+    actual_fps: 6.08
+    avg_frame_size: 22675.60
+    avg_process_time: 0.06
+    total_frames: 128
+    frames_received: 2182
+
+Test #3:
+  Time: 2025-05-09 16:56:54
+  Resolution Scale: 0.5
+  JPEG Quality: 95
+  Frame Rate: 15
+  Network: Good (6mbit, 40ms, 0.5%)
+  Metrics:
+    bandwidth_usage: 244882.85
+    frame_delivery_time: 0.31
+    frame_drop_rate: 0.00
+    visual_quality_score: 37.78
+    smoothness_score: 21.26
+    actual_fps: 3.19
+    avg_frame_size: 102389.87
+    avg_process_time: 0.21
+    total_frames: 189
+    frames_received: 2243
+
+Test #4:
+  Time: 2025-05-09 16:57:10
+  Resolution Scale: 0.5
+  JPEG Quality: 95
+  Frame Rate: 30
+  Network: Good (6mbit, 40ms, 0.5%)
+  Metrics:
+    bandwidth_usage: 271883.43
+    frame_delivery_time: 0.34
+    frame_drop_rate: 0.00
+    visual_quality_score: 37.78
+    smoothness_score: 9.90
+    actual_fps: 2.97
+    avg_frame_size: 122081.33
+    avg_process_time: 0.24
+    total_frames: 237
+    frames_received: 2291
+
+Test #5:
+  Time: 2025-05-09 16:57:26
+  Resolution Scale: 1.0
+  JPEG Quality: 60
+  Frame Rate: 15
+  Network: Good (6mbit, 40ms, 0.5%)
+  Metrics:
+    bandwidth_usage: 278634.26
+    frame_delivery_time: 0.39
+    frame_drop_rate: 0.00
+    visual_quality_score: 61.11
+    smoothness_score: 17.17
+    actual_fps: 2.58
+    avg_frame_size: 144061.60
+    avg_process_time: 0.25
+    total_frames: 280
+    frames_received: 2334
+
+Test #6:
+  Time: 2025-05-09 16:57:42
+  Resolution Scale: 1.0
+  JPEG Quality: 60
+  Frame Rate: 30
+  Network: Good (6mbit, 40ms, 0.5%)
+  Metrics:
+    bandwidth_usage: 315216.72
+    frame_delivery_time: 0.39
+    frame_drop_rate: 0.00
+    visual_quality_score: 61.11
+    smoothness_score: 8.63
+    actual_fps: 2.59
+    avg_frame_size: 162445.07
+    avg_process_time: 0.28
+    total_frames: 321
+    frames_received: 2375
+
+Test #7:
+  Time: 2025-05-09 16:57:58
+  Resolution Scale: 1.0
+  JPEG Quality: 95
+  Frame Rate: 15
+  Network: Good (6mbit, 40ms, 0.5%)
+  Metrics:
+    bandwidth_usage: 358390.88
+    frame_delivery_time: 0.64
+    frame_drop_rate: 0.00
+    visual_quality_score: 61.11
+    smoothness_score: 10.50
+    actual_fps: 1.57
+    avg_frame_size: 303448.93
+    avg_process_time: 0.49
+    total_frames: 342
+    frames_received: 2396
+
+Test #8:
+  Time: 2025-05-09 16:58:15
+  Resolution Scale: 1.0
+  JPEG Quality: 95
+  Frame Rate: 30
+  Network: Good (6mbit, 40ms, 0.5%)
+  Metrics:
+    bandwidth_usage: 398092.80
+    frame_delivery_time: 0.89
+    frame_drop_rate: 0.00
+    visual_quality_score: 61.11
+    smoothness_score: 3.75
+    actual_fps: 1.12
+    avg_frame_size: 471998.40
+    avg_process_time: 0.78
+    total_frames: 360
+    frames_received: 2414
+
+Test #9:
+  Time: 2025-05-09 16:58:31
+  Resolution Scale: 0.5
+  JPEG Quality: 60
+  Frame Rate: 15
+  Network: Poor (2mbit, 150ms, 3%)
+  Metrics:
+    bandwidth_usage: 236811.04
+    frame_delivery_time: 1.07
+    frame_drop_rate: 0.00
+    visual_quality_score: 37.78
+    smoothness_score: 6.28
+    actual_fps: 0.93
+    avg_frame_size: 335049.73
+    avg_process_time: 0.85
+    total_frames: 373
+    frames_received: 2427
+
+Test #10:
+  Time: 2025-05-09 16:58:47
+  Resolution Scale: 0.5
+  JPEG Quality: 60
+  Frame Rate: 30
+  Network: Poor (2mbit, 150ms, 3%)
+  Metrics:
+    bandwidth_usage: 38644.80
+    frame_delivery_time: 1.05
+    frame_drop_rate: 0.00
+    visual_quality_score: 23.77
+    smoothness_score: 3.22
+    actual_fps: 0.96
+    avg_frame_size: 53321.60
+    avg_process_time: 0.63
+    total_frames: 392
+    frames_received: 2446
+
+Test #11:
+  Time: 2025-05-09 16:59:04
+  Resolution Scale: 0.5
+  JPEG Quality: 95
+  Frame Rate: 15
+  Network: Poor (2mbit, 150ms, 3%)
+  Metrics:
+    bandwidth_usage: 36289.79
+    frame_delivery_time: 0.83
+    frame_drop_rate: 0.00
+    visual_quality_score: 19.31
+    smoothness_score: 8.05
+    actual_fps: 1.21
+    avg_frame_size: 38430.40
+    avg_process_time: 0.41
+    total_frames: 410
+    frames_received: 2464
+
+Test #12:
+  Time: 2025-05-09 16:59:20
+  Resolution Scale: 0.5
+  JPEG Quality: 95
+  Frame Rate: 30
+  Network: Poor (2mbit, 150ms, 3%)
+  Metrics:
+    bandwidth_usage: 41214.87
+    frame_delivery_time: 1.08
+    frame_drop_rate: 0.00
+    visual_quality_score: 25.65
+    smoothness_score: 3.07
+    actual_fps: 0.92
+    avg_frame_size: 59571.20
+    avg_process_time: 0.64
+    total_frames: 422
+    frames_received: 2476
+
+Test #13:
+  Time: 2025-05-09 16:59:37
+  Resolution Scale: 1.0
+  JPEG Quality: 60
+  Frame Rate: 15
+  Network: Poor (2mbit, 150ms, 3%)
+  Metrics:
+    bandwidth_usage: 39291.91
+    frame_delivery_time: 1.34
+    frame_drop_rate: 0.00
+    visual_quality_score: 52.29
+    smoothness_score: 4.96
+    actual_fps: 0.74
+    avg_frame_size: 70604.80
+    avg_process_time: 0.80
+    total_frames: 433
+    frames_received: 2487
+
+Test #14:
+  Time: 2025-05-09 16:59:53
+  Resolution Scale: 1.0
+  JPEG Quality: 60
+  Frame Rate: 30
+  Network: Poor (2mbit, 150ms, 3%)
+  Metrics:
+    bandwidth_usage: 34538.05
+    frame_delivery_time: 1.45
+    frame_drop_rate: 0.00
+    visual_quality_score: 51.17
+    smoothness_score: 2.30
+    actual_fps: 0.69
+    avg_frame_size: 66857.07
+    avg_process_time: 0.89
+    total_frames: 443
+    frames_received: 2497
+
+Test #15:
+  Time: 2025-05-09 17:00:10
+  Resolution Scale: 1.0
+  JPEG Quality: 95
+  Frame Rate: 15
+  Network: Poor (2mbit, 150ms, 3%)
+  Metrics:
+    bandwidth_usage: 42430.95
+    frame_delivery_time: 1.59
+    frame_drop_rate: 0.00
+    visual_quality_score: 57.12
+    smoothness_score: 4.19
+    actual_fps: 0.63
+    avg_frame_size: 86681.73
+    avg_process_time: 1.04
+    total_frames: 454
+    frames_received: 2508
+
+Test #16:
+  Time: 2025-05-09 17:00:26
+  Resolution Scale: 1.0
+  JPEG Quality: 95
+  Frame Rate: 30
+  Network: Poor (2mbit, 150ms, 3%)
+  Metrics:
+    bandwidth_usage: 48909.95
+    frame_delivery_time: 1.72
+    frame_drop_rate: 0.00
+    visual_quality_score: 61.11
+    smoothness_score: 1.90
+    actual_fps: 0.58
+    avg_frame_size: 114641.60
+    avg_process_time: 1.27
+    total_frames: 461
+    frames_received: 2515
+

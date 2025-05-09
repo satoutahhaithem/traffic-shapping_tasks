@@ -46,24 +46,36 @@ test_cap.release()
 
 # Function to send frames to receiver
 def send_frame_to_receiver(jpeg_bytes):
-    global failed_frames, transmission_times
+    global failed_frames, transmission_times, total_frames
+    
+    # Only log every 30 frames to reduce console spam
+    should_log = (total_frames % 30 == 0)
     
     encoded_frame = base64.b64encode(jpeg_bytes).decode('utf-8')
     start_time = time.time()
     
     try:
-        print("Sending frame to receiver...")
-        response = requests.post(f'http://{receiver_ip}:{receiver_port}/receive_video', json={'frame': encoded_frame}, timeout=10)
+        if should_log:
+            print("Sending frame to receiver...")
+        
+        # Reduce timeout to avoid long waits during poor network conditions
+        response = requests.post(f'http://{receiver_ip}:{receiver_port}/receive_video',
+                               json={'frame': encoded_frame},
+                               timeout=5)
         
         # Record transmission time
         end_time = time.time()
         transmission_time = end_time - start_time
         transmission_times.append(transmission_time)
         
-        print(f"Response from receiver: {response.status_code} - {response.text}")
+        if should_log:
+            print(f"Response from receiver: {response.status_code} - {response.text}")
+        
         return True
     except requests.exceptions.RequestException as e:
-        print(f"Error sending frame to receiver: {e}")
+        # Only log detailed errors occasionally to reduce console spam
+        if should_log or "Connection refused" in str(e):
+            print(f"Error sending frame to receiver: {e}")
         failed_frames += 1
         return False
 
@@ -119,7 +131,7 @@ def generate():
             frame_sizes.append(len(jpeg_bytes))
             
             # Send frame to receiver (not in a separate thread to avoid thread safety issues)
-            send_frame_to_receiver(jpeg_bytes)
+            success = send_frame_to_receiver(jpeg_bytes)
             
             # Yield the frame to stream to browser
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + jpeg_bytes + b'\r\n\r\n')
@@ -129,7 +141,14 @@ def generate():
             frame_times.append(process_time)
             
             # Adjust sleep time to maintain target FPS
-            sleep_time = max(0, (1 / target_fps) - process_time)
+            # If we're having network issues, add a bit more delay to reduce load
+            if not success and process_time > (1 / target_fps):
+                # Network is struggling, add extra delay to reduce pressure
+                extra_delay = 0.1  # 100ms extra delay
+                sleep_time = max(0, (1 / target_fps) - process_time + extra_delay)
+            else:
+                sleep_time = max(0, (1 / target_fps) - process_time)
+            
             time.sleep(sleep_time)
     
     except Exception as e:

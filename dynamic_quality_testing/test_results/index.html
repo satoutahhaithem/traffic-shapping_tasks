@@ -1,0 +1,41 @@
+
+        <html>
+        <head>
+            <title>Dynamic Quality Testing Results</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                .container { max-width: 800px; margin: 0 auto; }
+                h1, h2 { color: #333; }
+                table { border-collapse: collapse; width: 100%; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                tr:nth-child(even) { background-color: #f9f9f9; }
+                .button { display: inline-block; padding: 8px 16px; background-color: #007bff; 
+                         color: white; text-decoration: none; border-radius: 4px; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Dynamic Quality Testing Results</h1>
+                <p>Select a test result to view:</p>
+                
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+        
+                    <tr>
+                        <td>2025-05-09 15:20:52</td>
+                        <td><a href="quality_test_report_20250509_152052.html" class="button">View Results</a></td>
+                    </tr>
+            
+                </table>
+                
+                <p style="margin-top: 20px;">
+                    <a href="javascript:window.location.reload()" class="button">Refresh List</a>
+                </p>
+            </div>
+        </body>
+        </html>
+        

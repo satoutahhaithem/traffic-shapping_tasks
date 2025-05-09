@@ -25,16 +25,19 @@ RECEIVER_IP = "192.168.2.169"  # Change to match the IP address of your receiver
 RECEIVER_PORT = 8081
 INTERFACE = "wlp0s20f3"  # Change to match your network interface
 
+# Results directory
+RESULTS_DIR = "test_results"  # Directory to store test results
+
 # Test matrix
-RESOLUTION_SCALES = [0.25, 0.5, 0.75, 1.0]
-JPEG_QUALITIES = [50, 65, 80, 95]
+RESOLUTION_SCALES = [0.5, 0.75, 0.9, 1.0]  # Increased minimum scale to 0.5
+JPEG_QUALITIES = [60, 75, 85, 95]  # Increased minimum quality
 FRAME_RATES = [10, 15, 20, 30]
 
 # Network conditions
 NETWORK_CONDITIONS = [
-    {"name": "Poor", "rate": "1mbit", "delay": "200ms", "loss": "5%"},
-    {"name": "Fair", "rate": "3mbit", "delay": "100ms", "loss": "2%"},
-    {"name": "Good", "rate": "5mbit", "delay": "50ms", "loss": "1%"},
+    {"name": "Poor", "rate": "2mbit", "delay": "150ms", "loss": "3%"},
+    {"name": "Fair", "rate": "4mbit", "delay": "80ms", "loss": "1%"},
+    {"name": "Good", "rate": "6mbit", "delay": "40ms", "loss": "0.5%"},
     {"name": "Excellent", "rate": "10mbit", "delay": "20ms", "loss": "0%"}
 ]
 
@@ -209,7 +212,7 @@ def run_test(resolution, quality, fps, network):
     
     # Wait for system to stabilize
     print("Waiting for system to stabilize...")
-    time.sleep(10)
+    time.sleep(15)  # Increased stabilization time
     
     # Measure performance
     metrics = measure_performance()
@@ -269,8 +272,8 @@ def generate_plots(timestamp):
         for network in NETWORK_CONDITIONS:
             network_name = network["name"]
             indices = [i for i, n in enumerate(networks) if n == network_name]
-            plt.plot([resolutions[i] for i in indices], 
-                    [bandwidth[i] for i in indices], 
+            plt.plot([resolutions[i] for i in indices],
+                    [bandwidth[i] for i in indices],
                     'o-', label=network_name)
         
         plt.xlabel('Resolution Scale')
@@ -283,8 +286,8 @@ def generate_plots(timestamp):
         plt.subplot(2, 2, 2)
         for quality in JPEG_QUALITIES:
             indices = [i for i, q in enumerate(qualities) if q == quality]
-            plt.plot([resolutions[i] for i in indices], 
-                    [visual_quality[i] for i in indices], 
+            plt.plot([resolutions[i] for i in indices],
+                    [visual_quality[i] for i in indices],
                     'o-', label=f'Quality {quality}%')
         
         plt.xlabel('Resolution Scale')
@@ -298,8 +301,8 @@ def generate_plots(timestamp):
         for network in NETWORK_CONDITIONS:
             network_name = network["name"]
             indices = [i for i, n in enumerate(networks) if n == network_name]
-            plt.plot([fps_values[i] for i in indices], 
-                    [smoothness[i] for i in indices], 
+            plt.plot([fps_values[i] for i in indices],
+                    [smoothness[i] for i in indices],
                     'o-', label=network_name)
         
         plt.xlabel('Frame Rate (FPS)')
@@ -310,7 +313,7 @@ def generate_plots(timestamp):
         
         # Plot 4: Quality-bandwidth tradeoff
         plt.subplot(2, 2, 4)
-        plt.scatter(bandwidth, visual_quality, c=np.array(fps_values), cmap='viridis', 
+        plt.scatter(bandwidth, visual_quality, c=np.array(fps_values), cmap='viridis',
                    s=100, alpha=0.7)
         plt.colorbar(label='Frame Rate (FPS)')
         plt.xlabel('Bandwidth (Mbps)')
@@ -319,10 +322,108 @@ def generate_plots(timestamp):
         plt.grid(True)
         
         # Save the figure
-        plot_filename = f"quality_test_plots_{timestamp}.png"
+        plot_filename = os.path.join(RESULTS_DIR, f"quality_test_plots_{timestamp}.png")
         plt.tight_layout()
         plt.savefig(plot_filename)
         print(f"Plots saved to {plot_filename}")
+        
+        # Create an HTML report with the plots and results
+        html_report = os.path.join(RESULTS_DIR, f"quality_test_report_{timestamp}.html")
+        with open(html_report, "w") as f:
+            f.write(f"""
+            <html>
+            <head>
+                <title>Quality Test Results - {timestamp}</title>
+                <style>
+                    body {{ font-family: Arial, sans-serif; margin: 20px; }}
+                    .container {{ max-width: 1200px; margin: 0 auto; }}
+                    h1, h2 {{ color: #333; }}
+                    .results-section {{ margin-bottom: 30px; }}
+                    table {{ border-collapse: collapse; width: 100%; }}
+                    th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+                    th {{ background-color: #f2f2f2; }}
+                    tr:nth-child(even) {{ background-color: #f9f9f9; }}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Quality Test Results</h1>
+                    <p>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+                    
+                    <div class="results-section">
+                        <h2>Test Plots</h2>
+                        <img src="quality_test_plots_{timestamp}.png" alt="Test Results Plots" style="width: 100%;">
+                    </div>
+                    
+                    <div class="results-section">
+                        <h2>Network Analysis Graphs</h2>
+                        <p>The following graphs show the relationship between controlled network parameters and measured metrics:</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
+                            <div style="flex: 1; min-width: 45%;">
+                                <h3>Bandwidth Analysis</h3>
+                                <img src="bandwidth_graphs.png" alt="Bandwidth Analysis" style="width: 100%;">
+                            </div>
+                            <div style="flex: 1; min-width: 45%;">
+                                <h3>Delay Analysis</h3>
+                                <img src="delay_graphs.png" alt="Delay Analysis" style="width: 100%;">
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                            <div style="flex: 1; min-width: 45%;">
+                                <h3>Packet Loss Analysis</h3>
+                                <img src="loss_graphs.png" alt="Packet Loss Analysis" style="width: 100%;">
+                            </div>
+                            <div style="flex: 1; min-width: 45%;">
+                                <h3>Combined Analysis (3D)</h3>
+                                <img src="combined_graph.png" alt="Combined Analysis" style="width: 100%;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="results-section">
+                        <h2>Test Parameters</h2>
+                        <p>Resolution scales tested: {', '.join(str(r) for r in RESOLUTION_SCALES)}</p>
+                        <p>JPEG qualities tested: {', '.join(str(q) for q in JPEG_QUALITIES)}</p>
+                        <p>Frame rates tested: {', '.join(str(fps) for fps in FRAME_RATES)}</p>
+                        <p>Network conditions tested:</p>
+                        <ul>
+                            {"".join(f"<li>{n['name']}: {n['rate']}, {n['delay']}, {n['loss']}</li>" for n in NETWORK_CONDITIONS)}
+                        </ul>
+                    </div>
+                    
+                    <div class="results-section">
+                        <h2>Detailed Results</h2>
+                        <table>
+                            <tr>
+                                <th>Test #</th>
+                                <th>Network</th>
+                                <th>Resolution</th>
+                                <th>Quality</th>
+                                <th>FPS</th>
+                                <th>Bandwidth</th>
+                                <th>Visual Quality</th>
+                                <th>Smoothness</th>
+                            </tr>
+                            {"".join(f"""
+                            <tr>
+                                <td>{i+1}</td>
+                                <td>{result['network_condition']}</td>
+                                <td>{result['resolution_scale']}</td>
+                                <td>{result['jpeg_quality']}</td>
+                                <td>{result['frame_rate']}</td>
+                                <td>{result['metrics']['bandwidth_usage']/1000000:.2f} Mbps</td>
+                                <td>{result['metrics']['visual_quality_score']:.1f}</td>
+                                <td>{result['metrics']['smoothness_score']:.1f}</td>
+                            </tr>
+                            """ for i, result in enumerate(results))}
+                        </table>
+                    </div>
+                </div>
+            </body>
+            </html>
+            """)
+        
+        print(f"HTML report saved to {html_report}")
         
         # Close the figure
         plt.close()
@@ -376,9 +477,14 @@ def generate_report():
     """Generate a report of the test results."""
     print_header("Generating Test Report")
     
+    # Create results directory if it doesn't exist
+    if not os.path.exists(RESULTS_DIR):
+        os.makedirs(RESULTS_DIR)
+        print(f"Created results directory: {RESULTS_DIR}")
+    
     # Save results to JSON file
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"quality_test_results_{timestamp}.json"
+    filename = os.path.join(RESULTS_DIR, f"quality_test_results_{timestamp}.json")
     
     with open(filename, "w") as f:
         json.dump(results, f, indent=2)
@@ -389,7 +495,7 @@ def generate_report():
     generate_plots(timestamp)
     
     # Generate a text report
-    text_report = f"quality_test_report_{timestamp}.txt"
+    text_report = os.path.join(RESULTS_DIR, f"quality_test_report_{timestamp}.txt")
     with open(text_report, "w") as f:
         f.write("=================================================\n")
         f.write("DYNAMIC QUALITY TESTING REPORT\n")
@@ -420,6 +526,15 @@ def generate_report():
             f.write("\n")
     
     print(f"Text report saved to {text_report}")
+    
+    # Generate graphs using the generate_graphs.py script
+    print("Generating graphs from test results...")
+    try:
+        subprocess.run(["python3", "dynamic_quality_testing/generate_graphs.py"], check=True)
+        print("Graphs generated successfully.")
+    except Exception as e:
+        print(f"Error generating graphs: {e}")
+        print("You can generate graphs manually by running: python3 dynamic_quality_testing/generate_graphs.py")
 
 def main():
     """Main function to run the quality tests."""
@@ -441,12 +556,20 @@ def main():
         return
     
     try:
-        # Run tests for each combination
-        for network in NETWORK_CONDITIONS:
+        # Run tests for each combination, but in a more efficient order
+        # Start with better network conditions to establish a baseline
+        for network in reversed(NETWORK_CONDITIONS):
+            # Test each resolution with a reasonable quality and FPS
             for resolution in RESOLUTION_SCALES:
-                for quality in JPEG_QUALITIES:
-                    for fps in FRAME_RATES:
-                        run_test(resolution, quality, fps, network)
+                run_test(resolution, 85, 20, network)
+            
+            # Test different qualities at a fixed resolution
+            for quality in JPEG_QUALITIES:
+                run_test(0.75, quality, 20, network)
+            
+            # Test different FPS at a fixed resolution and quality
+            for fps in FRAME_RATES:
+                run_test(0.75, 85, fps, network)
         
         # Reset network conditions
         reset_network_condition()
