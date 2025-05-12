@@ -684,5 +684,27 @@
       "total_frames": 49920,
       "frames_received": 51974
     }
+  },
+  {
+    "timestamp": "2025-05-09 18:32:24",
+    "network_condition": "Good",
+    "network_rate": "6mbit",
+    "network_delay": "40ms",
+    "network_loss": "0.5%",
+    "resolution_scale": 0.75,
+    "jpeg_quality": 85,
+    "frame_rate": 20,
+    "metrics": {
+      "bandwidth_usage": 554199.1649337155,
+      "frame_delivery_time": 0.23156747023264568,
+      "frame_drop_rate": 0.0,
+      "visual_quality_score": 61.11111111111111,
+      "smoothness_score": 14.399960009876681,
+      "actual_fps": 4.318395839430054,
+      "avg_frame_size": 170805.2,
+      "avg_process_time": 0.16967761516571045,
+      "total_frames": 53506,
+      "frames_received": 55560
+    }
   }
 ]

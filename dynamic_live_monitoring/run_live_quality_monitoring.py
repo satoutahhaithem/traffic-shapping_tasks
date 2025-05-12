@@ -181,30 +181,17 @@ def start_live_monitor():
     choice = input("Enter your choice (1-2): ")
     
     if choice == "1":
-        # Start the terminal-based monitor in a new terminal window
+        # Run the terminal-based monitor directly in the current terminal
         try:
-            # Start in a new terminal window
-            if os.name == 'nt':  # Windows
-                cmd = ["start", "cmd", "/k", "python", "dynamic_quality_testing/terminal_live_monitor.py"]
-                subprocess.Popen(cmd, shell=True)
-            else:  # Linux/Mac
-                cmd = ["gnome-terminal", "--", "python3", "dynamic_quality_testing/terminal_live_monitor.py"]
-                try:
-                    subprocess.Popen(cmd)
-                except FileNotFoundError:
-                    # Try with xterm if gnome-terminal is not available
-                    try:
-                        cmd = ["xterm", "-e", "python3 dynamic_quality_testing/terminal_live_monitor.py"]
-                        subprocess.Popen(cmd)
-                    except FileNotFoundError:
-                        # If no terminal is available, run in the current terminal
-                        print("Could not open a new terminal window. Running in the current terminal...")
-                        cmd = ["python3", "dynamic_quality_testing/terminal_live_monitor.py"]
-                        process = subprocess.Popen(cmd)
-                        processes["monitor"] = process
+            print("Starting terminal-based monitoring in the current terminal...")
+            print("Press Ctrl+C to return to the main menu when done.")
+            time.sleep(2)  # Give the user time to read the message
             
-            print("✓ Terminal-based live monitoring started")
-            print("  Check the new terminal window for real-time updates")
+            # Run the terminal monitor directly
+            subprocess.run(["python3", "dynamic_live_monitoring/terminal_live_monitor.py"])
+            
+            # When the terminal monitor exits, return to the main menu
+            print("✓ Terminal-based monitoring completed")
             
         except Exception as e:
             print(f"Error starting terminal monitor: {e}")
@@ -229,7 +216,7 @@ def start_live_monitor():
 def run_live_monitor():
     """Run the browser-based live monitor script."""
     try:
-        cmd = ["python3", "dynamic_quality_testing/live_monitor.py"]
+        cmd = ["python3", "dynamic_live_monitoring/live_monitor.py"]
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         processes["monitor"] = process
         
