@@ -1,0 +1,13 @@
+{
+  "embed_dim": 64,
+  "num_heads": 4,
+  "ff_dim": 128,
+  "num_transformer_blocks": 2,
+  "mlp_units": [64],
+  "dropout_rate": 0.2,
+  "learning_rate": 0.001,
+  "batch_size": 64,
+  "epochs": 100,
+  "patience": 15,
+  "model_type": "regression"
+}

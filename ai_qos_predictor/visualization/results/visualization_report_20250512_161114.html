@@ -1,0 +1,117 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>AI QoS Predictor - Visualization Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                line-height: 1.6;
+            }
+            h1, h2, h3 {
+                color: #2c3e50;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .metrics-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .metrics-table th, .metrics-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+            .metrics-table th {
+                background-color: #f2f2f2;
+            }
+            .visualization {
+                margin-bottom: 40px;
+            }
+            .visualization img {
+                max-width: 100%;
+                height: auto;
+                border: 1px solid #ddd;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>AI QoS Predictor - Visualization Report</h1>
+            <p>Generated on: 20250512_161114</p>
+            
+            <h2>Model Performance Metrics</h2>
+            <table class="metrics-table">
+                <tr>
+                    <th>Target</th>
+                    <th>MSE</th>
+                    <th>RMSE</th>
+                    <th>MAE</th>
+                    <th>R²</th>
+                </tr>
+    
+                <tr>
+                    <td>throughput_down</td>
+                    <td>0.2822</td>
+                    <td>0.5313</td>
+                    <td>0.1685</td>
+                    <td>0.7181</td>
+                </tr>
+        
+                <tr>
+                    <td>rtt</td>
+                    <td>0.0758</td>
+                    <td>0.2753</td>
+                    <td>0.0456</td>
+                    <td>0.9234</td>
+                </tr>
+        
+                <tr>
+                    <td>packet_loss</td>
+                    <td>0.2128</td>
+                    <td>0.4613</td>
+                    <td>0.0519</td>
+                    <td>0.7676</td>
+                </tr>
+        
+            </table>
+            
+            <h2>Visualizations</h2>
+            
+            <div class="visualization">
+                <h3>Time-Series Comparison</h3>
+                <p>This plot shows a comparison between predicted and actual values over time for a sample of the test data.</p>
+                <img src="time_series_comparison_20250512_161114.png" alt="Time-Series Comparison">
+            </div>
+            
+            <div class="visualization">
+                <h3>Scatter Plots</h3>
+                <p>These scatter plots show the relationship between predicted and actual values. Points closer to the diagonal line indicate more accurate predictions.</p>
+                <img src="scatter_plots_20250512_161114.png" alt="Scatter Plots">
+            </div>
+            
+            <div class="visualization">
+                <h3>Error Distribution</h3>
+                <p>These histograms show the distribution of prediction errors. A distribution centered around zero with small spread indicates good model performance.</p>
+                <img src="error_distribution_20250512_161114.png" alt="Error Distribution">
+            </div>
+            
+            <div class="visualization">
+                <h3>Prediction Horizon Analysis</h3>
+                <p>This plot shows how prediction accuracy (R² score) changes with different prediction horizons.</p>
+                <img src="prediction_horizon_20250512_161114.png" alt="Prediction Horizon Analysis">
+            </div>
+            
+            <div class="visualization">
+                <h3>Feature Importance</h3>
+                <p>This plot shows the relative importance of each feature in making predictions.</p>
+                <img src="feature_importance_20250512_161114.png" alt="Feature Importance">
+            </div>
+        </div>
+    </body>
+    </html>
+    
