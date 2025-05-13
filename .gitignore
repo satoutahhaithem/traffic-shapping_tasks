@@ -1,5 +1,71 @@
-.venv/
-Video_test/BigBuckBunny.mp4
-Control_with_tc_task/Video_test/BigBuckBunny.mp4
-.venv/
-Video_test/BigBuckBunny.mp4
+# Large data files
+*.zip
+*.csv
+*.npz
+*.h5
+*.pkl
+
+# Raw data directories
+ai_qos_predictor/data/raw/
+
+# Generated model files
+ai_qos_predictor/models/saved/
+ai_qos_predictor/models/results/
+
+# Generated visualization results
+ai_qos_predictor/visualization/results/
+test_results/
+dynamic_traffic_shapping/test_results/
+
+# Python related
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.venv
+venv/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Logs
+*.log
+logs/
+tc_api.log
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+__MACOSX/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
