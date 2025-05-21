@@ -26,21 +26,29 @@ def generate():
     print("MJPEG stream generator started - waiting for frames...")
     frame_count = 0
     last_log_time = time.time()
+    last_frame_time = time.time()
+    target_frame_duration = 1.0 / 30.0  # Target 30 FPS for smooth playback
     
     while True:
+        current_time = time.time()
+        
         if current_frame is not None:
             frame_count += 1
             
             # Log only once per second to reduce console output
-            current_time = time.time()
             if current_time - last_log_time >= 1.0:
                 print(f"Streaming frame #{frame_count} with shape: {current_frame.shape}")
                 last_log_time = current_time
             
-            # Encode the frame as JPEG
-            ret, jpeg = cv2.imencode('.jpg', current_frame)
+            # Use a copy of the current frame to avoid race conditions
+            frame_to_encode = current_frame.copy()
+            
+            # Encode the frame as JPEG with higher quality for smoother playback
+            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+            ret, jpeg = cv2.imencode('.jpg', frame_to_encode, encode_params)
             if not ret:
                 print("Failed to encode frame for streaming!")
+                time.sleep(0.01)  # Short sleep to prevent CPU spinning
                 continue
             
             jpeg_bytes = jpeg.tobytes()
@@ -49,16 +57,25 @@ def generate():
             if frame_count % 30 == 0:
                 print(f"Encoded JPEG size: {len(jpeg_bytes)} bytes")
             
+            # Calculate time since last frame
+            frame_time = current_time - last_frame_time
+            last_frame_time = current_time
+            
             # Yield the frame in MJPEG format
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + jpeg_bytes + b'\r\n\r\n')
+            
+            # Add a tiny sleep to maintain consistent timing if processing was very fast
+            elapsed = time.time() - current_time
+            if elapsed < target_frame_duration:
+                time.sleep(max(0, target_frame_duration - elapsed) * 0.8)  # 80% of ideal wait time
         else:
             # Reduce waiting messages
-            if time.time() - last_log_time >= 5.0:
+            if current_time - last_log_time >= 5.0:
                 print("Waiting for frames from streamer...")
-                last_log_time = time.time()
+                last_log_time = current_time
             
-            time.sleep(0.1)  # Check less frequently when no frames
+            time.sleep(0.03)  # Check more frequently for frames but avoid CPU spinning
 
 @app.route('/')
 def home():

@@ -11,7 +11,7 @@ from collections import deque
 app = Flask(__name__)
 
 # Video file path
-video_path = '/home/sattoutah/Bureau/git_mesurement_tc/Video_test/BigBuckBunny.mp4'
+video_path = '/home/sattoutah/Bureau/git_mesurement_tc/video/zidane.mp4'
 
 # Receiver configuration
 receiver_ip = "192.168.2.169"  # Change this to the IP address of your receiver
@@ -20,7 +20,7 @@ receiver_port = 8081
 # Quality parameters
 resolution_scale = 1.0  # Scale factor for resolution (1.0 = original, 0.5 = half, etc.)
 jpeg_quality = 85       # JPEG quality (0-100)
-target_fps = 15         # Target frames per second
+target_fps = 30         # Target frames per second
 
 # Performance metrics
 frame_sizes = deque(maxlen=30)       # Last 30 frame sizes
@@ -141,15 +141,25 @@ def generate():
             frame_times.append(process_time)
             
             # Adjust sleep time to maintain target FPS
-            # If we're having network issues, add a bit more delay to reduce load
-            if not success and process_time > (1 / target_fps):
-                # Network is struggling, add extra delay to reduce pressure
-                extra_delay = 0.1  # 100ms extra delay
-                sleep_time = max(0, (1 / target_fps) - process_time + extra_delay)
-            else:
-                sleep_time = max(0, (1 / target_fps) - process_time)
+            # Use a more precise timing approach
+            frame_duration = 1.0 / target_fps
             
-            time.sleep(sleep_time)
+            if not success:
+                # Network is struggling, add a small delay to reduce pressure
+                extra_delay = 0.05  # 50ms extra delay (reduced from 100ms)
+                sleep_time = max(0, frame_duration - process_time + extra_delay)
+            else:
+                # Calculate sleep time more precisely
+                sleep_time = max(0, frame_duration - process_time)
+                
+                # If we're consistently processing frames too quickly, add a small buffer
+                if process_time < (frame_duration * 0.5) and len(frame_times) > 5:
+                    # Add a tiny buffer to prevent CPU spinning
+                    sleep_time += 0.001  # 1ms buffer
+            
+            # Use a more precise sleep if available
+            if sleep_time > 0:
+                time.sleep(sleep_time)
     
     except Exception as e:
         print(f"Error in generate function: {e}")

@@ -113,11 +113,13 @@ menu() {
     echo "Dynamic Network Control (TC)"
     echo "----------------------------"
     echo "1. Set network conditions (Rate, Delay, Loss)"
-    echo "2. Show current stats"
-    echo "3. Reset network conditions"
-    echo "4. Exit"
+    echo "2. Apply preset network conditions"
+    echo "3. Show current stats"
+    echo "4. Reset network conditions"
+    echo "5. Apply optimal streaming conditions"
+    echo "6. Exit"
     echo "----------------------------"
-    read -p "Select an option (1-4): " option
+    read -p "Select an option (1-6): " option
 
     case $option in
         1)
@@ -128,14 +130,37 @@ menu() {
             apply_conditions "$rate" "$delay" "$loss"
             ;;
         2)
+            # Apply preset network conditions
+            echo "Select a preset network condition:"
+            echo "1. Excellent (10mbit, 20ms, 0%)"
+            echo "2. Good (6mbit, 40ms, 0.5%)"
+            echo "3. Fair (4mbit, 80ms, 1%)"
+            echo "4. Poor (2mbit, 150ms, 3%)"
+            read -p "Select a preset (1-4): " preset
+            
+            case $preset in
+                1) apply_conditions "10mbit" "20ms" "0%" ;;
+                2) apply_conditions "6mbit" "40ms" "0.5%" ;;
+                3) apply_conditions "4mbit" "80ms" "1%" ;;
+                4) apply_conditions "2mbit" "150ms" "3%" ;;
+                *) echo "Invalid preset selection." ;;
+            esac
+            ;;
+        3)
             # Show current stats
             show_stats
             ;;
-        3)
+        4)
             # Reset network conditions
             reset_conditions
             ;;
-        4)
+        5)
+            # Apply optimal streaming conditions
+            echo "Applying optimal streaming conditions for smooth playback..."
+            apply_conditions "20mbit" "10ms" "0%"
+            echo "Optimal conditions applied. This should provide smooth video playback."
+            ;;
+        6)
             echo "Exiting the script."
             exit 0
             ;;
