@@ -20,9 +20,17 @@ frame_times = deque(maxlen=30)       # Last 30 frame processing times
 frame_intervals = deque(maxlen=30)   # Last 30 intervals between frames
 failed_decodes = 0                   # Count of failed frame decodes
 
+# Frame buffer for smoother playback
+frame_buffer = deque(maxlen=15)      # Buffer to store frames
+use_buffering = True                 # Enable frame buffering
+buffer_lock = threading.Lock()       # Lock for thread-safe buffer access
+
+# Import threading for buffer management
+import threading
+
 # Function to generate MJPEG stream from received frames
 def generate():
-    global current_frame
+    global current_frame, frame_buffer
     print("MJPEG stream generator started - waiting for frames...")
     frame_count = 0
     last_log_time = time.time()
@@ -32,16 +40,25 @@ def generate():
     while True:
         current_time = time.time()
         
-        if current_frame is not None:
+        # Get frame (either from buffer or directly)
+        frame_to_encode = None
+        
+        if use_buffering:
+            with buffer_lock:
+                if frame_buffer:
+                    frame_to_encode = frame_buffer.popleft()
+                elif current_frame is not None:
+                    frame_to_encode = current_frame.copy()
+        elif current_frame is not None:
+            frame_to_encode = current_frame.copy()
+            
+        if frame_to_encode is not None:
             frame_count += 1
             
             # Log only once per second to reduce console output
             if current_time - last_log_time >= 1.0:
-                print(f"Streaming frame #{frame_count} with shape: {current_frame.shape}")
+                print(f"Streaming frame #{frame_count} with shape: {frame_to_encode.shape}")
                 last_log_time = current_time
-            
-            # Use a copy of the current frame to avoid race conditions
-            frame_to_encode = current_frame.copy()
             
             # Encode the frame as JPEG with higher quality for smoother playback
             encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
@@ -65,17 +82,32 @@ def generate():
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + jpeg_bytes + b'\r\n\r\n')
             
-            # Add a tiny sleep to maintain consistent timing if processing was very fast
+            # Adaptive timing based on buffer state
             elapsed = time.time() - current_time
-            if elapsed < target_frame_duration:
-                time.sleep(max(0, target_frame_duration - elapsed) * 0.8)  # 80% of ideal wait time
+            sleep_time = max(0, target_frame_duration - elapsed)
+            
+            with buffer_lock:
+                buffer_level = len(frame_buffer)
+                
+            if buffer_level > 10:
+                # Buffer is well-filled, can be more aggressive
+                sleep_time *= 0.7
+            elif buffer_level < 3:
+                # Buffer is getting low, slow down slightly
+                sleep_time *= 0.9
+            else:
+                # Normal buffer level
+                sleep_time *= 0.8
+                
+            if sleep_time > 0:
+                time.sleep(sleep_time)
         else:
             # Reduce waiting messages
             if current_time - last_log_time >= 5.0:
                 print("Waiting for frames from streamer...")
                 last_log_time = current_time
             
-            time.sleep(0.03)  # Check more frequently for frames but avoid CPU spinning
+            time.sleep(0.02)  # Check more frequently for frames but avoid CPU spinning
 
 @app.route('/')
 def home():
@@ -84,10 +116,10 @@ def home():
     <head>
         <title>Dynamic Quality Testing - Video Receiver</title>
         <style>
-            body {{ font-family: Arial, sans-serif; margin: 20px; }}
-            .container {{ max-width: 800px; margin: 0 auto; }}
-            h1 {{ color: #333; }}
-            .info-box {{ background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; }}
+            body {{ font-family: Arial, sans-serif; margin: 20px; background-color: #121212; color: #f0f0f0; }}
+            .container {{ max-width: 1200px; margin: 0 auto; }}
+            h1 {{ color: #f0f0f0; }}
+            .info-box {{ background-color: #1e1e1e; padding: 15px; border-radius: 5px; margin-bottom: 20px; }}
             .button {{ display: inline-block; padding: 8px 16px; background-color: #007bff; color: white;
                      text-decoration: none; border-radius: 4px; margin-right: 10px; }}
             .button:hover {{ background-color: #0056b3; }}
@@ -228,7 +260,7 @@ def status():
 @app.route('/receive_video', methods=['POST'])
 def receive_video():
     global current_frame, frames_received, last_frame_time, fps_estimate
-    global frame_sizes, frame_times, frame_intervals, failed_decodes
+    global frame_sizes, frame_times, frame_intervals, failed_decodes, frame_buffer
     
     # Record start time for processing time calculation
     start_time = time.time()
@@ -265,13 +297,24 @@ def receive_video():
             if frames_received % 60 == 0:  # Log less frequently
                 print(f"Successfully decoded frame with shape: {frame.shape}")
             
-            # Set the current frame to be used in the MJPEG stream
-            current_frame = frame
+            # Add frame to buffer if buffering is enabled
+            if use_buffering:
+                with buffer_lock:
+                    # Add to buffer
+                    frame_buffer.append(frame)
+                    
+                    # If this is the first frame, also set current_frame
+                    if current_frame is None:
+                        current_frame = frame
+            else:
+                # Set the current frame directly
+                current_frame = frame
             
             # Record processing time
             process_time = time.time() - start_time
             frame_times.append(process_time)
             
+            # Return success immediately to reduce round-trip time
             return jsonify({'status': 'success', 'message': 'Frame received and processed successfully'}), 200
         else:
             print("Failed to decode frame!")
@@ -328,6 +371,24 @@ def get_metrics():
 
 @app.route('/rx_video_feed')
 def video_feed():
+    # Return the MJPEG stream to the browser
+    return """
+    <html>
+    <head>
+        <title>Video Stream</title>
+        <style>
+            body {{ margin: 0; padding: 0; background-color: #000; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }}
+            img {{ max-width: 100%; max-height: 100vh; object-fit: contain; }}
+        </style>
+    </head>
+    <body>
+        <img src="/video_stream_data" style="width: 100%; height: 100%;" />
+    </body>
+    </html>
+    """
+
+@app.route('/video_stream_data')
+def video_stream_data():
     # Return the MJPEG stream to the browser
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 

@@ -22,6 +22,13 @@ resolution_scale = 1.0  # Scale factor for resolution (1.0 = original, 0.5 = hal
 jpeg_quality = 85       # JPEG quality (0-100)
 target_fps = 30         # Target frames per second
 
+# Buffer settings for smoother playback
+buffer_size = 10        # Increased buffer size for smoother playback
+use_buffering = True    # Enable frame buffering
+frame_buffer = []       # Buffer to store frames
+max_retries = 3         # Number of retries for failed transmissions
+retry_delay = 0.01      # Delay between retries (10ms)
+
 # Performance metrics
 frame_sizes = deque(maxlen=30)       # Last 30 frame sizes
 frame_times = deque(maxlen=30)       # Last 30 frame processing times
@@ -54,35 +61,50 @@ def send_frame_to_receiver(jpeg_bytes):
     encoded_frame = base64.b64encode(jpeg_bytes).decode('utf-8')
     start_time = time.time()
     
-    try:
-        if should_log:
-            print("Sending frame to receiver...")
-        
-        # Reduce timeout to avoid long waits during poor network conditions
-        response = requests.post(f'http://{receiver_ip}:{receiver_port}/receive_video',
-                               json={'frame': encoded_frame},
-                               timeout=5)
-        
-        # Record transmission time
-        end_time = time.time()
-        transmission_time = end_time - start_time
-        transmission_times.append(transmission_time)
-        
-        if should_log:
-            print(f"Response from receiver: {response.status_code} - {response.text}")
-        
-        return True
-    except requests.exceptions.RequestException as e:
-        # Only log detailed errors occasionally to reduce console spam
-        if should_log or "Connection refused" in str(e):
-            print(f"Error sending frame to receiver: {e}")
-        failed_frames += 1
-        return False
+    # Try multiple times with exponential backoff
+    for attempt in range(max_retries):
+        try:
+            if should_log and attempt == 0:
+                print("Sending frame to receiver...")
+            
+            # Reduce timeout for faster recovery from network issues
+            timeout = 2 if attempt == 0 else 1
+            
+            # Use a session for connection pooling
+            session = requests.Session()
+            response = session.post(
+                f'http://{receiver_ip}:{receiver_port}/receive_video',
+                json={'frame': encoded_frame},
+                timeout=timeout
+            )
+            
+            # Record transmission time
+            end_time = time.time()
+            transmission_time = end_time - start_time
+            transmission_times.append(transmission_time)
+            
+            if should_log:
+                print(f"Response from receiver: {response.status_code} - {response.text}")
+            
+            return True
+            
+        except requests.exceptions.RequestException as e:
+            # Only log detailed errors occasionally to reduce console spam
+            if (should_log or "Connection refused" in str(e)) and attempt == 0:
+                print(f"Error sending frame to receiver (attempt {attempt+1}/{max_retries}): {e}")
+            
+            # Last attempt failed
+            if attempt == max_retries - 1:
+                failed_frames += 1
+                return False
+                
+            # Wait before retrying with exponential backoff
+            time.sleep(retry_delay * (2 ** attempt))
 
 # Function to encode and send frames
 def generate():
     print("Entering generate function...")
-    global total_frames, frame_sizes, frame_times
+    global total_frames, frame_sizes, frame_times, frame_buffer
     
     # Create a new capture object each time to avoid thread safety issues
     local_cap = cv2.VideoCapture(video_path)
@@ -90,28 +112,16 @@ def generate():
         print("Error: Could not open video file in generate function.")
         return
     
-    try:
-        frame_count = 0
-        while local_cap.isOpened():
-            start_time = time.time()
-            
+    # Pre-fill buffer if buffering is enabled
+    if use_buffering:
+        print("Pre-filling frame buffer...")
+        while len(frame_buffer) < buffer_size and local_cap.isOpened():
             ret, frame = local_cap.read()
             if not ret:
-                print("End of video or failed to capture frame.")
-                # Try to loop the video by reopening it
                 local_cap.release()
                 local_cap = cv2.VideoCapture(video_path)
-                if not local_cap.isOpened():
-                    print("Failed to reopen video file.")
-                    break
                 continue
-            
-            frame_count += 1
-            total_frames += 1
-            
-            if frame_count % 5 == 0:  # Only print every 5th frame to reduce console spam
-                print(f"Processing frame #{frame_count} at {target_fps} FPS, Resolution scale: {resolution_scale}, Quality: {jpeg_quality}")
-            
+                
             # Apply resolution scaling if needed
             if resolution_scale != 1.0:
                 new_width = int(frame_width * resolution_scale)
@@ -122,10 +132,81 @@ def generate():
             encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
             ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
             if not ret:
-                print("Error: Failed to encode frame.")
                 continue
+                
+            frame_buffer.append(jpeg.tobytes())
+        
+        print(f"Buffer filled with {len(frame_buffer)} frames")
+    
+    try:
+        frame_count = 0
+        last_frame_time = time.time()
+        
+        while local_cap.isOpened():
+            start_time = time.time()
             
-            jpeg_bytes = jpeg.tobytes()
+            # Calculate time since last frame
+            frame_time = start_time - last_frame_time
+            last_frame_time = start_time
+            
+            # Get frame (either from buffer or directly)
+            if use_buffering and frame_buffer:
+                # Get frame from buffer
+                jpeg_bytes = frame_buffer.pop(0)
+                
+                # Read a new frame to refill the buffer
+                ret, frame = local_cap.read()
+                if ret:
+                    # Process the new frame for the buffer
+                    if resolution_scale != 1.0:
+                        new_width = int(frame_width * resolution_scale)
+                        new_height = int(frame_height * resolution_scale)
+                        frame = cv2.resize(frame, (new_width, new_height))
+                    
+                    encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
+                    ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
+                    if ret:
+                        frame_buffer.append(jpeg.tobytes())
+                else:
+                    # Try to loop the video by reopening it
+                    local_cap.release()
+                    local_cap = cv2.VideoCapture(video_path)
+                    if not local_cap.isOpened():
+                        print("Failed to reopen video file.")
+                        break
+            else:
+                # Read and process frame directly
+                ret, frame = local_cap.read()
+                if not ret:
+                    print("End of video or failed to capture frame.")
+                    # Try to loop the video by reopening it
+                    local_cap.release()
+                    local_cap = cv2.VideoCapture(video_path)
+                    if not local_cap.isOpened():
+                        print("Failed to reopen video file.")
+                        break
+                    continue
+                
+                # Apply resolution scaling if needed
+                if resolution_scale != 1.0:
+                    new_width = int(frame_width * resolution_scale)
+                    new_height = int(frame_height * resolution_scale)
+                    frame = cv2.resize(frame, (new_width, new_height))
+                
+                # Encode the frame in JPEG format with specified quality
+                encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
+                ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
+                if not ret:
+                    print("Error: Failed to encode frame.")
+                    continue
+                
+                jpeg_bytes = jpeg.tobytes()
+            
+            frame_count += 1
+            total_frames += 1
+            
+            if frame_count % 5 == 0:  # Only print every 5th frame to reduce console spam
+                print(f"Processing frame #{frame_count} at {target_fps} FPS, Resolution scale: {resolution_scale}, Quality: {jpeg_quality}")
             
             # Record frame size
             frame_sizes.append(len(jpeg_bytes))
@@ -140,24 +221,31 @@ def generate():
             process_time = time.time() - start_time
             frame_times.append(process_time)
             
-            # Adjust sleep time to maintain target FPS
-            # Use a more precise timing approach
+            # Adaptive timing based on network conditions
             frame_duration = 1.0 / target_fps
             
             if not success:
-                # Network is struggling, add a small delay to reduce pressure
-                extra_delay = 0.05  # 50ms extra delay (reduced from 100ms)
+                # Network is struggling, add a small delay and refill buffer
+                extra_delay = 0.03  # 30ms extra delay (reduced from 50ms)
                 sleep_time = max(0, frame_duration - process_time + extra_delay)
+                
+                # If buffer is low, add extra time to refill it
+                if use_buffering and len(frame_buffer) < buffer_size / 2:
+                    sleep_time += 0.01  # Add 10ms to allow buffer refill
             else:
-                # Calculate sleep time more precisely
+                # Normal operation - precise timing
                 sleep_time = max(0, frame_duration - process_time)
                 
-                # If we're consistently processing frames too quickly, add a small buffer
-                if process_time < (frame_duration * 0.5) and len(frame_times) > 5:
-                    # Add a tiny buffer to prevent CPU spinning
-                    sleep_time += 0.001  # 1ms buffer
+                # Adaptive timing based on buffer state
+                if use_buffering:
+                    if len(frame_buffer) < buffer_size / 3:
+                        # Buffer is getting low, slow down slightly
+                        sleep_time += 0.005
+                    elif len(frame_buffer) > buffer_size * 0.8:
+                        # Buffer is well-filled, can be more aggressive
+                        sleep_time = max(0, sleep_time - 0.002)
             
-            # Use a more precise sleep if available
+            # Use a more precise sleep
             if sleep_time > 0:
                 time.sleep(sleep_time)
     
@@ -172,6 +260,24 @@ def generate():
 @app.route('/tx_video_feed')
 def video_feed():
     print("Entering video_feed route...")
+    return """
+    <html>
+    <head>
+        <title>Video Stream</title>
+        <style>
+            body {{ margin: 0; padding: 0; background-color: #000; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }}
+            img {{ max-width: 100%; max-height: 100vh; object-fit: contain; }}
+        </style>
+    </head>
+    <body>
+        <img src="/video_stream_data" style="width: 100%; height: 100%;" />
+    </body>
+    </html>
+    """
+
+@app.route('/video_stream_data')
+def video_stream_data():
+    print("Entering video_stream_data route...")
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/')

@@ -105,6 +105,27 @@ apply_conditions() {
 reset_conditions() {
     echo "Resetting network conditions."
     sudo tc qdisc del dev $INTERFACE root
+    echo "Network conditions reset successfully."
+}
+
+# Function to apply ultra-smooth streaming conditions
+apply_ultra_smooth() {
+    echo "Applying ultra-smooth streaming conditions..."
+    
+    # First, ensure the qdisc is added to the interface if it doesn't exist yet
+    if ! tc qdisc show dev $INTERFACE | grep -q "netem"; then
+        # Add the root qdisc for network emulation if not already added
+        sudo tc qdisc add dev $INTERFACE root netem
+    fi
+    
+    # Apply optimal network conditions for ultra-smooth streaming:
+    # - Very high bandwidth (30mbit)
+    # - Very low delay (5ms)
+    # - No packet loss (0%)
+    sudo tc qdisc change dev $INTERFACE root netem rate 30mbit delay 5ms loss 0%
+    
+    echo "Ultra-smooth streaming conditions applied successfully!"
+    echo "These settings should provide the smoothest possible video streaming experience."
 }
 
 # Interactive menu for dynamic control
@@ -117,9 +138,10 @@ menu() {
     echo "3. Show current stats"
     echo "4. Reset network conditions"
     echo "5. Apply optimal streaming conditions"
-    echo "6. Exit"
+    echo "6. Apply ULTRA-SMOOTH streaming conditions"
+    echo "7. Exit"
     echo "----------------------------"
-    read -p "Select an option (1-6): " option
+    read -p "Select an option (1-7): " option
 
     case $option in
         1)
@@ -161,6 +183,10 @@ menu() {
             echo "Optimal conditions applied. This should provide smooth video playback."
             ;;
         6)
+            # Apply ultra-smooth streaming conditions
+            apply_ultra_smooth
+            ;;
+        7)
             echo "Exiting the script."
             exit 0
             ;;

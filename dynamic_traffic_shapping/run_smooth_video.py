@@ -106,13 +106,13 @@ def main():
         if os.geteuid() == 0:
             # We're running as root, apply network conditions directly
             tc_process = run_command("bash dynamic_tc_control.sh", wait=True)
-            # Select option 5 (Apply optimal streaming conditions)
-            tc_process = run_command("echo '5' | bash dynamic_tc_control.sh", wait=True)
+            # Select option 6 (Apply ULTRA-SMOOTH streaming conditions)
+            tc_process = run_command("echo '6' | bash dynamic_tc_control.sh", wait=True)
         else:
             # We're not running as root, prompt user to run the command separately
-            print("To apply optimal network conditions, please run this command in another terminal:")
+            print("To apply ultra-smooth network conditions, please run this command in another terminal:")
             print("sudo bash dynamic_tc_control.sh")
-            print("Then select option 5 to apply optimal streaming conditions.")
+            print("Then select option 6 to apply ULTRA-SMOOTH streaming conditions.")
             input("Press Enter to continue after applying network conditions...")
         
         # Step 2: Start the video streamer
