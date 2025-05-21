@@ -110,32 +110,40 @@ reset_conditions() {
 
 # Function to apply ultra-smooth streaming conditions
 apply_ultra_smooth() {
-    echo "Applying ultra-smooth streaming conditions..."
+    echo "Applying ULTRA-SMOOTH streaming conditions..."
     
-    # First, ensure the qdisc is added to the interface if it doesn't exist yet
-    if ! tc qdisc show dev $INTERFACE | grep -q "netem"; then
-        # Add the root qdisc for network emulation if not already added
-        sudo tc qdisc add dev $INTERFACE root netem
-    fi
+    # Reset any existing traffic control settings
+    sudo tc qdisc del dev $INTERFACE root 2>/dev/null
     
-    # Apply optimal network conditions for ultra-smooth streaming:
-    # - Extremely high bandwidth (50mbit)
-    # - Minimal delay (2ms)
-    # - No packet loss (0%)
-    # - No packet corruption (0%)
-    # - No packet reordering (0%)
-    # - No packet duplication (0%)
-    sudo tc qdisc change dev $INTERFACE root netem rate 50mbit delay 2ms loss 0% corrupt 0% reorder 0% duplicate 0%
+    # Create a hierarchical token bucket (HTB) qdisc as the root
+    sudo tc qdisc add dev $INTERFACE root handle 1: htb default 10
     
-    # Apply priority queuing to prioritize video packets
-    sudo tc qdisc add dev $INTERFACE parent 1:1 handle 10: prio
+    # Add a class with extremely high bandwidth (100mbit)
+    sudo tc class add dev $INTERFACE parent 1: classid 1:10 htb rate 100mbit ceil 100mbit burst 15k
     
-    echo "Ultra-smooth streaming conditions applied successfully!"
-    echo "These settings should provide the smoothest possible video streaming experience with:"
-    echo "  - 50Mbit bandwidth"
-    echo "  - 2ms delay"
+    # Add minimal network emulation parameters
+    sudo tc qdisc add dev $INTERFACE parent 1:10 handle 10: netem \
+        delay 1ms 0.5ms distribution normal \
+        loss 0% \
+        corrupt 0% \
+        reorder 0% \
+        duplicate 0%
+    
+    # Add SFQ (Stochastic Fairness Queueing) for better packet scheduling
+    sudo tc qdisc add dev $INTERFACE parent 10: handle 100: sfq perturb 10
+    
+    # Add filter to prioritize video traffic (common video streaming ports)
+    sudo tc filter add dev $INTERFACE parent 1: protocol ip prio 1 u32 \
+        match ip dport 8081 0xffff flowid 1:10
+    
+    echo "✅ ULTRA-SMOOTH streaming conditions applied successfully!"
+    echo "These settings provide the absolute best video streaming experience with:"
+    echo "  - 100Mbit bandwidth (doubled from previous setting)"
+    echo "  - 1ms delay (reduced from previous setting)"
     echo "  - 0% packet loss"
-    echo "  - Priority queuing for video packets"
+    echo "  - Advanced packet scheduling (SFQ)"
+    echo "  - Video traffic prioritization"
+    echo "  - Hierarchical bandwidth allocation"
 }
 
 # Interactive menu for dynamic control

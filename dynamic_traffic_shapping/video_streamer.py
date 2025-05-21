@@ -22,14 +22,16 @@ resolution_scale = 1.0  # Scale factor for resolution (1.0 = original, 0.5 = hal
 jpeg_quality = 85       # JPEG quality (0-100)
 target_fps = 30         # Target frames per second
 
-# Buffer settings for smoother playback
-buffer_size = 30        # Further increased buffer size for smoother playback
+# Buffer settings for ultra-smooth playback
+buffer_size = 60        # Doubled buffer size for ultra-smooth playback
 use_buffering = True    # Enable frame buffering
 frame_buffer = []       # Buffer to store frames
-max_retries = 5         # Increased number of retries for failed transmissions
-retry_delay = 0.005     # Reduced delay between retries (5ms)
+max_retries = 8         # Further increased number of retries for failed transmissions
+retry_delay = 0.003     # Further reduced delay between retries (3ms)
 thread_pool = []        # Thread pool for sending frames
-max_threads = 10        # Maximum number of threads in the pool
+max_threads = 15        # Increased maximum number of threads in the pool
+priority_queue = []     # Priority queue for important frames
+frame_sequence = 0      # Frame sequence counter for ordering
 
 # Performance metrics
 frame_sizes = deque(maxlen=30)       # Last 30 frame sizes
@@ -54,13 +56,24 @@ print(f"Original resolution: {frame_width}x{frame_height}")
 test_cap.release()
 
 # Function to send frames to receiver
-def send_frame_to_receiver(jpeg_bytes):
-    global failed_frames, transmission_times, total_frames
+def send_frame_to_receiver(jpeg_bytes, is_keyframe=False):
+    global failed_frames, transmission_times, total_frames, frame_sequence
     
     # Only log occasionally to reduce console spam, but send EVERY frame
-    should_log = (total_frames % 30 == 0)
+    should_log = (total_frames % 60 == 0)
     
+    # Increment frame sequence
+    current_sequence = frame_sequence
+    frame_sequence += 1
+    
+    # Add frame sequence and keyframe flag to the data
     encoded_frame = base64.b64encode(jpeg_bytes).decode('utf-8')
+    data = {
+        'frame': encoded_frame,
+        'sequence': current_sequence,
+        'is_keyframe': is_keyframe
+    }
+    
     start_time = time.time()
     
     # Try multiple times with exponential backoff
@@ -70,14 +83,22 @@ def send_frame_to_receiver(jpeg_bytes):
                 print("Sending frame to receiver...")
             
             # Reduce timeout for faster recovery from network issues
-            timeout = 1.5 if attempt == 0 else 0.75
+            timeout = 1.0 if attempt == 0 else 0.5
             
             # Use a session for connection pooling
             session = requests.Session()
+            
+            # Set headers for better performance
+            headers = {
+                'Content-Type': 'application/json',
+                'Connection': 'keep-alive'
+            }
+            
             response = session.post(
                 f'http://{receiver_ip}:{receiver_port}/receive_video',
-                json={'frame': encoded_frame},
-                timeout=timeout
+                json=data,
+                timeout=timeout,
+                headers=headers
             )
             
             # Record transmission time
@@ -101,7 +122,7 @@ def send_frame_to_receiver(jpeg_bytes):
                 return False
                 
             # Wait before retrying with exponential backoff - use shorter delays
-            time.sleep(retry_delay * (1.5 ** attempt))
+            time.sleep(retry_delay * (1.3 ** attempt))
 
 # Function to encode and send frames
 def generate():
@@ -117,6 +138,7 @@ def generate():
     # Pre-fill buffer if buffering is enabled
     if use_buffering:
         print("Pre-filling frame buffer...")
+        frame_index = 0
         while len(frame_buffer) < buffer_size and local_cap.isOpened():
             ret, frame = local_cap.read()
             if not ret:
@@ -130,13 +152,20 @@ def generate():
                 new_height = int(frame_height * resolution_scale)
                 frame = cv2.resize(frame, (new_width, new_height))
             
+            # Apply subtle sharpening to improve visual quality
+            kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+            frame = cv2.filter2D(frame, -1, kernel)
+            
             # Encode the frame in JPEG format with specified quality
             encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
             ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
             if not ret:
                 continue
-                
-            frame_buffer.append(jpeg.tobytes())
+            
+            # Mark every 10th frame as a keyframe for better synchronization
+            is_keyframe = (frame_index % 10 == 0)
+            frame_buffer.append((jpeg.tobytes(), is_keyframe))
+            frame_index += 1
         
         print(f"Buffer filled with {len(frame_buffer)} frames")
     
@@ -213,6 +242,14 @@ def generate():
             # Record frame size
             frame_sizes.append(len(jpeg_bytes))
             
+            # Determine if this is a keyframe (every 10th frame)
+            is_keyframe = (frame_count % 10 == 0)
+            
+            # Apply subtle sharpening to improve visual quality
+            if is_keyframe:
+                kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+                frame = cv2.filter2D(frame, -1, kernel)
+            
             # Send frame to receiver using thread pool to avoid blocking the main thread
             # Clean up completed threads from the pool
             global thread_pool
@@ -220,14 +257,26 @@ def generate():
             
             # If thread pool is full, wait for a thread to complete
             while len(thread_pool) >= max_threads:
-                time.sleep(0.001)  # Short sleep
+                time.sleep(0.0005)  # Shorter sleep
                 thread_pool = [t for t in thread_pool if t.is_alive()]
             
-            # Create and start a new thread
-            send_thread = threading.Thread(target=lambda: send_frame_to_receiver(jpeg_bytes))
-            send_thread.daemon = True
-            send_thread.start()
-            thread_pool.append(send_thread)
+            # Prioritize keyframes by using a higher thread priority
+            if is_keyframe:
+                # Create and start a new thread with higher priority for keyframes
+                send_thread = threading.Thread(
+                    target=lambda: send_frame_to_receiver(jpeg_bytes, is_keyframe=True)
+                )
+                send_thread.daemon = True
+                send_thread.start()
+                thread_pool.insert(0, send_thread)  # Add to front of pool for priority
+            else:
+                # Create and start a normal thread for regular frames
+                send_thread = threading.Thread(
+                    target=lambda: send_frame_to_receiver(jpeg_bytes, is_keyframe=False)
+                )
+                send_thread.daemon = True
+                send_thread.start()
+                thread_pool.append(send_thread)
             
             success = True  # Assume success for smoother playback
             

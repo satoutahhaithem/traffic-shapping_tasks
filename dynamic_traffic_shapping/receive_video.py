@@ -21,91 +21,124 @@ frame_times = deque(maxlen=30)       # Last 30 frame processing times
 frame_intervals = deque(maxlen=30)   # Last 30 intervals between frames
 failed_decodes = 0                   # Count of failed frame decodes
 
-# Frame buffer for smoother playback
-frame_buffer = deque(maxlen=30)      # Increased buffer size to store more frames
+# Advanced frame buffering for ultra-smooth playback
+frame_buffer = deque(maxlen=60)      # Doubled buffer size again for ultra-smooth playback
+display_buffer = deque(maxlen=10)    # Separate buffer for display to ensure consistent frame rate
 use_buffering = True                 # Enable frame buffering
 buffer_lock = threading.Lock()       # Lock for thread-safe buffer access
+display_lock = threading.Lock()      # Lock for thread-safe display buffer access
 last_good_frame = None               # Store the last successfully decoded frame
+last_keyframe = None                 # Store the last keyframe for reference
+frame_counter = 0                    # Counter for frame sequencing
+last_display_time = time.time()      # Time of last frame display
+target_display_interval = 1.0/30.0   # Target interval between frames (30 FPS)
+received_frames = {}                 # Dictionary to store received frames by sequence number
+max_sequence_gap = 30                # Maximum allowed gap in sequence numbers
+
+# Function to fill the display buffer from the frame buffer
+def fill_display_buffer():
+    global frame_buffer, display_buffer, current_frame, last_good_frame
+    
+    with buffer_lock:
+        # If frame buffer has frames, move some to display buffer
+        if frame_buffer and len(display_buffer) < 5:  # Keep display buffer partially filled
+            with display_lock:
+                while frame_buffer and len(display_buffer) < 8:  # Fill up to 8 frames
+                    display_buffer.append(frame_buffer.popleft())
+        
+        # If display buffer is still empty but we have a current frame
+        if not display_buffer and current_frame is not None:
+            with display_lock:
+                display_buffer.append(current_frame.copy())
+        
+        # If display buffer is still empty but we have a last good frame
+        if not display_buffer and last_good_frame is not None:
+            with display_lock:
+                # Add the last good frame multiple times to prevent blinking
+                for _ in range(3):
+                    display_buffer.append(last_good_frame.copy())
 
 # Function to generate MJPEG stream from received frames
 def generate():
-    global current_frame, frame_buffer
+    global current_frame, frame_buffer, display_buffer, last_display_time, frame_counter
     print("MJPEG stream generator started - waiting for frames...")
     frame_count = 0
     last_log_time = time.time()
-    last_frame_time = time.time()
-    target_frame_duration = 1.0 / 30.0  # Target 30 FPS for smooth playback
+    
+    # Start a background thread to continuously fill the display buffer
+    buffer_filler = threading.Thread(target=lambda: [fill_display_buffer(), time.sleep(0.01)] * 1000000)
+    buffer_filler.daemon = True
+    buffer_filler.start()
     
     while True:
         current_time = time.time()
+        time_since_last_frame = current_time - last_display_time
         
-        # Get frame (either from buffer or directly)
+        # Maintain consistent frame rate
+        if time_since_last_frame < target_display_interval * 0.8:
+            # Not enough time has passed for next frame
+            time.sleep(target_display_interval * 0.1)  # Short sleep
+            continue
+            
+        # Get frame from display buffer or fallback options
         frame_to_encode = None
         
-        if use_buffering:
-            with buffer_lock:
-                if frame_buffer:
-                    frame_to_encode = frame_buffer.popleft()
-                elif current_frame is not None:
-                    frame_to_encode = current_frame.copy()
-                elif last_good_frame is not None:
-                    # Use the last good frame if no new frame is available
-                    frame_to_encode = last_good_frame.copy()
-        elif current_frame is not None:
-            frame_to_encode = current_frame.copy()
-        elif last_good_frame is not None:
-            # Use the last good frame if no new frame is available
-            frame_to_encode = last_good_frame.copy()
+        # First try to get from display buffer
+        with display_lock:
+            if display_buffer:
+                frame_to_encode = display_buffer.popleft()
+        
+        # If no frame in display buffer, try other sources
+        if frame_to_encode is None:
+            if current_frame is not None:
+                frame_to_encode = current_frame.copy()
+            elif last_good_frame is not None:
+                frame_to_encode = last_good_frame.copy()
+                
+        # Fill display buffer if it's getting low
+        if len(display_buffer) < 3:
+            fill_display_buffer()
             
         if frame_to_encode is not None:
             frame_count += 1
+            frame_counter += 1
+            last_display_time = current_time  # Update last display time
             
             # Log only once per second to reduce console output
             if current_time - last_log_time >= 1.0:
-                print(f"Streaming frame #{frame_count} with shape: {frame_to_encode.shape}")
+                print(f"Streaming frame #{frame_count} with shape: {frame_to_encode.shape}, Buffer: {len(display_buffer)}/{len(frame_buffer)}")
                 last_log_time = current_time
             
+            # Apply subtle frame smoothing to reduce flickering
+            frame_to_encode = cv2.GaussianBlur(frame_to_encode, (3, 3), 0)
+            
             # Encode the frame as JPEG with higher quality for smoother playback
-            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 95]  # Increased quality
             ret, jpeg = cv2.imencode('.jpg', frame_to_encode, encode_params)
             if not ret:
                 print("Failed to encode frame for streaming!")
-                time.sleep(0.01)  # Short sleep to prevent CPU spinning
+                time.sleep(0.005)  # Shorter sleep to prevent CPU spinning
                 continue
             
             jpeg_bytes = jpeg.tobytes()
             
             # Only log size occasionally to reduce console spam
-            if frame_count % 30 == 0:
+            if frame_count % 60 == 0:
                 print(f"Encoded JPEG size: {len(jpeg_bytes)} bytes")
-            
-            # Calculate time since last frame
-            frame_time = current_time - last_frame_time
-            last_frame_time = current_time
             
             # Yield the frame in MJPEG format
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + jpeg_bytes + b'\r\n\r\n')
             
-            # Adaptive timing based on buffer state
+            # Precise timing control
             elapsed = time.time() - current_time
-            sleep_time = max(0, target_frame_duration - elapsed)
+            remaining_time = target_display_interval - elapsed
             
-            with buffer_lock:
-                buffer_level = len(frame_buffer)
-                
-            if buffer_level > 10:
-                # Buffer is well-filled, can be more aggressive
-                sleep_time *= 0.7
-            elif buffer_level < 3:
-                # Buffer is getting low, slow down slightly
-                sleep_time *= 0.9
-            else:
-                # Normal buffer level
-                sleep_time *= 0.8
-                
-            if sleep_time > 0:
-                time.sleep(sleep_time)
+            if remaining_time > 0:
+                # Use a more precise sleep method
+                sleep_start = time.time()
+                while time.time() - sleep_start < remaining_time * 0.8:
+                    time.sleep(0.001)  # Micro-sleep for more precise timing
         else:
             # Reduce waiting messages
             if current_time - last_log_time >= 5.0:
@@ -282,15 +315,27 @@ def receive_video():
         fps_estimate = 0.7 * fps_estimate + 0.3 * new_fps  # Smoothed average
     
     frames_received += 1
-    if frames_received % 30 == 0:  # Log less frequently
+    if frames_received % 60 == 0:  # Log less frequently
         print(f"Received frame #{frames_received}, FPS: {fps_estimate:.1f}")
 
-    # Get the base64-encoded frame from the POST request
+    # Get data from the POST request
     data = request.json
     frame_data = data['frame']
+    sequence_number = data.get('sequence', 0)
+    is_keyframe = data.get('is_keyframe', False)
     
     # Record frame size
     frame_sizes.append(len(frame_data))
+    
+    # Clean up old frames from received_frames dictionary
+    current_keys = list(received_frames.keys())
+    if current_keys:
+        min_seq = min(current_keys)
+        max_seq = max(current_keys)
+        # Remove frames that are too old
+        for seq in current_keys:
+            if seq < max_seq - max_sequence_gap:
+                del received_frames[seq]
     
     # Decode the frame from base64 format
     try:
@@ -300,21 +345,41 @@ def receive_video():
 
         if frame is not None:
             if frames_received % 60 == 0:  # Log less frequently
-                print(f"Successfully decoded frame with shape: {frame.shape}")
+                print(f"Successfully decoded frame with shape: {frame.shape}, Sequence: {sequence_number}, Keyframe: {is_keyframe}")
             
             # Store this as the last good frame
             global last_good_frame
             last_good_frame = frame.copy()
             
+            # If this is a keyframe, store it separately
+            if is_keyframe:
+                global last_keyframe
+                last_keyframe = frame.copy()
+                if frames_received % 60 == 0:
+                    print(f"Stored new keyframe at sequence {sequence_number}")
+            
+            # Store frame in sequence dictionary
+            received_frames[sequence_number] = frame.copy()
+            
             # Add frame to buffer if buffering is enabled
             if use_buffering:
                 with buffer_lock:
-                    # Add to buffer
-                    frame_buffer.append(frame)
+                    # Add to buffer based on priority
+                    if is_keyframe:
+                        # Add keyframes to the front of the buffer for priority
+                        frame_buffer.appendleft(frame)
+                    else:
+                        # Add regular frames to the end
+                        frame_buffer.append(frame)
                     
                     # If this is the first frame, also set current_frame
                     if current_frame is None:
                         current_frame = frame
+                        
+                    # If display buffer is low, add directly to it as well
+                    if len(display_buffer) < 2:
+                        with display_lock:
+                            display_buffer.append(frame.copy())
             else:
                 # Set the current frame directly
                 current_frame = frame
