@@ -60,24 +60,49 @@ def fill_display_buffer():
 
 # Function to generate MJPEG stream from received frames
 def generate():
-    global current_frame, frame_buffer, display_buffer, last_display_time, frame_counter
+    global current_frame, frame_buffer, display_buffer, last_display_time, frame_counter, last_good_frame, last_keyframe
     print("MJPEG stream generator started - waiting for frames...")
     frame_count = 0
     last_log_time = time.time()
+    last_frame_sent = None  # Keep track of the last frame we sent
     
     # Start a background thread to continuously fill the display buffer
-    buffer_filler = threading.Thread(target=lambda: [fill_display_buffer(), time.sleep(0.01)] * 1000000)
+    def buffer_filler_task():
+        while True:
+            fill_display_buffer()
+            time.sleep(0.005)  # Run more frequently (5ms)
+    
+    buffer_filler = threading.Thread(target=buffer_filler_task)
     buffer_filler.daemon = True
     buffer_filler.start()
+    
+    # Start another thread to ensure we always have frames in the display buffer
+    def ensure_frames_available():
+        global display_buffer, last_good_frame, last_keyframe
+        while True:
+            with display_lock:
+                # If display buffer is empty, add frames
+                if len(display_buffer) < 5:
+                    # First try to use last keyframe
+                    if last_keyframe is not None:
+                        display_buffer.append(last_keyframe.copy())
+                    # Then try last good frame
+                    elif last_good_frame is not None:
+                        display_buffer.append(last_good_frame.copy())
+            time.sleep(0.01)
+    
+    frame_ensurer = threading.Thread(target=ensure_frames_available)
+    frame_ensurer.daemon = True
+    frame_ensurer.start()
     
     while True:
         current_time = time.time()
         time_since_last_frame = current_time - last_display_time
         
-        # Maintain consistent frame rate
-        if time_since_last_frame < target_display_interval * 0.8:
-            # Not enough time has passed for next frame
-            time.sleep(target_display_interval * 0.1)  # Short sleep
+        # Maintain consistent frame rate but never wait too long
+        if time_since_last_frame < target_display_interval * 0.9 and time_since_last_frame < 0.05:
+            # Not enough time has passed for next frame, but don't wait more than 50ms
+            time.sleep(0.001)  # Very short sleep for more responsive playback
             continue
             
         # Get frame from display buffer or fallback options
@@ -90,13 +115,18 @@ def generate():
         
         # If no frame in display buffer, try other sources
         if frame_to_encode is None:
-            if current_frame is not None:
+            if last_keyframe is not None:
+                frame_to_encode = last_keyframe.copy()
+            elif current_frame is not None:
                 frame_to_encode = current_frame.copy()
             elif last_good_frame is not None:
                 frame_to_encode = last_good_frame.copy()
+            elif last_frame_sent is not None:
+                # Reuse the last frame we sent rather than showing black
+                frame_to_encode = last_frame_sent.copy()
                 
         # Fill display buffer if it's getting low
-        if len(display_buffer) < 3:
+        if len(display_buffer) < 5:
             fill_display_buffer()
             
         if frame_to_encode is not None:
@@ -109,11 +139,14 @@ def generate():
                 print(f"Streaming frame #{frame_count} with shape: {frame_to_encode.shape}, Buffer: {len(display_buffer)}/{len(frame_buffer)}")
                 last_log_time = current_time
             
+            # Store this frame as the last one we sent
+            last_frame_sent = frame_to_encode.copy()
+            
             # Apply subtle frame smoothing to reduce flickering
             frame_to_encode = cv2.GaussianBlur(frame_to_encode, (3, 3), 0)
             
             # Encode the frame as JPEG with higher quality for smoother playback
-            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 95]  # Increased quality
+            encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 98]  # Further increased quality
             ret, jpeg = cv2.imencode('.jpg', frame_to_encode, encode_params)
             if not ret:
                 print("Failed to encode frame for streaming!")
@@ -452,9 +485,9 @@ def video_feed():
         <title>Video Stream</title>
         <style>
             html, body {{ margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }}
-            body {{ background-color: #000; }}
-            .video-container {{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }}
-            img {{ position: absolute; width: 100%; height: 100%; object-fit: contain; }}
+            body {{ background-color: #000; display: flex; justify-content: center; align-items: center; }}
+            .video-container {{ width: 640px; height: 360px; position: relative; }}
+            img {{ width: 640px; height: 360px; object-fit: contain; }}
         </style>
         <script>
             // Add fullscreen functionality

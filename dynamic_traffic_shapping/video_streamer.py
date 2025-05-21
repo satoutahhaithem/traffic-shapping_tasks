@@ -6,6 +6,7 @@ import json
 from flask import Flask, Response, request, jsonify
 import threading
 import statistics
+import numpy as np
 from collections import deque
 
 app = Flask(__name__)
@@ -152,9 +153,10 @@ def generate():
                 new_height = int(frame_height * resolution_scale)
                 frame = cv2.resize(frame, (new_width, new_height))
             
-            # Apply subtle sharpening to improve visual quality
-            kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
-            frame = cv2.filter2D(frame, -1, kernel)
+            # Apply subtle sharpening to improve visual quality for keyframes
+            if frame_index % 10 == 0:  # Every 10th frame is a keyframe
+                kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+                frame = cv2.filter2D(frame, -1, kernel)
             
             # Encode the frame in JPEG format with specified quality
             encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
@@ -182,8 +184,9 @@ def generate():
             
             # Get frame (either from buffer or directly)
             if use_buffering and frame_buffer:
-                # Get frame from buffer
-                jpeg_bytes = frame_buffer.pop(0)
+                # Get frame from buffer (tuple of jpeg_bytes and is_keyframe)
+                frame_data = frame_buffer.pop(0)
+                jpeg_bytes, is_keyframe = frame_data
                 
                 # Read a new frame to refill the buffer
                 ret, frame = local_cap.read()
@@ -197,7 +200,9 @@ def generate():
                     encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
                     ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
                     if ret:
-                        frame_buffer.append(jpeg.tobytes())
+                        # Mark every 10th frame as a keyframe for better synchronization
+                        is_keyframe = (frame_count % 10 == 0)
+                        frame_buffer.append((jpeg.tobytes(), is_keyframe))
                 else:
                     # Try to loop the video by reopening it
                     local_cap.release()
@@ -224,6 +229,11 @@ def generate():
                     new_height = int(frame_height * resolution_scale)
                     frame = cv2.resize(frame, (new_width, new_height))
                 
+                # Apply subtle sharpening to improve visual quality for keyframes
+                if frame_count % 10 == 0:  # Every 10th frame is a keyframe
+                    kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+                    frame = cv2.filter2D(frame, -1, kernel)
+                
                 # Encode the frame in JPEG format with specified quality
                 encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
                 ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
@@ -244,11 +254,6 @@ def generate():
             
             # Determine if this is a keyframe (every 10th frame)
             is_keyframe = (frame_count % 10 == 0)
-            
-            # Apply subtle sharpening to improve visual quality
-            if is_keyframe:
-                kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
-                frame = cv2.filter2D(frame, -1, kernel)
             
             # Send frame to receiver using thread pool to avoid blocking the main thread
             # Clean up completed threads from the pool
@@ -656,9 +661,9 @@ def tx_video_feed():
         <title>Video Stream</title>
         <style>
             html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
-            body { background-color: #000; }
-            .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-            img { position: absolute; width: 100%; height: 100%; object-fit: contain; }
+            body { background-color: #000; display: flex; justify-content: center; align-items: center; }
+            .video-container { width: 640px; height: 360px; position: relative; }
+            img { width: 640px; height: 360px; object-fit: contain; }
         </style>
         <script>
             // Add fullscreen functionality
