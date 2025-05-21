@@ -23,11 +23,13 @@ jpeg_quality = 85       # JPEG quality (0-100)
 target_fps = 30         # Target frames per second
 
 # Buffer settings for smoother playback
-buffer_size = 10        # Increased buffer size for smoother playback
+buffer_size = 30        # Further increased buffer size for smoother playback
 use_buffering = True    # Enable frame buffering
 frame_buffer = []       # Buffer to store frames
-max_retries = 3         # Number of retries for failed transmissions
-retry_delay = 0.01      # Delay between retries (10ms)
+max_retries = 5         # Increased number of retries for failed transmissions
+retry_delay = 0.005     # Reduced delay between retries (5ms)
+thread_pool = []        # Thread pool for sending frames
+max_threads = 10        # Maximum number of threads in the pool
 
 # Performance metrics
 frame_sizes = deque(maxlen=30)       # Last 30 frame sizes
@@ -211,10 +213,22 @@ def generate():
             # Record frame size
             frame_sizes.append(len(jpeg_bytes))
             
-            # Send frame to receiver using a separate thread to avoid blocking the main thread
+            # Send frame to receiver using thread pool to avoid blocking the main thread
+            # Clean up completed threads from the pool
+            global thread_pool
+            thread_pool = [t for t in thread_pool if t.is_alive()]
+            
+            # If thread pool is full, wait for a thread to complete
+            while len(thread_pool) >= max_threads:
+                time.sleep(0.001)  # Short sleep
+                thread_pool = [t for t in thread_pool if t.is_alive()]
+            
+            # Create and start a new thread
             send_thread = threading.Thread(target=lambda: send_frame_to_receiver(jpeg_bytes))
             send_thread.daemon = True
             send_thread.start()
+            thread_pool.append(send_thread)
+            
             success = True  # Assume success for smoother playback
             
             # Yield the frame to stream to browser
@@ -227,14 +241,15 @@ def generate():
             # Adaptive timing based on network conditions
             frame_duration = 1.0 / target_fps
             
-            if not success:
-                # Network is struggling, add a small delay and refill buffer
-                extra_delay = 0.03  # 30ms extra delay (reduced from 50ms)
+            # Adaptive timing based on buffer state and thread pool size
+            if not success or len(thread_pool) > max_threads * 0.8:
+                # Network is struggling or thread pool is getting full
+                extra_delay = 0.02  # 20ms extra delay (reduced from 30ms)
                 sleep_time = max(0, frame_duration - process_time + extra_delay)
                 
                 # If buffer is low, add extra time to refill it
                 if use_buffering and len(frame_buffer) < buffer_size / 2:
-                    sleep_time += 0.01  # Add 10ms to allow buffer refill
+                    sleep_time += 0.005  # Add 5ms to allow buffer refill
             else:
                 # Normal operation - precise timing
                 sleep_time = max(0, frame_duration - process_time)
@@ -243,10 +258,10 @@ def generate():
                 if use_buffering:
                     if len(frame_buffer) < buffer_size / 3:
                         # Buffer is getting low, slow down slightly
-                        sleep_time += 0.005
+                        sleep_time += 0.003
                     elif len(frame_buffer) > buffer_size * 0.8:
                         # Buffer is well-filled, can be more aggressive
-                        sleep_time = max(0, sleep_time - 0.002)
+                        sleep_time = max(0, sleep_time - 0.001)
             
             # Use a more precise sleep
             if sleep_time > 0:
@@ -258,30 +273,6 @@ def generate():
         # Always release the capture object
         local_cap.release()
         print("Video capture released.")
-
-# Flask route to trigger the video stream (this is the route that VLC will use)
-@app.route('/tx_video_feed')
-def video_feed():
-    print("Entering video_feed route...")
-    return """
-    <html>
-    <head>
-        <title>Video Stream</title>
-        <style>
-            body {{ margin: 0; padding: 0; background-color: #000; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }}
-            img {{ max-width: 100%; max-height: 100vh; object-fit: contain; }}
-        </style>
-    </head>
-    <body>
-        <img src="/video_stream_data" style="width: 100%; height: 100%;" />
-    </body>
-    </html>
-    """
-
-@app.route('/video_stream_data')
-def video_stream_data():
-    print("Entering video_stream_data route...")
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/')
 def home():
@@ -608,17 +599,17 @@ def get_metrics():
     return jsonify(metrics)
 
 @app.route('/tx_video_feed')
-def video_feed():
-    print("Entering video_feed route...")
+def tx_video_feed():
+    print("Entering tx_video_feed route...")
     return """
     <html>
     <head>
         <title>Video Stream</title>
         <style>
-            html, body {{ margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }}
-            body {{ background-color: #000; }}
-            .video-container {{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }}
-            img {{ position: absolute; width: 100%; height: 100%; object-fit: cover; }}
+            html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+            body { background-color: #000; }
+            .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+            img { position: absolute; width: 100%; height: 100%; object-fit: contain; }
         </style>
         <script>
             // Add fullscreen functionality

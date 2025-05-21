@@ -119,13 +119,23 @@ apply_ultra_smooth() {
     fi
     
     # Apply optimal network conditions for ultra-smooth streaming:
-    # - Very high bandwidth (30mbit)
-    # - Very low delay (5ms)
+    # - Extremely high bandwidth (50mbit)
+    # - Minimal delay (2ms)
     # - No packet loss (0%)
-    sudo tc qdisc change dev $INTERFACE root netem rate 30mbit delay 5ms loss 0%
+    # - No packet corruption (0%)
+    # - No packet reordering (0%)
+    # - No packet duplication (0%)
+    sudo tc qdisc change dev $INTERFACE root netem rate 50mbit delay 2ms loss 0% corrupt 0% reorder 0% duplicate 0%
+    
+    # Apply priority queuing to prioritize video packets
+    sudo tc qdisc add dev $INTERFACE parent 1:1 handle 10: prio
     
     echo "Ultra-smooth streaming conditions applied successfully!"
-    echo "These settings should provide the smoothest possible video streaming experience."
+    echo "These settings should provide the smoothest possible video streaming experience with:"
+    echo "  - 50Mbit bandwidth"
+    echo "  - 2ms delay"
+    echo "  - 0% packet loss"
+    echo "  - Priority queuing for video packets"
 }
 
 # Interactive menu for dynamic control

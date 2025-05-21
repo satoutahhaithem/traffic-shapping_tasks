@@ -22,9 +22,10 @@ frame_intervals = deque(maxlen=30)   # Last 30 intervals between frames
 failed_decodes = 0                   # Count of failed frame decodes
 
 # Frame buffer for smoother playback
-frame_buffer = deque(maxlen=15)      # Buffer to store frames
+frame_buffer = deque(maxlen=30)      # Increased buffer size to store more frames
 use_buffering = True                 # Enable frame buffering
 buffer_lock = threading.Lock()       # Lock for thread-safe buffer access
+last_good_frame = None               # Store the last successfully decoded frame
 
 # Function to generate MJPEG stream from received frames
 def generate():
@@ -47,8 +48,14 @@ def generate():
                     frame_to_encode = frame_buffer.popleft()
                 elif current_frame is not None:
                     frame_to_encode = current_frame.copy()
+                elif last_good_frame is not None:
+                    # Use the last good frame if no new frame is available
+                    frame_to_encode = last_good_frame.copy()
         elif current_frame is not None:
             frame_to_encode = current_frame.copy()
+        elif last_good_frame is not None:
+            # Use the last good frame if no new frame is available
+            frame_to_encode = last_good_frame.copy()
             
         if frame_to_encode is not None:
             frame_count += 1
@@ -295,6 +302,10 @@ def receive_video():
             if frames_received % 60 == 0:  # Log less frequently
                 print(f"Successfully decoded frame with shape: {frame.shape}")
             
+            # Store this as the last good frame
+            global last_good_frame
+            last_good_frame = frame.copy()
+            
             # Add frame to buffer if buffering is enabled
             if use_buffering:
                 with buffer_lock:
@@ -378,7 +389,7 @@ def video_feed():
             html, body {{ margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }}
             body {{ background-color: #000; }}
             .video-container {{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }}
-            img {{ position: absolute; width: 100%; height: 100%; object-fit: cover; }}
+            img {{ position: absolute; width: 100%; height: 100%; object-fit: contain; }}
         </style>
         <script>
             // Add fullscreen functionality
