@@ -375,12 +375,31 @@ def video_feed():
     <head>
         <title>Video Stream</title>
         <style>
-            body {{ margin: 0; padding: 0; background-color: #000; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }}
-            img {{ max-width: 100%; max-height: 100vh; object-fit: contain; }}
+            html, body {{ margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }}
+            body {{ background-color: #000; }}
+            .video-container {{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }}
+            img {{ position: absolute; width: 100%; height: 100%; object-fit: cover; }}
         </style>
+        <script>
+            // Add fullscreen functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                var videoImg = document.getElementById('videoStream');
+                videoImg.addEventListener('click', function() {
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    } else {
+                        document.documentElement.requestFullscreen().catch(err => {
+                            console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+                        });
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
-        <img src="/video_stream_data" style="width: 100%; height: 100%;" />
+        <div class="video-container">
+            <img id="videoStream" src="/video_stream_data" alt="Video Stream" />
+        </div>
     </body>
     </html>
     """

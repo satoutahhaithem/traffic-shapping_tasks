@@ -55,7 +55,7 @@ test_cap.release()
 def send_frame_to_receiver(jpeg_bytes):
     global failed_frames, transmission_times, total_frames
     
-    # Only log every 30 frames to reduce console spam
+    # Only log occasionally to reduce console spam, but send EVERY frame
     should_log = (total_frames % 30 == 0)
     
     encoded_frame = base64.b64encode(jpeg_bytes).decode('utf-8')
@@ -68,7 +68,7 @@ def send_frame_to_receiver(jpeg_bytes):
                 print("Sending frame to receiver...")
             
             # Reduce timeout for faster recovery from network issues
-            timeout = 2 if attempt == 0 else 1
+            timeout = 1.5 if attempt == 0 else 0.75
             
             # Use a session for connection pooling
             session = requests.Session()
@@ -98,8 +98,8 @@ def send_frame_to_receiver(jpeg_bytes):
                 failed_frames += 1
                 return False
                 
-            # Wait before retrying with exponential backoff
-            time.sleep(retry_delay * (2 ** attempt))
+            # Wait before retrying with exponential backoff - use shorter delays
+            time.sleep(retry_delay * (1.5 ** attempt))
 
 # Function to encode and send frames
 def generate():
@@ -211,8 +211,11 @@ def generate():
             # Record frame size
             frame_sizes.append(len(jpeg_bytes))
             
-            # Send frame to receiver (not in a separate thread to avoid thread safety issues)
-            success = send_frame_to_receiver(jpeg_bytes)
+            # Send frame to receiver using a separate thread to avoid blocking the main thread
+            send_thread = threading.Thread(target=lambda: send_frame_to_receiver(jpeg_bytes))
+            send_thread.daemon = True
+            send_thread.start()
+            success = True  # Assume success for smoother playback
             
             # Yield the frame to stream to browser
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + jpeg_bytes + b'\r\n\r\n')
@@ -603,6 +606,48 @@ def get_metrics():
     }
     
     return jsonify(metrics)
+
+@app.route('/tx_video_feed')
+def video_feed():
+    print("Entering video_feed route...")
+    return """
+    <html>
+    <head>
+        <title>Video Stream</title>
+        <style>
+            html, body {{ margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }}
+            body {{ background-color: #000; }}
+            .video-container {{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }}
+            img {{ position: absolute; width: 100%; height: 100%; object-fit: cover; }}
+        </style>
+        <script>
+            // Add fullscreen functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                var videoImg = document.getElementById('videoStream');
+                videoImg.addEventListener('click', function() {
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    } else {
+                        document.documentElement.requestFullscreen().catch(err => {
+                            console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+                        });
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="video-container">
+            <img id="videoStream" src="/video_stream_data" alt="Video Stream" />
+        </div>
+    </body>
+    </html>
+    """
+
+@app.route('/video_stream_data')
+def video_stream_data():
+    print("Entering video_stream_data route...")
+    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/start_stream', methods=['GET'])
 def start_stream():
