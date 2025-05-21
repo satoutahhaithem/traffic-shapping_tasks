@@ -4,6 +4,7 @@ import base64
 import numpy as np
 import time
 import statistics
+import threading
 from collections import deque
 
 app = Flask(__name__)
@@ -24,9 +25,6 @@ failed_decodes = 0                   # Count of failed frame decodes
 frame_buffer = deque(maxlen=15)      # Buffer to store frames
 use_buffering = True                 # Enable frame buffering
 buffer_lock = threading.Lock()       # Lock for thread-safe buffer access
-
-# Import threading for buffer management
-import threading
 
 # Function to generate MJPEG stream from received frames
 def generate():
