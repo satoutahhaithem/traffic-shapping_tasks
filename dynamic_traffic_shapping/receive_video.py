@@ -22,8 +22,8 @@ frame_intervals = deque(maxlen=30)   # Last 30 intervals between frames
 failed_decodes = 0                   # Count of failed frame decodes
 
 # Advanced frame buffering for ultra-smooth playback
-frame_buffer = deque(maxlen=60)      # Doubled buffer size again for ultra-smooth playback
-display_buffer = deque(maxlen=10)    # Separate buffer for display to ensure consistent frame rate
+frame_buffer = deque(maxlen=120)     # Increased buffer size for better resilience
+display_buffer = deque(maxlen=20)    # Increased display buffer size
 use_buffering = True                 # Enable frame buffering
 buffer_lock = threading.Lock()       # Lock for thread-safe buffer access
 display_lock = threading.Lock()      # Lock for thread-safe display buffer access
@@ -107,13 +107,19 @@ def generate():
             
         # Get frame from display buffer or fallback options
         frame_to_encode = None
-        
-        # First try to get from display buffer
+
+        # Try to get frame from display buffer with a short wait if empty
         with display_lock:
             if display_buffer:
                 frame_to_encode = display_buffer.popleft()
-        
-        # If no frame in display buffer, try other sources
+            else:
+                # If display buffer is empty, wait briefly for a frame to arrive
+                # This prioritizes showing a new frame over immediately showing an old one
+                time.sleep(target_display_interval * 0.5) # Wait up to half the target interval
+                if display_buffer:
+                    frame_to_encode = display_buffer.popleft()
+
+        # If still no frame after waiting, use fallback options
         if frame_to_encode is None:
             if last_keyframe is not None:
                 frame_to_encode = last_keyframe.copy()
@@ -124,27 +130,27 @@ def generate():
             elif last_frame_sent is not None:
                 # Reuse the last frame we sent rather than showing black
                 frame_to_encode = last_frame_sent.copy()
-                
+
         # Fill display buffer if it's getting low
-        if len(display_buffer) < 5:
+        if len(display_buffer) < 10: # Fill if less than half full
             fill_display_buffer()
-            
+
         if frame_to_encode is not None:
             frame_count += 1
             frame_counter += 1
             last_display_time = current_time  # Update last display time
-            
+
             # Log only once per second to reduce console output
             if current_time - last_log_time >= 1.0:
                 print(f"Streaming frame #{frame_count} with shape: {frame_to_encode.shape}, Buffer: {len(display_buffer)}/{len(frame_buffer)}")
                 last_log_time = current_time
-            
+
             # Store this frame as the last one we sent
             last_frame_sent = frame_to_encode.copy()
-            
+
             # Apply subtle frame smoothing to reduce flickering
             frame_to_encode = cv2.GaussianBlur(frame_to_encode, (3, 3), 0)
-            
+
             # Encode the frame as JPEG with higher quality for smoother playback
             encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), 98]  # Further increased quality
             ret, jpeg = cv2.imencode('.jpg', frame_to_encode, encode_params)
@@ -152,21 +158,21 @@ def generate():
                 print("Failed to encode frame for streaming!")
                 time.sleep(0.005)  # Shorter sleep to prevent CPU spinning
                 continue
-            
+
             jpeg_bytes = jpeg.tobytes()
-            
+
             # Only log size occasionally to reduce console spam
             if frame_count % 60 == 0:
                 print(f"Encoded JPEG size: {len(jpeg_bytes)} bytes")
-            
+
             # Yield the frame in MJPEG format
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + jpeg_bytes + b'\r\n\r\n')
-            
+
             # Precise timing control
             elapsed = time.time() - current_time
             remaining_time = target_display_interval - elapsed
-            
+
             if remaining_time > 0:
                 # Use a more precise sleep method
                 sleep_start = time.time()
@@ -177,7 +183,7 @@ def generate():
             if current_time - last_log_time >= 5.0:
                 print("Waiting for frames from streamer...")
                 last_log_time = current_time
-            
+
             time.sleep(0.02)  # Check more frequently for frames but avoid CPU spinning
 
 @app.route('/')
