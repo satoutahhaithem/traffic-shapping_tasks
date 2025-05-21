@@ -1,0 +1,8 @@
+{
+  "throughput_down_mae": 0.20843424493909163,
+  "throughput_down_rmse": 0.5433833102179855,
+  "rtt_mae": 0.08007349946196364,
+  "rtt_rmse": 0.4287738013174645,
+  "packet_loss_mae": 0.09461321213909009,
+  "packet_loss_rmse": 0.5517474003777676
+}

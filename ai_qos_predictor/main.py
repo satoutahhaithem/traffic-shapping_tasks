@@ -157,12 +157,21 @@ def run_prediction(args):
         if args.model_path:
             cmd.extend(['--model', args.model_path])
         elif args.model:
-            # Look for the specified model type
-            model_files = list(MODELS_DIR.glob(f"saved/*{args.model}*.h5"))
-            if model_files:
+            # Look for the specified model type in both the current models directory and the parent models directory
+            model_files = list(MODELS_DIR.glob(f"*{args.model}*.pt"))
+            parent_models_dir = Path("../models")
+            parent_model_files = list(parent_models_dir.glob(f"*{args.model}*.pt"))
+            
+            # Combine the lists
+            all_model_files = model_files + parent_model_files
+            
+            if all_model_files:
                 # Use the most recent model of the specified type
-                model_path = str(sorted(model_files, key=os.path.getmtime)[-1])
+                model_path = str(sorted(all_model_files, key=os.path.getmtime)[-1])
                 cmd.extend(['--model', model_path])
+            else:
+                logger.error(f"No models found. Please train a model first or specify a model path.")
+                return
         
         # Add interface if provided
         if args.interface:
@@ -199,12 +208,21 @@ def visualize_predictions(args):
         if args.model_path:
             cmd.extend(['--model-path', args.model_path])
         elif args.model:
-            # Look for the specified model type
-            model_files = list(MODELS_DIR.glob(f"saved/*{args.model}*.h5"))
-            if model_files:
+            # Look for the specified model type in both the current models directory and the parent models directory
+            model_files = list(MODELS_DIR.glob(f"*{args.model}*.pt"))
+            parent_models_dir = Path("../models")
+            parent_model_files = list(parent_models_dir.glob(f"*{args.model}*.pt"))
+            
+            # Combine the lists
+            all_model_files = model_files + parent_model_files
+            
+            if all_model_files:
                 # Use the most recent model of the specified type
-                model_path = str(sorted(model_files, key=os.path.getmtime)[-1])
+                model_path = str(sorted(all_model_files, key=os.path.getmtime)[-1])
                 cmd.extend(['--model-path', model_path])
+            else:
+                logger.error(f"No models found. Please train a model first or specify a model path.")
+                return
         
         # Add dataset if provided
         if args.dataset:

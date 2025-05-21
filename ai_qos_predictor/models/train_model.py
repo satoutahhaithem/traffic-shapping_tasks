@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Train LSTM Model for QoS Prediction
+Train Model for QoS Prediction
 
-This script trains an LSTM model to predict future network QoS metrics
+This script trains a model to predict future network QoS metrics
 based on sequences of past network measurements.
 """
 
@@ -16,10 +16,13 @@ import json
 import matplotlib.pyplot as plt
 from pathlib import Path
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
+
+import torch
+from torch.utils.data import DataLoader, TensorDataset
+
+# Import model implementations
+from lstm_model import QoSPredictor
+from transformer_model import QoSTransformer
 
 # Configure logging
 logging.basicConfig(
@@ -81,171 +84,68 @@ def load_data(dataset_name):
         'prediction_horizon': metadata['prediction_horizon']
     }
 
-def build_lstm_model(input_shape, output_shape, lstm_units=64, dropout_rate=0.2):
-    """
-    Build an LSTM model for time-series prediction
-    
-    Args:
-        input_shape: Shape of input sequences (sequence_length, n_features)
-        output_shape: Number of target variables to predict
-        lstm_units: Number of LSTM units in each layer
-        dropout_rate: Dropout rate for regularization
-        
-    Returns:
-        Compiled Keras model
-    """
-    model = Sequential([
-        LSTM(lstm_units, return_sequences=True, input_shape=input_shape),
-        Dropout(dropout_rate),
-        LSTM(lstm_units),
-        Dropout(dropout_rate),
-        Dense(output_shape)
-    ])
-    
-    model.compile(
-        optimizer='adam',
-        loss='mse',
-        metrics=['mae']
-    )
-    
-    return model
-
-def build_transformer_model(input_shape, output_shape, head_size=256, num_heads=4, ff_dim=4, num_transformer_blocks=4, dropout_rate=0.2):
-    """
-    Build a Transformer model for time-series prediction
-    
-    Args:
-        input_shape: Shape of input sequences (sequence_length, n_features)
-        output_shape: Number of target variables to predict
-        head_size: Size of attention heads
-        num_heads: Number of attention heads
-        ff_dim: Hidden layer size in feed forward network inside transformer
-        num_transformer_blocks: Number of transformer blocks
-        dropout_rate: Dropout rate for regularization
-        
-    Returns:
-        Compiled Keras model
-    """
-    # Define Transformer block
-    def transformer_encoder(inputs, head_size, num_heads, ff_dim, dropout=0):
-        # Multi-head attention
-        attention_output = tf.keras.layers.MultiHeadAttention(
-            key_dim=head_size, num_heads=num_heads, dropout=dropout
-        )(inputs, inputs)
-        attention_output = tf.keras.layers.Dropout(dropout)(attention_output)
-        attention_output = tf.keras.layers.LayerNormalization(epsilon=1e-6)(inputs + attention_output)
-        
-        # Feed-forward network
-        ffn = tf.keras.Sequential([
-            tf.keras.layers.Dense(ff_dim, activation="relu"),
-            tf.keras.layers.Dense(inputs.shape[-1]),
-        ])
-        ffn_output = ffn(attention_output)
-        ffn_output = tf.keras.layers.Dropout(dropout)(ffn_output)
-        return tf.keras.layers.LayerNormalization(epsilon=1e-6)(attention_output + ffn_output)
-    
-    # Build the model
-    inputs = tf.keras.Input(shape=input_shape)
-    x = inputs
-    
-    # Add transformer blocks
-    for _ in range(num_transformer_blocks):
-        x = transformer_encoder(x, head_size, num_heads, ff_dim, dropout_rate)
-    
-    # Global average pooling
-    x = tf.keras.layers.GlobalAveragePooling1D()(x)
-    
-    # Final dense layer
-    outputs = tf.keras.layers.Dense(output_shape)(x)
-    
-    model = tf.keras.Model(inputs=inputs, outputs=outputs)
-    
-    model.compile(
-        optimizer='adam',
-        loss='mse',
-        metrics=['mae']
-    )
-    
-    return model
-
-def train_model(model, data, epochs=100, batch_size=64, patience=10):
+def train_model(model_type, data, config=None):
     """
     Train the model with early stopping
     
     Args:
-        model: Compiled Keras model
+        model_type: Type of model to train ('lstm' or 'transformer')
         data: Dictionary with training and validation data
-        epochs: Maximum number of epochs to train
-        batch_size: Batch size for training
-        patience: Number of epochs with no improvement before stopping
+        config: Dictionary with model configuration
         
     Returns:
-        Training history
+        Trained model and training history
     """
-    # Define callbacks
-    early_stopping = EarlyStopping(
-        monitor='val_loss',
-        patience=patience,
-        restore_best_weights=True
-    )
-    
-    model_checkpoint = ModelCheckpoint(
-        str(MODELS_DIR / 'best_model.h5'),
-        monitor='val_loss',
-        save_best_only=True
-    )
-    
-    reduce_lr = ReduceLROnPlateau(
-        monitor='val_loss',
-        factor=0.2,
-        patience=5,
-        min_lr=1e-6
-    )
+    # Create model based on type
+    if model_type == 'lstm':
+        model = QoSPredictor(config)
+    elif model_type == 'transformer':
+        model = QoSTransformer(config)
+    else:
+        logger.error(f"Unknown model type: {model_type}")
+        return None, None
     
     # Train the model
-    history = model.fit(
+    history = model.train(
         data['X_train'],
         data['y_train'],
-        epochs=epochs,
-        batch_size=batch_size,
-        validation_data=(data['X_val'], data['y_val']),
-        callbacks=[early_stopping, model_checkpoint, reduce_lr],
-        verbose=1
+        data['X_val'],
+        data['y_val'],
+        {
+            'features': data['features'],
+            'targets': data['targets'],
+            'sequence_length': data['sequence_length'],
+            'prediction_horizon': data['prediction_horizon']
+        }
     )
     
-    return history
+    return model, history
 
 def evaluate_model(model, data):
     """
     Evaluate the model on test data
     
     Args:
-        model: Trained Keras model
+        model: Trained model
         data: Dictionary with test data and metadata
         
     Returns:
         Dictionary with evaluation metrics
     """
     # Make predictions
+    metrics = model.evaluate(data['X_test'], data['y_test'])
+    
+    # Calculate R² score for each target
     y_pred = model.predict(data['X_test'])
     
-    # Calculate metrics for each target
-    metrics = {}
     for i, target in enumerate(data['targets']):
         y_true = data['y_test'][:, i]
         pred = y_pred[:, i]
         
-        mse = mean_squared_error(y_true, pred)
-        rmse = np.sqrt(mse)
-        mae = mean_absolute_error(y_true, pred)
         r2 = r2_score(y_true, pred)
+        metrics[f"{target}_r2"] = r2
         
-        metrics[target] = {
-            'mse': mse,
-            'rmse': rmse,
-            'mae': mae,
-            'r2': r2
-        }
+        logger.info(f"{target} R² score: {r2:.4f}")
     
     return metrics
 
@@ -254,15 +154,15 @@ def plot_history(history, save_path=None):
     Plot training history
     
     Args:
-        history: Training history from model.fit()
+        history: Training history
         save_path: Path to save the plot (optional)
     """
     plt.figure(figsize=(12, 4))
     
     # Plot loss
     plt.subplot(1, 2, 1)
-    plt.plot(history.history['loss'], label='Training Loss')
-    plt.plot(history.history['val_loss'], label='Validation Loss')
+    plt.plot(history['loss'], label='Training Loss')
+    plt.plot(history['val_loss'], label='Validation Loss')
     plt.title('Loss')
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
@@ -270,8 +170,8 @@ def plot_history(history, save_path=None):
     
     # Plot MAE
     plt.subplot(1, 2, 2)
-    plt.plot(history.history['mae'], label='Training MAE')
-    plt.plot(history.history['val_mae'], label='Validation MAE')
+    plt.plot(history['mae'], label='Training MAE')
+    plt.plot(history['val_mae'], label='Validation MAE')
     plt.title('Mean Absolute Error')
     plt.xlabel('Epoch')
     plt.ylabel('MAE')
@@ -290,7 +190,7 @@ def plot_predictions(model, data, num_samples=5, save_path=None):
     Plot predictions vs actual values for a few test samples
     
     Args:
-        model: Trained Keras model
+        model: Trained model
         data: Dictionary with test data and metadata
         num_samples: Number of samples to plot
         save_path: Path to save the plot (optional)
@@ -351,16 +251,24 @@ def save_results(metrics, history, model_summary, save_path):
         f.write("\n\n")
         
         f.write("Training History:\n")
-        f.write(f"Final training loss: {history.history['loss'][-1]:.4f}\n")
-        f.write(f"Final validation loss: {history.history['val_loss'][-1]:.4f}\n")
-        f.write(f"Final training MAE: {history.history['mae'][-1]:.4f}\n")
-        f.write(f"Final validation MAE: {history.history['val_mae'][-1]:.4f}\n")
+        f.write(f"Final training loss: {history['loss'][-1]:.4f}\n")
+        f.write(f"Final validation loss: {history['val_loss'][-1]:.4f}\n")
+        f.write(f"Final training MAE: {history['mae'][-1]:.4f}\n")
+        f.write(f"Final validation MAE: {history['val_mae'][-1]:.4f}\n")
         f.write("\n")
         
         f.write("Evaluation Metrics:\n")
-        for target, target_metrics in metrics.items():
-            f.write(f"Target: {target}\n")
-            for metric_name, value in target_metrics.items():
+        # Check if metrics is a nested dictionary or a flat dictionary
+        if any(isinstance(v, dict) for v in metrics.values()):
+            # Nested dictionary structure
+            for target, target_metrics in metrics.items():
+                f.write(f"Target: {target}\n")
+                for metric_name, value in target_metrics.items():
+                    f.write(f"  {metric_name}: {value:.4f}\n")
+                f.write("\n")
+        else:
+            # Flat dictionary structure
+            for metric_name, value in metrics.items():
                 f.write(f"  {metric_name}: {value:.4f}\n")
             f.write("\n")
     
@@ -402,6 +310,11 @@ def main():
         except Exception as e:
             logger.error(f"Error loading configuration: {e}")
     
+    # Add command-line arguments to config
+    config['epochs'] = args.epochs
+    config['batch_size'] = args.batch_size
+    config['patience'] = args.patience
+    
     # Load data
     data = load_data(args.dataset)
     
@@ -418,73 +331,26 @@ def main():
     logger.info(f"Validation samples: {len(data['X_val'])}")
     logger.info(f"Test samples: {len(data['X_test'])}")
     
-    # Build model
-    input_shape = (data['sequence_length'], len(data['features']))
-    output_shape = len(data['targets'])
-    
-    if args.model_type == 'lstm':
-        # Get LSTM hyperparameters from config or use defaults
-        lstm_units = config.get('lstm_units', 64)
-        dropout_rate = config.get('dropout_rate', 0.2)
-        
-        model = build_lstm_model(
-            input_shape, 
-            output_shape, 
-            lstm_units=lstm_units, 
-            dropout_rate=dropout_rate
-        )
-    elif args.model_type == 'transformer':
-        # Get Transformer hyperparameters from config or use defaults
-        head_size = config.get('head_size', 256)
-        num_heads = config.get('num_heads', 4)
-        ff_dim = config.get('ff_dim', 4)
-        num_transformer_blocks = config.get('num_transformer_blocks', 4)
-        dropout_rate = config.get('dropout_rate', 0.2)
-        
-        model = build_transformer_model(
-            input_shape, 
-            output_shape, 
-            head_size=head_size, 
-            num_heads=num_heads, 
-            ff_dim=ff_dim, 
-            num_transformer_blocks=num_transformer_blocks, 
-            dropout_rate=dropout_rate
-        )
-    else:
-        logger.error(f"Unknown model type: {args.model_type}")
-        return
-    
-    # Get model summary as string
-    model_summary_lines = []
-    model.summary(print_fn=lambda x: model_summary_lines.append(x))
-    model_summary = "\n".join(model_summary_lines)
-    
-    logger.info("Model built")
-    logger.info(model_summary)
-    
     # Train model
     logger.info("Training model...")
-    history = train_model(
-        model, 
-        data, 
-        epochs=args.epochs, 
-        batch_size=args.batch_size, 
-        patience=args.patience
-    )
+    model, history = train_model(args.model_type, data, config)
+    
+    if model is None:
+        logger.error("Model training failed")
+        return
+    
     logger.info("Model training completed")
     
     # Evaluate model
     logger.info("Evaluating model...")
     metrics = evaluate_model(model, data)
     
-    # Log metrics
-    for target, target_metrics in metrics.items():
-        logger.info(f"Metrics for {target}:")
-        for metric_name, value in target_metrics.items():
-            logger.info(f"  {metric_name}: {value:.4f}")
+    # Get model summary as string
+    model_summary = str(model.model)
     
     # Plot and save results
-    timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+    from datetime import datetime
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
     plot_history(
         history,
@@ -501,20 +367,15 @@ def main():
         metrics,
         history,
         model_summary,
-        save_path=RESULTS_DIR / f"{args.dataset}_{args.model_type}_results_{timestamp}.txt"
+        RESULTS_DIR / f"{args.dataset}_{args.model_type}_results_{timestamp}.txt"
     )
     
     # Save model
-    model_path = MODELS_DIR / f"{args.dataset}_{args.model_type}_model_{timestamp}.h5"
-    model.save(model_path)
-    logger.info(f"Model saved to {model_path}")
+    model_name = f"{args.dataset}_{args.model_type}_{timestamp}"
+    model.save(model_name)
     
-    # Save model architecture as JSON
-    model_json = model.to_json()
-    with open(MODELS_DIR / f"{args.dataset}_{args.model_type}_model_{timestamp}.json", "w") as json_file:
-        json_file.write(model_json)
-    
-    logger.info("Model training and evaluation completed")
+    logger.info(f"Model saved as {model_name}")
+    logger.info("Training and evaluation completed successfully")
 
 if __name__ == "__main__":
     main()

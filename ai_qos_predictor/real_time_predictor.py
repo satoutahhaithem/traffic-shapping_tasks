@@ -401,10 +401,15 @@ class QoSPredictionSystem:
             # Make prediction
             y_pred = self.model.predict(X)
             
+            # Print debug information
+            print(f"Raw prediction shape: {y_pred.shape}")
+            print(f"Raw prediction values: {y_pred}")
+            
             # Convert to dictionary
             predictions = {}
             for i, target in enumerate(self.model.metadata['targets']):
-                predictions[target] = y_pred[0, i]
+                predictions[target] = float(y_pred[0, i])  # Convert to float to avoid nan issues
+                print(f"Prediction for {target}: {predictions[target]}")
             
             # Add timestamp
             predictions['timestamp'] = time.time()
@@ -599,23 +604,43 @@ class RealTimePlotter:
                 # Plot throughput prediction
                 if 'throughput_down' in predictions_df.columns:
                     x = [pred_offset]
-                    self.axes[0].plot(x, predictions_df['throughput_down'].iloc[-1:], 'bo', markersize=8, label='Predicted')
-                    self.axes[0].plot([pred_offset-1, pred_offset], 
-                                     [metrics_df['throughput_down'].iloc[-1], predictions_df['throughput_down'].iloc[-1]], 
-                                     'b--', alpha=0.5)
+                    # Make predictions more visible
+                    self.axes[0].plot(x, predictions_df['throughput_down'].iloc[-1:], 'bo', markersize=12, label='Predicted')
+                    self.axes[0].plot([pred_offset-1, pred_offset],
+                                     [metrics_df['throughput_down'].iloc[-1], predictions_df['throughput_down'].iloc[-1]],
+                                     'b--', linewidth=2, alpha=0.8)
+                    
+                    # Print prediction value for debugging
+                    print(f"Throughput prediction: {predictions_df['throughput_down'].iloc[-1]}")
                 
                 # Plot RTT prediction
                 if 'rtt' in predictions_df.columns:
                     x = [pred_offset]
-                    self.axes[1].plot(x, predictions_df['rtt'].iloc[-1:], 'ro', markersize=8, label='Predicted')
-                    self.axes[1].plot([pred_offset-1, pred_offset], 
-                                     [metrics_df['rtt'].iloc[-1], predictions_df['rtt'].iloc[-1]], 
-                                     'r--', alpha=0.5)
+                    # Make predictions more visible
+                    self.axes[1].plot(x, predictions_df['rtt'].iloc[-1:], 'ro', markersize=12, label='Predicted')
+                    self.axes[1].plot([pred_offset-1, pred_offset],
+                                     [metrics_df['rtt'].iloc[-1], predictions_df['rtt'].iloc[-1]],
+                                     'r--', linewidth=2, alpha=0.8)
+                    
+                    # Print prediction value for debugging
+                    print(f"RTT prediction: {predictions_df['rtt'].iloc[-1]}")
+                
+                # Plot stall probability if available
+                # Plot packet loss prediction
+                if 'packet_loss' in predictions_df.columns:
+                    x = [pred_offset]
+                    self.axes[2].plot(x, predictions_df['packet_loss'].iloc[-1:], 'mo', markersize=12, label='Predicted')
+                    self.axes[2].plot([pred_offset-1, pred_offset],
+                                     [metrics_df['packet_loss'].iloc[-1], predictions_df['packet_loss'].iloc[-1]],
+                                     'm--', linewidth=2, alpha=0.8)
+                    
+                    # Print prediction value for debugging
+                    print(f"Packet loss prediction: {predictions_df['packet_loss'].iloc[-1]}")
                 
                 # Plot stall probability if available
                 if 'stall_event' in predictions_df.columns:
                     stall_prob = predictions_df['stall_event'].iloc[-1]
-                    self.axes[2].axhline(y=stall_prob*100, color='r', linestyle='--', 
+                    self.axes[2].axhline(y=stall_prob*100, color='r', linestyle='--', linewidth=2,
                                         label=f'Stall Prob: {stall_prob:.2f}')
             
             # Add legends

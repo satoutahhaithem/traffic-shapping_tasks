@@ -470,6 +470,89 @@ The system generates several types of graphs to visualize the results:
    - Shows 3D surface plots of multiple parameters
    - Helps identify complex relationships between parameters
 
+#### Side-by-Side Comparison of Controlled vs. Measured Metrics
+
+The dynamic traffic shaping implementation includes a script for generating side-by-side comparisons of controlled parameters and measured metrics:
+
+```bash
+python3 dynamic_traffic_shapping/compare_controlled_vs_measured.py
+```
+
+This script:
+1. Collects data from test results
+2. Generates comparison graphs showing controlled parameters on the left and measured metrics on the right
+3. Creates a comprehensive HTML report with tabular and graphical views
+
+**Sample Output:**
+
+The report includes a tabular view that looks like this:
+
+| Network   | Controlled Rate | Measured Bandwidth | Controlled Delay | Measured Delay | Controlled Loss | Measured Loss | Visual Quality | Smoothness |
+|-----------|----------------|-------------------|-----------------|---------------|----------------|--------------|---------------|------------|
+| Excellent | 10mbit         | 2.48 Mbps         | 20ms            | 17.23 ms      | 0%             | 0.00%        | 95.0          | 98.5       |
+| Good      | 6mbit          | 1.94 Mbps         | 40ms            | 32.27 ms      | 0.5%           | 0.41%        | 88.5          | 92.0       |
+| Fair      | 4mbit          | 3.21 Mbps         | 80ms            | 96.79 ms      | 1%             | 1.18%        | 75.0          | 78.5       |
+| Poor      | 2mbit          | 2.10 Mbps         | 150ms           | 115.51 ms     | 3%             | 2.29%        | 55.0          | 45.0       |
+
+The report also includes detailed graphs for each network condition, showing:
+- Bandwidth comparison (controlled vs. measured)
+- Delay comparison (controlled vs. measured)
+- Packet loss comparison (controlled vs. measured)
+
+**Viewing the Report:**
+
+After running the script, you can view the report by opening the generated HTML file in a web browser:
+
+```bash
+# Using xdg-open (Linux)
+xdg-open test_results/comparison_graphs/comparison_report.html
+
+# Using a specific browser
+firefox test_results/comparison_graphs/comparison_report.html
+# or
+google-chrome test_results/comparison_graphs/comparison_report.html
+```
+
+This comparison helps you understand how the actual measured metrics differ from the controlled parameters, providing insights into how network conditions affect video streaming performance.
+
+The report now includes two different ways to view the comparison graphs:
+
+1. **Side-by-Side View**: Shows controlled parameters on the left and measured metrics on the right
+2. **Combined View**: Shows both controlled and measured metrics on the same graph for direct comparison
+
+You can switch between these views using the tabs in the report:
+
+![Comparison Views](test_results/comparison_graphs/view_tabs.png)
+
+The combined view is particularly useful for directly comparing how measured metrics track with controlled parameters, making it easier to identify patterns and discrepancies.
+
+**Customizing the Comparison:**
+
+You can customize the `compare_controlled_vs_measured.py` script to suit your needs:
+
+1. **Changing the network conditions**: Edit the `NETWORK_CONDITIONS` array at the beginning of the script:
+   ```python
+   NETWORK_CONDITIONS = [
+       {"name": "Excellent", "rate": "10mbit", "delay": "20ms", "loss": "0%"},
+       {"name": "Good", "rate": "6mbit", "delay": "40ms", "loss": "0.5%"},
+       {"name": "Fair", "rate": "4mbit", "delay": "80ms", "loss": "1%"},
+       {"name": "Poor", "rate": "2mbit", "delay": "150ms", "loss": "3%"}
+   ]
+   ```
+
+2. **Using different data sources**: By default, the script uses `live_data.json` in the `test_results` directory. You can modify the `RESULTS_FILE` variable to use a different data source:
+   ```python
+   RESULTS_FILE = os.path.join(RESULTS_DIR, "your_custom_data.json")
+   ```
+
+3. **Generating additional graphs**: You can extend the script to generate additional types of graphs by adding new functions similar to the existing `generate_bandwidth_graphs`, `generate_delay_graphs`, etc.
+
+4. **Integrating with automated testing**: You can call this script at the end of your testing process to automatically generate comparison reports:
+   ```python
+   # At the end of your testing script
+   subprocess.run(["python3", "dynamic_traffic_shapping/compare_controlled_vs_measured.py"])
+   ```
+
 ### Dynamic Usage Instructions
 
 To use the dynamic traffic shaping system:

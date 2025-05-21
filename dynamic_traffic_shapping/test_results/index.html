@@ -4,19 +4,71 @@
             <title>Dynamic Quality Testing Results</title>
             <style>
                 body { font-family: Arial, sans-serif; margin: 20px; }
-                .container { max-width: 800px; margin: 0 auto; }
-                h1, h2 { color: #333; }
+                .container { max-width: 1200px; margin: 0 auto; }
+                h1, h2, h3 { color: #333; }
                 table { border-collapse: collapse; width: 100%; }
                 th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
                 th { background-color: #f2f2f2; }
                 tr:nth-child(even) { background-color: #f9f9f9; }
-                .button { display: inline-block; padding: 8px 16px; background-color: #007bff; 
+                .button { display: inline-block; padding: 8px 16px; background-color: #007bff;
                          color: white; text-decoration: none; border-radius: 4px; }
+                .graph-thumbnail { transition: transform 0.3s ease; }
+                .graph-thumbnail:hover { transform: scale(1.05); }
+                .graph-container { display: flex; flex-wrap: wrap; gap: 15px; margin: 20px 0; }
+                .graph-item { flex: 1; min-width: 250px; text-align: center; }
+                .graph-item img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; }
+                .graph-item div { margin-top: 5px; font-weight: bold; }
             </style>
         </head>
         <body>
             <div class="container">
                 <h1>Dynamic Quality Testing Results</h1>
+                
+                <div style="margin-bottom: 20px; padding: 15px; background-color: #f0f8ff; border-left: 4px solid #1e90ff;">
+                    <h2>Network Analysis Graphs</h2>
+                    <p>The following graphs show the relationship between controlled network parameters and measured metrics:</p>
+                    <div class="graph-container">
+                        <div class="graph-item">
+                            <a href="bandwidth_graphs.png" target="_blank">
+                                <img src="bandwidth_graphs.png" alt="Bandwidth Analysis" class="graph-thumbnail">
+                                <div>Bandwidth Analysis</div>
+                            </a>
+                        </div>
+                        <div class="graph-item">
+                            <a href="delay_graphs.png" target="_blank">
+                                <img src="delay_graphs.png" alt="Delay Analysis" class="graph-thumbnail">
+                                <div>Delay Analysis</div>
+                            </a>
+                        </div>
+                        <div class="graph-item">
+                            <a href="loss_graphs.png" target="_blank">
+                                <img src="loss_graphs.png" alt="Packet Loss Analysis" class="graph-thumbnail">
+                                <div>Packet Loss Analysis</div>
+                            </a>
+                        </div>
+                        <div class="graph-item">
+                            <a href="combined_graph.png" target="_blank">
+                                <img src="combined_graph.png" alt="Combined Analysis" class="graph-thumbnail">
+                                <div>Combined Analysis (3D)</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px; padding: 15px; background-color: #fff0f5; border-left: 4px solid #ff69b4;">
+                    <h2>Time Series Analysis</h2>
+                    <p>The following graph shows how metrics change over time during testing:</p>
+                    <div class="graph-container">
+                        <div class="graph-item" style="flex: 1; min-width: 90%;">
+                            <a href="time_series_graphs.png" target="_blank">
+                                <img src="time_series_graphs.png" alt="Time Series Analysis" class="graph-thumbnail">
+                                <div>Metrics Over Time</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>Test Results</h2>
                 <p>Select a test result to view:</p>
                 
                 <table>

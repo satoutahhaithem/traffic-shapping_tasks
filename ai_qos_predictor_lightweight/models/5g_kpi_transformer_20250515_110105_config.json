@@ -1,0 +1,39 @@
+{
+  "config": {
+    "embed_dim": 64,
+    "num_heads": 4,
+    "ff_dim": 128,
+    "num_transformer_blocks": 2,
+    "mlp_units": [
+      64
+    ],
+    "dropout_rate": 0.2,
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "epochs": 100,
+    "patience": 10,
+    "model_type": "regression"
+  },
+  "metadata": {
+    "features": [
+      "throughput_down",
+      "throughput_up",
+      "rtt",
+      "jitter",
+      "packet_loss",
+      "sinr",
+      "rsrp",
+      "rsrq"
+    ],
+    "targets": [
+      "throughput_down",
+      "rtt",
+      "packet_loss"
+    ],
+    "sequence_length": 10,
+    "prediction_horizon": 3
+  },
+  "input_size": 8,
+  "d_model": 64,
+  "output_size": 3
+}

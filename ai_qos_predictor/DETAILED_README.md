@@ -70,6 +70,36 @@ Think of it like driving a car:
 
 Our system works in four main stages:
 
+```mermaid
+flowchart TD
+    subgraph "1. Data Collection & Processing"
+        A1[Collect Network Measurements] --> A2[Clean Data]
+        A2 --> A3[Organize Data]
+    end
+    
+    subgraph "2. Feature Extraction"
+        B1[Create Time Sequences] --> B2[Normalize Data]
+        B2 --> B3[Extract Features]
+    end
+    
+    subgraph "3. Model Training"
+        C1[Split Data] --> C2[Train LSTM Model]
+        C2 --> C3[Validate Model]
+        C3 --> C4[Save Trained Model]
+    end
+    
+    subgraph "4. Making Predictions"
+        D1[Monitor Network] --> D2[Feed Data to Model]
+        D2 --> D3[Generate Predictions]
+        D3 --> D4[Adjust Video Quality]
+    end
+    
+    A3 --> B1
+    B3 --> C1
+    C4 --> D2
+```
+*Figure 1: The four main stages of the AI QoS prediction system*
+
 ### 1. Data Collection and Processing
 
 First, we collect network measurements from real-world scenarios, like a phone in a moving car. These measurements include:
@@ -117,6 +147,57 @@ Our primary dataset is the **5G KPI Dataset** (also known as "Beyond Throughput"
 - **Context Information**: GPS location, speed, cell tower ID
 - **Time Information**: Timestamps for each measurement
 
+```mermaid
+graph LR
+    subgraph "Raw Data Collection"
+        A1[Mobile Device] --> A2[Network Measurements]
+        A1 --> A3[GPS Location]
+        A1 --> A4[Timestamps]
+    end
+    
+    subgraph "Data Types"
+        B1[Throughput]
+        B2[RTT]
+        B3[Packet Loss]
+        B4[Signal Strength]
+        B5[Location]
+        B6[Speed]
+        B7[Cell Tower ID]
+    end
+    
+    A2 --> B1
+    A2 --> B2
+    A2 --> B3
+    A2 --> B4
+    A3 --> B5
+    A3 --> B6
+    A3 --> B7
+    
+    subgraph "Data Processing"
+        C1[Clean Data]
+        C2[Create Sequences]
+        C3[Normalize Values]
+        C4[Split Data]
+    end
+    
+    B1 --> C1
+    B2 --> C1
+    B3 --> C1
+    B4 --> C1
+    B5 --> C1
+    B6 --> C1
+    B7 --> C1
+    
+    C1 --> C2
+    C2 --> C3
+    C3 --> C4
+    
+    C4 --> D1[Training Data]
+    C4 --> D2[Validation Data]
+    C4 --> D3[Test Data]
+```
+*Figure 6: Data collection, types, and processing pipeline*
+
 ### How We Use the Data
 
 1. **Sequences**: We organize the data into overlapping windows (e.g., 10-second sequences)
@@ -134,6 +215,23 @@ We use an **LSTM (Long Short-Term Memory)** neural network, which is specially d
 
 Our model consists of:
 
+```mermaid
+graph TD
+    A[Input Layer: 10 time steps x 8 features] --> B[LSTM Layer: 64 units]
+    B --> C[Dropout Layer: 20%]
+    C --> D[LSTM Layer: 64 units]
+    D --> E[Dropout Layer: 20%]
+    E --> F[Dense Output Layer: 3 units]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#ddd,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
+    style E fill:#ddd,stroke:#333,stroke-width:2px
+    style F fill:#bfb,stroke:#333,stroke-width:2px
+```
+*Figure 2: LSTM neural network architecture used in our prediction model*
+
 1. **Input Layer**: Takes in sequences of network measurements (10 time steps with 8 features each)
 2. **First LSTM Layer**: 64 units that process the sequence and remember important patterns
 3. **Dropout Layer**: Randomly ignores some information to prevent over-reliance on specific patterns
@@ -150,6 +248,32 @@ LSTM networks have a special ability to "remember" important information and "fo
 3. They can ignore random fluctuations that don't predict future conditions
 
 Think of it like an experienced driver who knows that when they see certain signs or landmarks, they should prepare for a change in road conditions ahead.
+
+```mermaid
+sequenceDiagram
+    participant Input as Network Measurements
+    participant Memory as LSTM Memory Cell
+    participant Output as Prediction
+    
+    Note over Memory: Initial state
+    
+    Input->>Memory: Throughput dropping slightly
+    Memory->>Memory: Remember pattern start
+    Memory->>Output: No significant change predicted
+    
+    Input->>Memory: Throughput continues dropping
+    Memory->>Memory: Recognize developing pattern
+    Memory->>Output: Predict RTT increase soon
+    
+    Input->>Memory: Signal strength decreasing
+    Memory->>Memory: Strengthen pattern recognition
+    Memory->>Output: Predict throughput drop and packet loss
+    
+    Input->>Memory: Random fluctuation in RTT
+    Memory->>Memory: Ignore as noise (not part of pattern)
+    Memory->>Output: Maintain previous prediction
+```
+*Figure 3: Simplified illustration of how LSTM remembers patterns and makes predictions*
 
 ## Visualizations: Understanding the Results
 
@@ -208,6 +332,33 @@ Our prediction system can be integrated with video players to:
 2. **Smart Buffering**: Buffer more content when the system predicts network degradation
 3. **Route Planning**: In connected vehicles, suggest routes with better predicted network coverage
 
+```mermaid
+graph TD
+    subgraph "Traditional Video Player"
+        A1[Monitor Current Network] --> B1{Network OK?}
+        B1 -->|Yes| C1[Continue High Quality]
+        B1 -->|No| D1[Reduce Quality]
+        D1 --> E1[Buffer More Content]
+        E1 --> F1[Resume Playback]
+    end
+    
+    subgraph "AI-Enhanced Video Player"
+        A2[Monitor Current Network] --> B2[Predict Future Network]
+        B2 --> C2{Problems Predicted?}
+        C2 -->|No| D2[Continue High Quality]
+        C2 -->|Yes| E2[Gradually Reduce Quality]
+        E2 --> F2[Increase Buffer Size]
+        F2 --> G2[Maintain Smooth Playback]
+    end
+    
+    style A1 fill:#f99,stroke:#333,stroke-width:1px
+    style A2 fill:#9f9,stroke:#333,stroke-width:1px
+    style B2 fill:#9f9,stroke:#333,stroke-width:2px
+    style E2 fill:#9f9,stroke:#333,stroke-width:1px
+    style F2 fill:#9f9,stroke:#333,stroke-width:1px
+```
+*Figure 4: Comparison between traditional and AI-enhanced video streaming approaches*
+
 ### Example Scenario
 
 Imagine watching a video while riding in a car:
@@ -215,6 +366,53 @@ Imagine watching a video while riding in a car:
 1. The car approaches an area with poor coverage (like a tunnel)
 2. Traditional player: Continues at high quality until signal drops, then buffers and quality drops sharply
 3. Our system: Detects patterns indicating approaching poor coverage, gradually reduces quality and increases buffer before entering the tunnel, maintaining smooth playback
+
+```mermaid
+sequenceDiagram
+    participant Car as Moving Vehicle
+    participant Network as Network Conditions
+    participant Traditional as Traditional Player
+    participant AI as AI-Enhanced Player
+    
+    Note over Car: Approaching tunnel
+    
+    Car->>Network: Location update
+    Network->>Traditional: Current conditions (still good)
+    Network->>AI: Current conditions (still good)
+    
+    AI->>AI: Analyze recent network patterns
+    AI->>AI: Predict upcoming poor coverage
+    
+    Traditional->>Traditional: Continue high quality (1080p)
+    AI->>AI: Preemptively reduce quality (720p)
+    AI->>AI: Increase buffer size
+    
+    Note over Car: Entering tunnel
+    
+    Car->>Network: Location update
+    Network->>Traditional: Degraded conditions
+    Network->>AI: Degraded conditions
+    
+    Traditional->>Traditional: Buffer underrun!
+    Traditional->>Traditional: Playback freezes
+    Traditional->>Traditional: Drop to low quality (240p)
+    Traditional->>Traditional: Resume playback
+    
+    AI->>AI: Use pre-buffered content
+    AI->>AI: Smooth playback continues
+    AI->>AI: Gradually adjust to 480p
+    
+    Note over Car: Exiting tunnel
+    
+    Car->>Network: Location update
+    Network->>Traditional: Improved conditions
+    Network->>AI: Improved conditions
+    
+    Traditional->>Traditional: Increase quality (720p)
+    AI->>AI: Predict stable good coverage
+    AI->>AI: Increase quality (1080p)
+```
+*Figure 5: Timeline comparison of traditional vs. AI-enhanced video streaming when entering a tunnel*
 
 ## Step-by-Step Guide to Using the System
 

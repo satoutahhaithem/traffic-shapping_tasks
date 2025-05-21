@@ -5,6 +5,16 @@
 *.h5
 *.pkl
 
+# Specific large files that exceed GitHub's 100MB limit
+ai_qos_predictor/data/features/5g_kpi_sequences.npz
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.wmv
+
 # Raw data directories
 ai_qos_predictor/data/raw/
 
