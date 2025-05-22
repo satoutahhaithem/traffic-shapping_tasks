@@ -8,17 +8,16 @@ A lightweight solution for streaming video between computers with real-time traf
 
 ```bash
 # Start the receiver WITH VIDEO DISPLAY (important!)
-python direct_receiver.py --display --buffer 60
+python direct_receiver.py --display
 ```
 
 The `--display` flag is critical - without it, the receiver will process frames but not show the video.
-The `--buffer` option controls frame buffering (higher values = smoother video but more delay).
 
 ### On the Sender Computer (e.g., 192.168.2.120):
 
 ```bash
 # Start the sender
-python direct_sender.py --ip 192.168.2.169 --video ../video/zidane.mp4 --buffer 30
+python direct_sender.py --ip 192.168.2.169 --video ../video/zidane.mp4
 ```
 
 ### What You'll See:
@@ -30,7 +29,23 @@ python direct_sender.py --ip 192.168.2.169 --video ../video/zidane.mp4 --buffer 
 2. On the sender:
    - Traffic statistics in the terminal
 
-## Fixing Video Blocking/Stuttering
+## Controlling Video Playback
+
+### Fixing Video Speed Issues
+
+If the video plays too fast or too slow:
+
+```bash
+# On the receiver - force a specific playback FPS
+python direct_receiver.py --display --fps 30
+
+# On the sender - control the sending rate
+python direct_sender.py --ip 192.168.2.169 --fps 30
+```
+
+The system will automatically match the video's original frame rate by default, but you can override it with the `--fps` option on both sides.
+
+### Fixing Video Blocking/Stuttering
 
 If the video blocks or stutters:
 
@@ -48,13 +63,6 @@ If the video blocks or stutters:
    python direct_sender.py --ip 192.168.2.169 --quality 80 --scale 0.75
    ```
 
-3. **Limit the frame rate**:
-   ```bash
-   python direct_sender.py --ip 192.168.2.169 --fps 15
-   ```
-
-4. **Check network conditions** using the traffic control script.
-
 ## Command Options
 
 ### Sender Options:
@@ -71,6 +79,7 @@ If the video blocks or stutters:
 - `--port`: Port to listen on (default: 9999)
 - `--display`: Display video (REQUIRED to see the video)
 - `--buffer`: Frame buffer size (default: 60)
+- `--fps`: Override playback FPS (default: 0 = use sender's FPS)
 
 ## Testing on a Single Computer
 
@@ -103,14 +112,14 @@ Choose from the menu:
 
 ## How It Works
 
-1. The sender reads frames from a video file into a buffer
-2. A separate thread sends frames from the buffer at a controlled rate
-3. Frames are compressed using JPEG encoding
-4. Compressed frames are sent over TCP to the receiver
-5. The receiver stores incoming frames in a buffer
-6. A separate thread displays frames from the buffer at a controlled rate
-7. Both sides monitor and display traffic statistics
-8. The tc script can modify network conditions to test performance
+1. The sender reads frames from a video file at the video's natural frame rate
+2. Frames are stored in a buffer on the sender side
+3. A separate thread sends frames at the target FPS rate
+4. Frames are compressed using JPEG encoding
+5. Compressed frames are sent over TCP to the receiver
+6. The receiver stores incoming frames in a buffer
+7. A separate thread displays frames at the correct playback rate
+8. Both sides monitor and display traffic statistics
 
 ## Troubleshooting
 
@@ -120,6 +129,9 @@ Choose from the menu:
   - Ensure you used the `--display` flag on the receiver
   - Make sure you have a GUI environment (X server) running
   - Check that OpenCV is installed correctly with GUI support
+- **Video speed issues**:
+  - Use the `--fps` option on both sender and receiver to set the same frame rate
+  - Try matching the original video's frame rate
 - **Video stuttering/blocking**:
   - Increase buffer sizes on both sender and receiver
   - Reduce video quality or resolution

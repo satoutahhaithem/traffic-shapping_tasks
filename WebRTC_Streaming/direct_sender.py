@@ -73,7 +73,9 @@ def print_stats():
     print("\nVIDEO STATISTICS:")
     print(f"  Resolution:     {frame_width}x{frame_height}")
     print(f"  Avg frame size: {avg_frame_size/1024:.1f} KB")
-    print(f"  FPS:            {fps:.1f}")
+    print(f"  Video FPS:      {video_fps:.1f}")
+    print(f"  Target FPS:     {target_fps:.1f}")
+    print(f"  Actual FPS:     {fps:.1f}")
     print(f"  Quality:        {jpeg_quality}%")
     print(f"  Buffer fullness: {len(frame_buffer)}/{frame_buffer.maxlen} ({buffer_percent:.1f}%)")
     print("="*50)
@@ -140,54 +142,59 @@ def send_frames_thread(client_socket, fps):
     """
     global frame_buffer, running
     
+    # Calculate target frame time based on desired FPS
     target_frame_time = 1.0 / fps
     last_frame_time = time.time()
     
     while running:
-        # Get frame from buffer
-        frame = None
-        with buffer_lock:
-            if frame_buffer:
-                frame = frame_buffer.popleft()
+        # Calculate time since last frame
+        current_time = time.time()
+        elapsed = current_time - last_frame_time
         
-        if frame is not None:
-            # Send the frame
-            success = send_frame(client_socket, frame, jpeg_quality)
+        # Only send a new frame if enough time has passed (control sending rate)
+        if elapsed >= target_frame_time:
+            # Get frame from buffer
+            frame = None
+            with buffer_lock:
+                if frame_buffer:
+                    frame = frame_buffer.popleft()
             
-            if not success:
-                # Try to reconnect if sending fails
-                try:
-                    client_socket.close()
-                    new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    new_socket.connect((receiver_ip, receiver_port))
-                    client_socket = new_socket
-                    
-                    # Re-send video info
-                    video_info = {
-                        "width": frame_width,
-                        "height": frame_height,
-                        "fps": fps,
-                        "quality": jpeg_quality
-                    }
-                    info_data = pickle.dumps(video_info)
-                    client_socket.sendall(struct.pack(">L", len(info_data)))
-                    client_socket.sendall(info_data)
-                    
-                    print("Reconnected to receiver")
-                except:
-                    print("Failed to reconnect")
-                    time.sleep(1.0)  # Wait before trying again
-            
-            # Control frame rate for smooth transmission
-            current_time = time.time()
-            elapsed = current_time - last_frame_time
-            sleep_time = max(0, target_frame_time - elapsed)
-            if sleep_time > 0:
-                time.sleep(sleep_time)
-            last_frame_time = time.time()
+            if frame is not None:
+                # Send the frame
+                success = send_frame(client_socket, frame, jpeg_quality)
+                
+                if not success:
+                    # Try to reconnect if sending fails
+                    try:
+                        client_socket.close()
+                        new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                        new_socket.connect((receiver_ip, receiver_port))
+                        client_socket = new_socket
+                        
+                        # Re-send video info
+                        video_info = {
+                            "width": frame_width,
+                            "height": frame_height,
+                            "fps": target_fps,
+                            "quality": jpeg_quality
+                        }
+                        info_data = pickle.dumps(video_info)
+                        client_socket.sendall(struct.pack(">L", len(info_data)))
+                        client_socket.sendall(info_data)
+                        
+                        print("Reconnected to receiver")
+                    except:
+                        print("Failed to reconnect")
+                        time.sleep(1.0)  # Wait before trying again
+                
+                # Update last frame time for consistent sending rate
+                last_frame_time = current_time
+            else:
+                # No frames in buffer, wait a bit
+                time.sleep(0.001)
         else:
-            # No frames in buffer, wait a bit
-            time.sleep(0.01)
+            # Not time to send next frame yet, short sleep
+            time.sleep(0.001)
 
 if __name__ == "__main__":
     # Parse command line arguments
@@ -233,15 +240,16 @@ if __name__ == "__main__":
         video_fps = cap.get(cv2.CAP_PROP_FPS)
         
         # Use target FPS from argument or video's FPS
-        fps = target_fps_arg if target_fps_arg > 0 else video_fps
+        target_fps = target_fps_arg if target_fps_arg > 0 else video_fps
         
-        print(f"Video opened: {frame_width}x{frame_height} at {fps} FPS")
+        print(f"Video opened: {frame_width}x{frame_height}")
+        print(f"Video FPS: {video_fps}, Target FPS: {target_fps}")
         
         # Send video info to receiver
         video_info = {
             "width": frame_width,
             "height": frame_height,
-            "fps": fps,
+            "fps": target_fps,
             "quality": jpeg_quality
         }
         info_data = pickle.dumps(video_info)
@@ -249,7 +257,7 @@ if __name__ == "__main__":
         client_socket.sendall(info_data)
         
         # Start sending thread
-        send_thread = threading.Thread(target=send_frames_thread, args=(client_socket, fps))
+        send_thread = threading.Thread(target=send_frames_thread, args=(client_socket, target_fps))
         send_thread.daemon = True
         send_thread.start()
         
@@ -277,40 +285,46 @@ if __name__ == "__main__":
             
         print("\nBuffer filled, starting transmission")
         
+        # Calculate frame reading rate - slightly faster than target FPS to keep buffer filled
+        read_fps = min(target_fps * 1.1, video_fps)
+        read_interval = 1.0 / read_fps
+        last_read_time = time.time()
+        
         # Main loop - read frames and add to buffer
         while running:
-            # Read a frame from the video
-            ret, frame = cap.read()
+            # Control reading rate to match the video's natural FPS
+            current_time = time.time()
+            elapsed = current_time - last_read_time
             
-            if not ret:
-                # Loop back to the beginning of the video when it ends
-                cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-                continue
-            
-            # Resize frame if needed
-            if scale_factor != 1.0:
-                frame = cv2.resize(frame, (frame_width, frame_height))
-            
-            # Add frame to buffer if there's space
-            with buffer_lock:
-                if len(frame_buffer) < frame_buffer.maxlen:
-                    frame_buffer.append(frame)
-            
-            frame_count += 1
+            if elapsed >= read_interval:
+                # Read a frame from the video
+                ret, frame = cap.read()
+                
+                if not ret:
+                    # Loop back to the beginning of the video when it ends
+                    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                    continue
+                
+                # Resize frame if needed
+                if scale_factor != 1.0:
+                    frame = cv2.resize(frame, (frame_width, frame_height))
+                
+                # Add frame to buffer if there's space
+                with buffer_lock:
+                    if len(frame_buffer) < frame_buffer.maxlen:
+                        frame_buffer.append(frame)
+                
+                frame_count += 1
+                last_read_time = current_time
+            else:
+                # Not time to read next frame yet, short sleep
+                time.sleep(0.001)
             
             # Print statistics every second
             current_time = time.time()
             if current_time - last_stats_time >= 1.0:
                 print_stats()
                 last_stats_time = current_time
-            
-            # Control reading rate to avoid filling buffer too quickly
-            # Only sleep if buffer is getting full
-            with buffer_lock:
-                buffer_fullness = len(frame_buffer) / frame_buffer.maxlen
-                
-            if buffer_fullness > 0.8:  # Buffer is more than 80% full
-                time.sleep(0.01)  # Short sleep to let sending thread catch up
     
     except KeyboardInterrupt:
         print("\nStopped by user")

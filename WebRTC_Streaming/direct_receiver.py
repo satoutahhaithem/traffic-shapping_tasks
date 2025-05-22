@@ -82,6 +82,7 @@ def print_stats():
     if video_info:
         print(f"  Resolution:     {video_info['width']}x{video_info['height']}")
         print(f"  Target FPS:     {video_info['fps']:.1f}")
+        print(f"  Playback FPS:   {playback_fps:.1f}")
         print(f"  Quality:        {video_info['quality']}%")
     print(f"  Actual FPS:     {fps:.1f}")
     print(f"  Frames received: {frames_received}")
@@ -215,6 +216,7 @@ if __name__ == "__main__":
     parser.add_argument("--port", type=int, default=9999, help="Port to listen on")
     parser.add_argument("--display", action="store_true", help="Display video (requires GUI)")
     parser.add_argument("--buffer", type=int, default=60, help="Frame buffer size")
+    parser.add_argument("--fps", type=float, default=0, help="Override playback FPS (0=use sender's FPS)")
     
     args = parser.parse_args()
     
@@ -223,6 +225,8 @@ if __name__ == "__main__":
     server_port = args.port
     display_video = args.display
     frame_buffer = deque(maxlen=args.buffer)
+    override_fps = args.fps
+    playback_fps = override_fps  # Will be updated with video_info if not overridden
     
     # Create TCP socket
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -248,6 +252,16 @@ if __name__ == "__main__":
         
         print(f"Received video info: {video_info}")
         
+        # Set playback FPS from video_info if not overridden
+        if override_fps <= 0 and video_info and 'fps' in video_info:
+            playback_fps = video_info['fps']
+        elif override_fps > 0:
+            playback_fps = override_fps
+        else:
+            playback_fps = 30.0  # Default if no FPS info available
+            
+        print(f"Using playback FPS: {playback_fps}")
+        
         # Start frame buffering thread
         buffer_thread = threading.Thread(target=buffer_frames, args=(client_socket,))
         buffer_thread.daemon = True
@@ -255,7 +269,11 @@ if __name__ == "__main__":
         
         # Wait for buffer to fill initially
         print("Buffering frames...")
+        buffer_fill_start = time.time()
         while len(frame_buffer) < min(30, frame_buffer.maxlen):
+            # Don't wait more than 5 seconds for buffer to fill
+            if time.time() - buffer_fill_start > 5.0:
+                break
             time.sleep(0.1)
             print(f"Buffer: {len(frame_buffer)}/{frame_buffer.maxlen}", end="\r")
         print("\nBuffer filled, starting playback")
@@ -263,40 +281,45 @@ if __name__ == "__main__":
         # Start displaying frames
         last_stats_time = time.time()
         last_frame_time = time.time()
-        target_frame_time = 1.0 / video_info['fps'] if video_info else 0.033  # Default to 30fps
+        
+        # Calculate target frame time based on playback FPS
+        target_frame_time = 1.0 / playback_fps
         
         while running:
-            # Get frame from buffer
-            frame = None
-            with buffer_lock:
-                if frame_buffer:
-                    frame = frame_buffer.popleft()
+            # Calculate time since last frame
+            current_time = time.time()
+            elapsed = current_time - last_frame_time
             
-            if frame is not None:
-                # Display frame if requested
-                if display_video:
-                    cv2.imshow('Received Video', frame)
-                    frames_displayed += 1
-                    
-                    # Press 'q' to quit
-                    key = cv2.waitKey(1) & 0xFF
-                    if key == ord('q'):
-                        running = False
-                        break
+            # Only display a new frame if enough time has passed (control playback speed)
+            if elapsed >= target_frame_time:
+                # Get frame from buffer
+                frame = None
+                with buffer_lock:
+                    if frame_buffer:
+                        frame = frame_buffer.popleft()
                 
-                # Control frame rate for smooth playback
-                current_time = time.time()
-                elapsed = current_time - last_frame_time
-                sleep_time = max(0, target_frame_time - elapsed)
-                if sleep_time > 0:
-                    time.sleep(sleep_time)
-                last_frame_time = time.time()
+                if frame is not None:
+                    # Display frame if requested
+                    if display_video:
+                        cv2.imshow('Received Video', frame)
+                        frames_displayed += 1
+                        
+                        # Press 'q' to quit
+                        key = cv2.waitKey(1) & 0xFF
+                        if key == ord('q'):
+                            running = False
+                            break
+                    
+                    # Update last frame time for consistent playback speed
+                    last_frame_time = current_time
+                else:
+                    # No frames in buffer, wait a bit
+                    time.sleep(0.01)
             else:
-                # No frames in buffer, wait a bit
-                time.sleep(0.01)
+                # Not time for next frame yet, short sleep
+                time.sleep(0.001)
             
             # Print statistics every second
-            current_time = time.time()
             if current_time - last_stats_time >= 1.0:
                 print_stats()
                 last_stats_time = current_time
