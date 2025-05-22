@@ -19,6 +19,7 @@ import struct
 import time
 import argparse
 import numpy as np
+import threading
 from collections import deque
 
 # Traffic statistics variables
@@ -32,13 +33,19 @@ frames_displayed = 0  # Total frames displayed
 frames_dropped = 0    # Total frames dropped
 video_info = None     # Video information from sender
 
+# Frame buffering for smoother playback
+frame_buffer = deque(maxlen=60)  # Buffer to store frames (increased size)
+buffer_lock = threading.Lock()   # Lock for thread-safe buffer access
+buffer_thread = None             # Thread for receiving frames
+running = True                   # Flag to control threads
+
 def print_stats():
     """
     Print current traffic statistics to the terminal.
     Clears the terminal and shows a formatted display of all metrics.
     """
     global bytes_received, packets_received, start_time, frame_sizes, frame_times
-    global frames_received, frames_displayed, frames_dropped, video_info
+    global frames_received, frames_displayed, frames_dropped, video_info, frame_buffer
     
     # Calculate elapsed time
     elapsed = time.time() - start_time
@@ -54,6 +61,9 @@ def print_stats():
     
     # Calculate drop rate
     drop_rate = (frames_dropped / frames_received * 100) if frames_received > 0 else 0
+    
+    # Calculate buffer fullness
+    buffer_percent = (len(frame_buffer) / frame_buffer.maxlen * 100) if frame_buffer.maxlen > 0 else 0
     
     # Clear terminal and print stats
     print("\033c", end="")  # Clear terminal
@@ -78,6 +88,7 @@ def print_stats():
     print(f"  Frames displayed: {frames_displayed}")
     print(f"  Frames dropped:  {frames_dropped} ({drop_rate:.1f}%)")
     print(f"  Avg frame size: {avg_frame_size/1024:.1f} KB")
+    print(f"  Buffer fullness: {len(frame_buffer)}/{frame_buffer.maxlen} ({buffer_percent:.1f}%)")
     print("="*50)
 
 def receive_frame(client_socket):
@@ -176,12 +187,34 @@ def receive_video_info(client_socket):
         print(f"Error receiving video info: {e}")
         return None
 
+def buffer_frames(client_socket):
+    """
+    Continuously receive frames and add them to the buffer
+    
+    Args:
+        client_socket: Socket connected to the sender
+    """
+    global frame_buffer, running
+    
+    while running:
+        frame = receive_frame(client_socket)
+        if frame is not None:
+            with buffer_lock:
+                # If buffer is full, remove oldest frame
+                if len(frame_buffer) >= frame_buffer.maxlen:
+                    frame_buffer.popleft()
+                frame_buffer.append(frame)
+        else:
+            # If we failed to receive a frame, wait a bit before trying again
+            time.sleep(0.01)
+
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser(description="Video Receiver")
     parser.add_argument("--ip", default="0.0.0.0", help="IP address to listen on")
     parser.add_argument("--port", type=int, default=9999, help="Port to listen on")
     parser.add_argument("--display", action="store_true", help="Display video (requires GUI)")
+    parser.add_argument("--buffer", type=int, default=60, help="Frame buffer size")
     
     args = parser.parse_args()
     
@@ -189,6 +222,7 @@ if __name__ == "__main__":
     server_ip = args.ip
     server_port = args.port
     display_video = args.display
+    frame_buffer = deque(maxlen=args.buffer)
     
     # Create TCP socket
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -214,30 +248,52 @@ if __name__ == "__main__":
         
         print(f"Received video info: {video_info}")
         
-        # Start receiving frames
-        last_stats_time = time.time()
+        # Start frame buffering thread
+        buffer_thread = threading.Thread(target=buffer_frames, args=(client_socket,))
+        buffer_thread.daemon = True
+        buffer_thread.start()
         
-        while True:
-            # Receive frame from sender
-            frame = receive_frame(client_socket)
+        # Wait for buffer to fill initially
+        print("Buffering frames...")
+        while len(frame_buffer) < min(30, frame_buffer.maxlen):
+            time.sleep(0.1)
+            print(f"Buffer: {len(frame_buffer)}/{frame_buffer.maxlen}", end="\r")
+        print("\nBuffer filled, starting playback")
+        
+        # Start displaying frames
+        last_stats_time = time.time()
+        last_frame_time = time.time()
+        target_frame_time = 1.0 / video_info['fps'] if video_info else 0.033  # Default to 30fps
+        
+        while running:
+            # Get frame from buffer
+            frame = None
+            with buffer_lock:
+                if frame_buffer:
+                    frame = frame_buffer.popleft()
             
-            if frame is None:
-                # Try to reconnect if receiving fails
-                print("Failed to receive frame, waiting for new connection...")
-                client_socket.close()
-                client_socket, addr = server_socket.accept()
-                print(f"New connection from {addr}")
-                video_info = receive_video_info(client_socket)
-                continue
-            
-            # Display frame if requested
-            if display_video:
-                cv2.imshow('Received Video', frame)
-                frames_displayed += 1
+            if frame is not None:
+                # Display frame if requested
+                if display_video:
+                    cv2.imshow('Received Video', frame)
+                    frames_displayed += 1
+                    
+                    # Press 'q' to quit
+                    key = cv2.waitKey(1) & 0xFF
+                    if key == ord('q'):
+                        running = False
+                        break
                 
-                # Press 'q' to quit
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                    break
+                # Control frame rate for smooth playback
+                current_time = time.time()
+                elapsed = current_time - last_frame_time
+                sleep_time = max(0, target_frame_time - elapsed)
+                if sleep_time > 0:
+                    time.sleep(sleep_time)
+                last_frame_time = time.time()
+            else:
+                # No frames in buffer, wait a bit
+                time.sleep(0.01)
             
             # Print statistics every second
             current_time = time.time()
@@ -253,6 +309,10 @@ if __name__ == "__main__":
     
     finally:
         # Clean up resources
+        running = False
+        if buffer_thread and buffer_thread.is_alive():
+            buffer_thread.join(timeout=1.0)
+        
         if 'client_socket' in locals():
             client_socket.close()
         

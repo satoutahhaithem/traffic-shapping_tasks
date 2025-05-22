@@ -19,6 +19,7 @@ import struct
 import time
 import argparse
 import numpy as np
+import threading
 from collections import deque
 
 # Traffic statistics variables
@@ -28,12 +29,18 @@ frame_sizes = deque(maxlen=30)  # Last 30 frame sizes for averaging
 frame_times = deque(maxlen=30)  # Last 30 frame processing times
 start_time = time.time()        # When the script started
 
+# Frame buffering for smoother transmission
+frame_buffer = deque(maxlen=30)  # Buffer to store frames
+buffer_lock = threading.Lock()   # Lock for thread-safe buffer access
+send_thread = None               # Thread for sending frames
+running = True                   # Flag to control threads
+
 def print_stats():
     """
     Print current traffic statistics to the terminal.
     Clears the terminal and shows a formatted display of all metrics.
     """
-    global bytes_sent, packets_sent, start_time, frame_sizes, frame_times
+    global bytes_sent, packets_sent, start_time, frame_sizes, frame_times, frame_buffer
     
     # Calculate elapsed time
     elapsed = time.time() - start_time
@@ -46,6 +53,9 @@ def print_stats():
     avg_frame_size = sum(frame_sizes) / len(frame_sizes) if frame_sizes else 0
     avg_frame_time = sum(frame_times) / len(frame_times) if frame_times else 0
     fps = 1 / avg_frame_time if avg_frame_time > 0 else 0
+    
+    # Calculate buffer fullness
+    buffer_percent = (len(frame_buffer) / frame_buffer.maxlen * 100) if frame_buffer.maxlen > 0 else 0
     
     # Clear terminal and print stats
     print("\033c", end="")  # Clear terminal
@@ -65,6 +75,7 @@ def print_stats():
     print(f"  Avg frame size: {avg_frame_size/1024:.1f} KB")
     print(f"  FPS:            {fps:.1f}")
     print(f"  Quality:        {jpeg_quality}%")
+    print(f"  Buffer fullness: {len(frame_buffer)}/{frame_buffer.maxlen} ({buffer_percent:.1f}%)")
     print("="*50)
 
 def send_frame(client_socket, frame, quality=90):
@@ -119,6 +130,65 @@ def send_frame(client_socket, frame, quality=90):
         print(f"Error sending frame: {e}")
         return False
 
+def send_frames_thread(client_socket, fps):
+    """
+    Thread function to continuously send frames from the buffer
+    
+    Args:
+        client_socket: Socket connected to the receiver
+        fps: Target frames per second
+    """
+    global frame_buffer, running
+    
+    target_frame_time = 1.0 / fps
+    last_frame_time = time.time()
+    
+    while running:
+        # Get frame from buffer
+        frame = None
+        with buffer_lock:
+            if frame_buffer:
+                frame = frame_buffer.popleft()
+        
+        if frame is not None:
+            # Send the frame
+            success = send_frame(client_socket, frame, jpeg_quality)
+            
+            if not success:
+                # Try to reconnect if sending fails
+                try:
+                    client_socket.close()
+                    new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    new_socket.connect((receiver_ip, receiver_port))
+                    client_socket = new_socket
+                    
+                    # Re-send video info
+                    video_info = {
+                        "width": frame_width,
+                        "height": frame_height,
+                        "fps": fps,
+                        "quality": jpeg_quality
+                    }
+                    info_data = pickle.dumps(video_info)
+                    client_socket.sendall(struct.pack(">L", len(info_data)))
+                    client_socket.sendall(info_data)
+                    
+                    print("Reconnected to receiver")
+                except:
+                    print("Failed to reconnect")
+                    time.sleep(1.0)  # Wait before trying again
+            
+            # Control frame rate for smooth transmission
+            current_time = time.time()
+            elapsed = current_time - last_frame_time
+            sleep_time = max(0, target_frame_time - elapsed)
+            if sleep_time > 0:
+                time.sleep(sleep_time)
+            last_frame_time = time.time()
+        else:
+            # No frames in buffer, wait a bit
+            time.sleep(0.01)
+
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser(description="Video Sender")
@@ -127,6 +197,8 @@ if __name__ == "__main__":
     parser.add_argument("--video", default="../video/zidane.mp4", help="Video file path")
     parser.add_argument("--quality", type=int, default=90, help="JPEG quality (1-100)")
     parser.add_argument("--scale", type=float, default=1.0, help="Resolution scale factor")
+    parser.add_argument("--fps", type=float, default=0, help="Target FPS (0=use video's FPS)")
+    parser.add_argument("--buffer", type=int, default=30, help="Frame buffer size")
     
     args = parser.parse_args()
     
@@ -136,6 +208,8 @@ if __name__ == "__main__":
     video_path = args.video
     jpeg_quality = args.quality
     scale_factor = args.scale
+    target_fps_arg = args.fps
+    frame_buffer = deque(maxlen=args.buffer)
     
     # Create TCP socket
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -156,7 +230,10 @@ if __name__ == "__main__":
         # Get video properties
         frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * scale_factor)
         frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * scale_factor)
-        fps = cap.get(cv2.CAP_PROP_FPS)
+        video_fps = cap.get(cv2.CAP_PROP_FPS)
+        
+        # Use target FPS from argument or video's FPS
+        fps = target_fps_arg if target_fps_arg > 0 else video_fps
         
         print(f"Video opened: {frame_width}x{frame_height} at {fps} FPS")
         
@@ -171,11 +248,37 @@ if __name__ == "__main__":
         client_socket.sendall(struct.pack(">L", len(info_data)))
         client_socket.sendall(info_data)
         
-        # Start sending frames
+        # Start sending thread
+        send_thread = threading.Thread(target=send_frames_thread, args=(client_socket, fps))
+        send_thread.daemon = True
+        send_thread.start()
+        
+        # Start reading frames
         frame_count = 0
         last_stats_time = time.time()
         
-        while True:
+        # Pre-fill buffer
+        print("Pre-filling buffer...")
+        while len(frame_buffer) < frame_buffer.maxlen and running:
+            ret, frame = cap.read()
+            if not ret:
+                cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                continue
+                
+            # Resize frame if needed
+            if scale_factor != 1.0:
+                frame = cv2.resize(frame, (frame_width, frame_height))
+                
+            # Add frame to buffer
+            with buffer_lock:
+                frame_buffer.append(frame)
+                
+            print(f"Buffer: {len(frame_buffer)}/{frame_buffer.maxlen}", end="\r")
+            
+        print("\nBuffer filled, starting transmission")
+        
+        # Main loop - read frames and add to buffer
+        while running:
             # Read a frame from the video
             ret, frame = cap.read()
             
@@ -188,20 +291,10 @@ if __name__ == "__main__":
             if scale_factor != 1.0:
                 frame = cv2.resize(frame, (frame_width, frame_height))
             
-            # Send the frame
-            success = send_frame(client_socket, frame, jpeg_quality)
-            
-            if not success:
-                # Try to reconnect if sending fails
-                print("Failed to send frame, reconnecting...")
-                client_socket.close()
-                client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                try:
-                    client_socket.connect((receiver_ip, receiver_port))
-                    print("Reconnected to receiver")
-                except:
-                    print("Failed to reconnect, exiting")
-                    break
+            # Add frame to buffer if there's space
+            with buffer_lock:
+                if len(frame_buffer) < frame_buffer.maxlen:
+                    frame_buffer.append(frame)
             
             frame_count += 1
             
@@ -211,12 +304,13 @@ if __name__ == "__main__":
                 print_stats()
                 last_stats_time = current_time
             
-            # Control frame rate to match the video's FPS
-            target_frame_time = 1.0 / fps
-            elapsed = time.time() - current_time
-            sleep_time = max(0, target_frame_time - elapsed)
-            if sleep_time > 0:
-                time.sleep(sleep_time)
+            # Control reading rate to avoid filling buffer too quickly
+            # Only sleep if buffer is getting full
+            with buffer_lock:
+                buffer_fullness = len(frame_buffer) / frame_buffer.maxlen
+                
+            if buffer_fullness > 0.8:  # Buffer is more than 80% full
+                time.sleep(0.01)  # Short sleep to let sending thread catch up
     
     except KeyboardInterrupt:
         print("\nStopped by user")
@@ -226,6 +320,10 @@ if __name__ == "__main__":
     
     finally:
         # Clean up resources
+        running = False
+        if send_thread and send_thread.is_alive():
+            send_thread.join(timeout=1.0)
+        
         if 'cap' in locals() and cap.isOpened():
             cap.release()
         
