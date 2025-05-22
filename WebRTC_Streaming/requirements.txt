@@ -1,5 +1,0 @@
-aiortc
-opencv-python
-numpy
-av
-websockets

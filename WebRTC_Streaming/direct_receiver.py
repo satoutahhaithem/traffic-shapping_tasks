@@ -1,0 +1,264 @@
+#!/usr/bin/env python3
+"""
+Video Receiver Script
+
+This script receives video frames from a sender over a TCP socket and optionally
+displays them. It shows real-time traffic statistics in the terminal.
+
+Usage:
+    python direct_receiver.py [--display]
+
+Author: Roo AI Assistant
+Date: May 2025
+"""
+
+import cv2
+import socket
+import pickle
+import struct
+import time
+import argparse
+import numpy as np
+from collections import deque
+
+# Traffic statistics variables
+bytes_received = 0    # Total bytes received
+packets_received = 0  # Total packets received
+frame_sizes = deque(maxlen=30)  # Last 30 frame sizes for averaging
+frame_times = deque(maxlen=30)  # Last 30 frame processing times
+start_time = time.time()        # When the script started
+frames_received = 0   # Total frames received
+frames_displayed = 0  # Total frames displayed
+frames_dropped = 0    # Total frames dropped
+video_info = None     # Video information from sender
+
+def print_stats():
+    """
+    Print current traffic statistics to the terminal.
+    Clears the terminal and shows a formatted display of all metrics.
+    """
+    global bytes_received, packets_received, start_time, frame_sizes, frame_times
+    global frames_received, frames_displayed, frames_dropped, video_info
+    
+    # Calculate elapsed time
+    elapsed = time.time() - start_time
+    
+    # Calculate rates
+    bytes_received_rate = bytes_received / elapsed if elapsed > 0 else 0
+    packets_received_rate = packets_received / elapsed if elapsed > 0 else 0
+    
+    # Calculate averages
+    avg_frame_size = sum(frame_sizes) / len(frame_sizes) if frame_sizes else 0
+    avg_frame_time = sum(frame_times) / len(frame_times) if frame_times else 0
+    fps = 1 / avg_frame_time if avg_frame_time > 0 else 0
+    
+    # Calculate drop rate
+    drop_rate = (frames_dropped / frames_received * 100) if frames_received > 0 else 0
+    
+    # Clear terminal and print stats
+    print("\033c", end="")  # Clear terminal
+    
+    print("\n" + "="*50)
+    print("VIDEO RECEIVER - TRAFFIC MONITOR")
+    print("="*50)
+    print(f"Running time: {elapsed:.1f} seconds")
+    print(f"Listening on: {server_ip}:{server_port}")
+    print("\nTRAFFIC STATISTICS:")
+    print(f"  Bytes received: {bytes_received} bytes ({bytes_received/1024/1024:.2f} MB)")
+    print(f"  Packets received: {packets_received}")
+    print(f"  Receive rate:   {bytes_received_rate/1024/1024:.2f} MB/s")
+    print(f"  Packet rate:    {packets_received_rate:.1f} packets/s")
+    print("\nVIDEO STATISTICS:")
+    if video_info:
+        print(f"  Resolution:     {video_info['width']}x{video_info['height']}")
+        print(f"  Target FPS:     {video_info['fps']:.1f}")
+        print(f"  Quality:        {video_info['quality']}%")
+    print(f"  Actual FPS:     {fps:.1f}")
+    print(f"  Frames received: {frames_received}")
+    print(f"  Frames displayed: {frames_displayed}")
+    print(f"  Frames dropped:  {frames_dropped} ({drop_rate:.1f}%)")
+    print(f"  Avg frame size: {avg_frame_size/1024:.1f} KB")
+    print("="*50)
+
+def receive_frame(client_socket):
+    """
+    Receive a frame from the sender
+    
+    Args:
+        client_socket: Socket connected to the sender
+        
+    Returns:
+        numpy.ndarray: The received frame, or None if failed
+    """
+    global bytes_received, packets_received, frame_sizes, frame_times
+    global frames_received, frames_dropped
+    
+    # Record start time for performance measurement
+    start_process = time.time()
+    
+    try:
+        # Receive the size of the data (4 bytes)
+        size_data = client_socket.recv(4)
+        if not size_data:
+            return None
+        
+        # Unpack the size value from the received bytes
+        size = struct.unpack(">L", size_data)[0]
+        
+        # Receive the actual frame data
+        data = b""
+        while len(data) < size:
+            # Receive in chunks to handle large frames
+            packet = client_socket.recv(min(size - len(data), 4096))
+            if not packet:
+                return None
+            data += packet
+        
+        # Update traffic statistics
+        bytes_received += len(data) + 4  # +4 for the size header
+        packets_received += 1
+        frame_sizes.append(size)
+        frames_received += 1
+        
+        # Deserialize the data
+        encoded_frame = pickle.loads(data)
+        
+        # Decode the JPEG frame
+        frame = cv2.imdecode(encoded_frame, cv2.IMREAD_COLOR)
+        
+        if frame is None:
+            frames_dropped += 1
+            return None
+        
+        # Calculate frame processing time
+        frame_times.append(time.time() - start_process)
+        
+        return frame
+    
+    except Exception as e:
+        print(f"Error receiving frame: {e}")
+        frames_dropped += 1
+        return None
+
+def receive_video_info(client_socket):
+    """
+    Receive video information from the sender
+    
+    Args:
+        client_socket: Socket connected to the sender
+        
+    Returns:
+        dict: Video information (width, height, fps, quality), or None if failed
+    """
+    try:
+        # Receive the size of the data (4 bytes)
+        size_data = client_socket.recv(4)
+        if not size_data:
+            return None
+        
+        # Unpack the size value
+        size = struct.unpack(">L", size_data)[0]
+        
+        # Receive the data
+        data = b""
+        while len(data) < size:
+            packet = client_socket.recv(min(size - len(data), 4096))
+            if not packet:
+                return None
+            data += packet
+        
+        # Deserialize the data to get video info
+        video_info = pickle.loads(data)
+        
+        return video_info
+    
+    except Exception as e:
+        print(f"Error receiving video info: {e}")
+        return None
+
+if __name__ == "__main__":
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="Video Receiver")
+    parser.add_argument("--ip", default="0.0.0.0", help="IP address to listen on")
+    parser.add_argument("--port", type=int, default=9999, help="Port to listen on")
+    parser.add_argument("--display", action="store_true", help="Display video (requires GUI)")
+    
+    args = parser.parse_args()
+    
+    # Set variables from arguments
+    server_ip = args.ip
+    server_port = args.port
+    display_video = args.display
+    
+    # Create TCP socket
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    
+    try:
+        # Bind socket to address and port
+        server_socket.bind((server_ip, server_port))
+        server_socket.listen(5)
+        print(f"Listening on {server_ip}:{server_port}...")
+        
+        # Accept connection from sender
+        client_socket, addr = server_socket.accept()
+        print(f"Connection from {addr}")
+        
+        # Receive video information
+        video_info = receive_video_info(client_socket)
+        if not video_info:
+            print("Failed to receive video info")
+            client_socket.close()
+            server_socket.close()
+            exit()
+        
+        print(f"Received video info: {video_info}")
+        
+        # Start receiving frames
+        last_stats_time = time.time()
+        
+        while True:
+            # Receive frame from sender
+            frame = receive_frame(client_socket)
+            
+            if frame is None:
+                # Try to reconnect if receiving fails
+                print("Failed to receive frame, waiting for new connection...")
+                client_socket.close()
+                client_socket, addr = server_socket.accept()
+                print(f"New connection from {addr}")
+                video_info = receive_video_info(client_socket)
+                continue
+            
+            # Display frame if requested
+            if display_video:
+                cv2.imshow('Received Video', frame)
+                frames_displayed += 1
+                
+                # Press 'q' to quit
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+            
+            # Print statistics every second
+            current_time = time.time()
+            if current_time - last_stats_time >= 1.0:
+                print_stats()
+                last_stats_time = current_time
+    
+    except KeyboardInterrupt:
+        print("\nStopped by user")
+    
+    except Exception as e:
+        print(f"Error: {e}")
+    
+    finally:
+        # Clean up resources
+        if 'client_socket' in locals():
+            client_socket.close()
+        
+        server_socket.close()
+        
+        if display_video:
+            cv2.destroyAllWindows()
+        
+        print("Socket closed")
