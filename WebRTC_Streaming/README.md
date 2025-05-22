@@ -7,9 +7,11 @@ A lightweight solution for streaming video between computers with real-time traf
 ### On the Receiver Computer (e.g., 192.168.2.169):
 
 ```bash
-# Start the receiver (add --display to show video)
-python direct_receiver.py
+# Start the receiver WITH VIDEO DISPLAY (important!)
+python direct_receiver.py --display
 ```
+
+The `--display` flag is critical - without it, the receiver will process frames but not show the video.
 
 ### On the Sender Computer (e.g., 192.168.2.120):
 
@@ -18,11 +20,14 @@ python direct_receiver.py
 python direct_sender.py --ip 192.168.2.169 --video ../video/zidane.mp4
 ```
 
-Both terminals will show real-time traffic statistics including:
-- Bytes sent/received
-- Bandwidth usage
-- Frame rates
-- Video quality metrics
+### What You'll See:
+
+1. On the receiver: 
+   - A window showing the video
+   - Traffic statistics in the terminal
+
+2. On the sender:
+   - Traffic statistics in the terminal
 
 ## Command Options
 
@@ -36,7 +41,21 @@ Both terminals will show real-time traffic statistics including:
 ### Receiver Options:
 - `--ip`: IP address to listen on (default: 0.0.0.0)
 - `--port`: Port to listen on (default: 9999)
-- `--display`: Display video (requires GUI)
+- `--display`: Display video (REQUIRED to see the video)
+
+## Testing on a Single Computer
+
+To test on a single computer:
+
+1. First terminal (receiver):
+   ```bash
+   python direct_receiver.py --display
+   ```
+
+2. Second terminal (sender):
+   ```bash
+   python direct_sender.py --ip localhost
+   ```
 
 ## Traffic Control
 
@@ -66,5 +85,8 @@ Choose from the menu:
 
 - Make sure both computers are on the same network
 - Check if any firewalls are blocking port 9999
-- For display issues, try running without the --display flag
+- **Video display issues**: 
+  - Ensure you used the `--display` flag on the receiver
+  - Make sure you have a GUI environment (X server) running
+  - Check that OpenCV is installed correctly with GUI support
 - If traffic control doesn't work, make sure you're running as root (sudo)
