@@ -11,18 +11,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def run_sender(pc, player):
-    @pc.signal
-    def onicecandidate(candidate):
-        logger.info('ICE candidate: %s', candidate)
-        # In a real application, send this candidate to the receiver via signaling
-
-    @pc.signal
-    def oniceconnectionstatechange():
-        logger.info('ICE connection state is %s', pc.iceConnectionState)
-
-    @pc.signal
-    def onsignalingstatechange():
-        logger.info('Signaling state is %s', pc.signalingState)
+    pc.on("icecandidate", lambda candidate: logger.info('ICE candidate: %s', candidate))
+    pc.on("iceconnectionstatechange", lambda: logger.info('ICE connection state is %s', pc.iceConnectionState))
+    pc.on("signalingstatechange", lambda: logger.info('Signaling state is %s', pc.signalingState))
 
     # Add video track from the player
     if player.video:

@@ -16,25 +16,18 @@ logger = logging.getLogger(__name__)
 latest_frame = None
 
 async def run_receiver(pc):
-    @pc.signal
-    def onicecandidate(candidate):
-        logger.info('ICE candidate: %s', candidate)
-        # In a real application, send this candidate to the sender via signaling
+    # Set up event handlers using the correct pc.on() method
+    pc.on("icecandidate", lambda candidate: logger.info('ICE candidate: %s', candidate))
+    pc.on("iceconnectionstatechange", lambda: logger.info('ICE connection state is %s', pc.iceConnectionState))
+    pc.on("signalingstatechange", lambda: logger.info('Signaling state is %s', pc.signalingState))
 
-    @pc.signal
-    def oniceconnectionstatechange():
-        logger.info('ICE connection state is %s', pc.iceConnectionState)
-
-    @pc.signal
-    def onsignalingstatechange():
-        logger.info('Signaling state is %s', pc.signalingState)
-
-    @pc.signal
+    # Use the correct @pc.on decorator for track events
+    @pc.on("track")
     def ontrack(track):
         logger.info('Track %s received', track.kind)
 
         if track.kind == 'video':
-            @track.signal
+            @track.on("frame")
             def onframe(frame):
                 global latest_frame
                 # Convert frame to OpenCV format
