@@ -1,140 +1,283 @@
-# Simple Video Streaming with Traffic Monitoring
+# Video Streaming System
 
 A lightweight solution for streaming video between computers with real-time traffic monitoring and network control.
 
-## Quick Start
+## What This Solves
 
-### On the Receiver Computer (e.g., 192.168.2.169):
+This system addresses several challenges in video streaming:
 
-```bash
-# Start the receiver WITH VIDEO DISPLAY (important!)
-python direct_receiver.py --display
-```
+- **Network Variability**: Handles changing network conditions with adaptive buffering
+- **Performance Monitoring**: Shows real-time statistics to understand network behavior
+- **Quality Control**: Allows adjusting video quality to match available bandwidth
+- **Frame Rate Issues**: Ensures consistent playback speed with precise timing control
+- **Testing Capabilities**: Simulates different network conditions for development and testing
 
-The `--display` flag is critical - without it, the receiver will process frames but not show the video.
+## Step-by-Step Execution Guide
 
-### On the Sender Computer (e.g., 192.168.2.120):
+### Basic Setup (Without Traffic Control)
 
-```bash
-# Start the sender
-python direct_sender.py --ip 192.168.2.169 --video ../video/zidane.mp4
-```
+1. **Prepare Both Computers**
+   - Ensure both computers are on the same network
+   - Install required packages on both computers:
+     ```bash
+     pip install opencv-python numpy
+     ```
 
-### What You'll See:
+2. **Start the Receiver First**
+   - On the receiver computer, open a terminal
+   - Navigate to the WebRTC_Streaming directory
+   - Run the receiver script with the display flag:
+     ```bash
+     python direct_receiver.py --display
+     ```
+   - You should see a message: "Listening on 0.0.0.0:9999..."
 
-1. On the receiver: 
-   - A window showing the video
-   - Traffic statistics in the terminal
+3. **Find the Receiver's IP Address**
+   - On the receiver computer, open a new terminal
+   - Run the following command to find the IP address:
+     ```bash
+     ip addr show | grep inet
+     ```
+   - Look for an IP address like 192.168.x.x (local network)
+   - Note this IP address for the next step
 
-2. On the sender:
-   - Traffic statistics in the terminal
+4. **Start the Sender**
+   - On the sender computer, open a terminal
+   - Navigate to the WebRTC_Streaming directory
+   - Run the sender script with the receiver's IP:
+     ```bash
+     python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO
+     ```
+     (Replace RECEIVER_IP with the actual IP address and PATH_TO_VIDEO with your video file path)
+   - You should see "Connected to receiver" and statistics in the terminal
 
-## Controlling Video Playback
+5. **Observe the Video Stream**
+   - On the receiver computer, a window should appear showing the video
+   - Both terminals will display real-time traffic statistics
 
-### Fixing Video Speed Issues
+### Advanced Setup (With Traffic Control)
 
-If the video plays too fast or too slow:
+1. **Follow Steps 1-2 from Basic Setup**
+   - Prepare both computers
+   - Start the receiver
 
-```bash
-# On the receiver - force a specific playback FPS
-python direct_receiver.py --display --fps 30
+2. **Set Up Traffic Control on Sender**
+   - On the sender computer, open a terminal
+   - Navigate to the WebRTC_Streaming directory
+   - Make the traffic control script executable:
+     ```bash
+     chmod +x webrtc_tc_control.sh
+     ```
+   - Run the traffic control script with sudo:
+     ```bash
+     sudo ./webrtc_tc_control.sh
+     ```
+   - The script will detect your network interface or ask you to select one
+   - You'll see a menu with options
 
-# On the sender - control the sending rate
-python direct_sender.py --ip 192.168.2.169 --fps 30
-```
+3. **Apply Network Conditions**
+   - From the menu, select option 2 (Apply preset network conditions)
+   - Choose a preset (1-5) to simulate different network conditions:
+     - 1: Excellent (10mbit, 20ms delay, 0% loss)
+     - 2: Good (6mbit, 40ms delay, 0.5% loss)
+     - 3: Fair (4mbit, 80ms delay, 1% loss)
+     - 4: Poor (2mbit, 150ms delay, 3% loss)
+     - 5: Very Poor (1mbit, 300ms delay, 5% loss)
+   - The script will apply the selected network conditions
 
-The system will automatically match the video's original frame rate by default, but you can override it with the `--fps` option on both sides.
+4. **Start the Sender**
+   - In a new terminal on the sender computer, run:
+     ```bash
+     python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO
+     ```
+     (Replace RECEIVER_IP with the actual IP address and PATH_TO_VIDEO with your video file path)
 
-### Fixing Video Blocking/Stuttering
+5. **Observe the Effects**
+   - Watch how the video quality and performance change under different network conditions
+   - Monitor the statistics in both terminals
 
-If the video blocks or stutters:
+6. **Try Different Conditions**
+   - While the video is streaming, you can change network conditions
+   - Go back to the traffic control terminal
+   - Select option 2 again and choose a different preset
+   - Observe how the video adapts to the new conditions
 
-1. **Increase buffer sizes** on both sender and receiver:
-   ```bash
-   # On receiver
-   python direct_receiver.py --display --buffer 120
-   
-   # On sender
-   python direct_sender.py --ip 192.168.2.169 --buffer 60
-   ```
+7. **Reset Network Conditions**
+   - When finished, select option 4 from the traffic control menu to reset network conditions
+   - Select option 5 to exit the traffic control script
 
-2. **Reduce video quality or resolution**:
-   ```bash
-   python direct_sender.py --ip 192.168.2.169 --quality 80 --scale 0.75
-   ```
+### Testing on a Single Computer
+
+1. **Open Two Terminals**
+   - In the first terminal, start the receiver:
+     ```bash
+     python direct_receiver.py --display
+     ```
+   - In the second terminal, start the sender using localhost:
+     ```bash
+     python direct_sender.py --ip localhost --video PATH_TO_VIDEO
+     ```
+
+2. **Optional: Apply Traffic Control**
+   - Open a third terminal
+   - Run the traffic control script:
+     ```bash
+     sudo ./webrtc_tc_control.sh
+     ```
+   - Follow steps 3-7 from the Advanced Setup
+
+### Stopping the System
+
+1. **Stop the Sender**
+   - In the sender terminal, press Ctrl+C once
+   - Wait for the program to clean up resources
+   - If it doesn't exit within a few seconds, press Ctrl+C again
+
+2. **Stop the Receiver**
+   - In the receiver terminal, press Ctrl+C once
+   - Wait for the program to clean up resources
+   - If it doesn't exit within a few seconds, press Ctrl+C again
+
+3. **Reset Traffic Control (if used)**
+   - In the traffic control terminal, select option 4 to reset network conditions
+   - Select option 5 to exit
 
 ## Command Options
 
 ### Sender Options:
-- `--ip`: Receiver IP address (default: 192.168.2.169)
+- `--ip`: Receiver IP address
 - `--port`: Receiver port (default: 9999)
-- `--video`: Video file path (default: ../video/zidane.mp4)
+- `--video`: Video file path
 - `--quality`: JPEG quality 1-100 (default: 90)
 - `--scale`: Resolution scale factor (default: 1.0)
-- `--fps`: Target FPS (default: 0 = use video's FPS)
+- `--fps`: Target FPS (default: use video's FPS)
 - `--buffer`: Frame buffer size (default: 30)
 
 ### Receiver Options:
-- `--ip`: IP address to listen on (default: 0.0.0.0)
-- `--port`: Port to listen on (default: 9999)
 - `--display`: Display video (REQUIRED to see the video)
+- `--fps`: Override playback FPS (default: use sender's FPS)
 - `--buffer`: Frame buffer size (default: 60)
-- `--fps`: Override playback FPS (default: 0 = use sender's FPS)
 
-## Testing on a Single Computer
+## Buffer Management
 
-To test on a single computer:
+If you see "Buffer fullness: 30/30 (100.0%)" or an extremely high "Actual FPS" value in the statistics, it indicates that the sender is producing frames faster than they can be sent. This can happen when:
 
-1. First terminal (receiver):
+1. The network connection is slow
+2. The receiver is not connected
+3. The video file is being read too quickly
+
+### Clearing a Full Buffer
+
+To address a full buffer:
+
+1. **Reduce the reading rate**:
    ```bash
-   python direct_receiver.py --display
+   python direct_sender.py --ip RECEIVER_IP --fps 15
    ```
 
-2. Second terminal (sender):
+2. **Increase the buffer size**:
    ```bash
-   python direct_sender.py --ip localhost
+   python direct_sender.py --ip RECEIVER_IP --buffer 60
    ```
 
-## Traffic Control
+3. **Ensure the receiver is running** before starting the sender
 
-To simulate different network conditions:
+4. **Restart both sender and receiver** if the buffer remains full
+
+### Properly Stopping the Program
+
+To properly stop the sender or receiver:
+
+1. Press `Ctrl+C` once and wait for the program to clean up resources
+2. If it doesn't exit within a few seconds, press `Ctrl+C` again
+3. If you see a KeyboardInterrupt error, the program has been forcibly terminated but should still have released most resources
+
+## Traffic Control (TC)
+
+The traffic control script allows you to simulate different network conditions to test how the video streaming performs under various scenarios.
+
+### Prerequisites for Traffic Control
+
+- Linux operating system (TC is a Linux-specific tool)
+- Root privileges (sudo access)
+- iproute2 package installed (provides the `tc` command)
 
 ```bash
-# Run with sudo (required for tc commands)
-sudo ./webrtc_tc_control.sh
+# Install iproute2 if not already installed
+sudo apt update
+sudo apt install iproute2
 ```
 
-Choose from the menu:
-1. Set custom network conditions (bandwidth, delay, packet loss)
-2. Apply preset network conditions (Excellent, Good, Fair, Poor)
-3. Show current network statistics
-4. Reset network conditions
+### Running Traffic Control
+
+1. Make the script executable (if not already):
+   ```bash
+   chmod +x webrtc_tc_control.sh
+   ```
+
+2. Run the script with sudo:
+   ```bash
+   sudo ./webrtc_tc_control.sh
+   ```
+
+3. When you first run the script, it will detect your network interface or ask you to select one.
+
+4. From the menu, you can:
+   - Option 1: Set custom network conditions (bandwidth, delay, packet loss)
+   - Option 2: Apply preset network conditions (Excellent, Good, Fair, Poor)
+   - Option 3: Show current network statistics
+   - Option 4: Reset network conditions
+   - Option 5: Exit
+
+### Troubleshooting TC
+
+- If you get "Command not found" errors, ensure iproute2 is installed
+- If you get permission errors, make sure you're running with sudo
+- If network interface detection fails, manually edit the INTERFACE variable in the script
+
+## Common Issues and Solutions
+
+### Video plays too fast or too slow:
+```bash
+# Set specific frame rate on both sides
+python direct_receiver.py --display --fps 30
+python direct_sender.py --ip RECEIVER_IP --fps 30
+```
+
+### Video stutters or blocks:
+```bash
+# Increase buffer sizes
+python direct_receiver.py --display --buffer 120
+python direct_sender.py --ip RECEIVER_IP --buffer 60
+```
+
+### High bandwidth usage:
+```bash
+# Reduce quality and resolution
+python direct_sender.py --ip RECEIVER_IP --quality 70 --scale 0.75
+```
+
+### Extremely high "Actual FPS" reported:
+This usually indicates the sender is reading frames faster than it can send them. Try:
+```bash
+# Limit the frame rate
+python direct_sender.py --ip RECEIVER_IP --fps 30
+```
+
+## Documentation
+
+For detailed documentation including architecture diagrams, implementation details, and advanced usage, see:
+
+- [SYSTEM_DOCUMENTATION.md](SYSTEM_DOCUMENTATION.md) - Complete system documentation with diagrams and technical details
 
 ## How It Works
 
-1. The sender reads frames from a video file at the video's natural frame rate
-2. Frames are stored in a buffer on the sender side
-3. A separate thread sends frames at the target FPS rate
-4. Frames are compressed using JPEG encoding
-5. Compressed frames are sent over TCP to the receiver
-6. The receiver stores incoming frames in a buffer
-7. A separate thread displays frames at the correct playback rate
-8. Both sides monitor and display traffic statistics
+The system uses a multi-threaded approach with frame buffering:
 
-## Troubleshooting
+1. The sender reads video frames and stores them in a buffer
+2. A separate thread sends frames at the target frame rate
+3. The receiver stores incoming frames in a buffer
+4. A separate thread displays frames at the correct playback rate
+5. Both sides monitor and display traffic statistics
 
-- Make sure both computers are on the same network
-- Check if any firewalls are blocking port 9999
-- **Video display issues**: 
-  - Ensure you used the `--display` flag on the receiver
-  - Make sure you have a GUI environment (X server) running
-  - Check that OpenCV is installed correctly with GUI support
-- **Video speed issues**:
-  - Use the `--fps` option on both sender and receiver to set the same frame rate
-  - Try matching the original video's frame rate
-- **Video stuttering/blocking**:
-  - Increase buffer sizes on both sender and receiver
-  - Reduce video quality or resolution
-  - Limit the frame rate
-  - Check network conditions
-- If traffic control doesn't work, make sure you're running as root (sudo)
+This architecture ensures smooth video playback even with network jitter and provides real-time performance metrics.
