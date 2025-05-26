@@ -12,6 +12,43 @@ This system addresses several challenges in video streaming:
 - **Frame Rate Issues**: Ensures consistent playback speed with precise timing control
 - **Testing Capabilities**: Simulates different network conditions for development and testing
 
+## Complete System Workflow
+
+For the best experience with the full system including performance monitoring and visualization:
+
+1. **Start the Receiver with Metrics Enabled**
+   ```bash
+   python direct_receiver.py --display --metrics-port 8001
+   ```
+
+2. **Start the Automatic Traffic Control**
+   ```bash
+   sudo ./auto_tc_control.sh
+   ```
+   This will automatically cycle through different network conditions every 20 seconds.
+
+3. **Start the Sender with Metrics Enabled**
+   ```bash
+   python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO --metrics-port 8000
+   ```
+   Replace RECEIVER_IP with the actual IP address and PATH_TO_VIDEO with your video file path.
+
+4. **Start the Performance Monitor**
+   ```bash
+   python performance_monitor.py --live
+   ```
+   This will collect metrics, display live graphs, and save performance data.
+
+5. **View the Results in the Performance Viewer**
+   ```bash
+   firefox performance_viewer.html
+   ```
+   This will open the web-based interface for analyzing the performance graphs.
+
+6. **When Finished**
+   - Press Ctrl+C in each terminal to stop the respective processes
+   - Make sure to reset network conditions: `sudo tc qdisc del dev INTERFACE root`
+
 ## Step-by-Step Execution Guide
 
 ### Basic Setup (Without Traffic Control)
