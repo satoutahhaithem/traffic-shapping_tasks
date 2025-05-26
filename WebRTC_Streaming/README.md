@@ -65,25 +65,40 @@ This system addresses several challenges in video streaming:
    - On the receiver computer, a window should appear showing the video
    - Both terminals will display real-time traffic statistics
 
-### Advanced Setup (With Traffic Control)
+### Advanced Setup (With Dynamic Traffic Control)
 
 1. **Follow Steps 1-2 from Basic Setup**
    - Prepare both computers
    - Start the receiver
 
-2. **Set Up Traffic Control on Sender**
+2. **Set Up Dynamic Traffic Control on Sender**
    - On the sender computer, open a terminal
    - Navigate to the WebRTC_Streaming directory
-   - Make the traffic control script executable:
-     ```bash
-     chmod +x webrtc_tc_control.sh
-     ```
-   - Run the traffic control script with sudo:
-     ```bash
-     sudo ./webrtc_tc_control.sh
-     ```
-   - The script will detect your network interface or ask you to select one
-   - You'll see a menu with options
+   - You have two options for traffic control:
+     
+     **Option 1: Manual Traffic Control**
+     - Make the traffic control script executable:
+       ```bash
+       chmod +x dynamic_tc_control.sh
+       ```
+     - Run the traffic control script with sudo:
+       ```bash
+       sudo ./dynamic_tc_control.sh
+       ```
+     - The script will detect your network interface or ask you to select one
+     - You'll see a menu with options
+     
+     **Option 2: Automatic Traffic Control (Recommended)**
+     - Make the automatic traffic control script executable:
+       ```bash
+       chmod +x auto_tc_control.py
+       ```
+     - Run the automatic traffic control script with sudo:
+       ```bash
+       sudo python3 auto_tc_control.py
+       ```
+     - The script will automatically detect your network interface
+     - It will continuously monitor network conditions and adjust them dynamically
 
 3. **Apply Network Conditions**
    - From the menu, select option 2 (Apply preset network conditions)
@@ -94,6 +109,7 @@ This system addresses several challenges in video streaming:
      - 4: Poor (2mbit, 150ms delay, 3% loss)
      - 5: Very Poor (1mbit, 300ms delay, 5% loss)
    - The script will apply the selected network conditions
+   - You can also select option 5 to apply ultra-low-latency conditions for the best possible streaming experience
 
 4. **Start the Sender**
    - In a new terminal on the sender computer, run:
@@ -114,7 +130,7 @@ This system addresses several challenges in video streaming:
 
 7. **Reset Network Conditions**
    - When finished, select option 4 from the traffic control menu to reset network conditions
-   - Select option 5 to exit the traffic control script
+   - Select option 6 to exit the traffic control script
 
 ### Testing on a Single Computer
 
@@ -128,13 +144,21 @@ This system addresses several challenges in video streaming:
      python direct_sender.py --ip localhost --video PATH_TO_VIDEO
      ```
 
-2. **Optional: Apply Traffic Control**
+2. **Optional: Apply Dynamic Traffic Control**
    - Open a third terminal
-   - Run the traffic control script:
+   - You have two options:
+     
+     **Option 1: Manual Traffic Control**
      ```bash
-     sudo ./webrtc_tc_control.sh
+     sudo ./dynamic_tc_control.sh
      ```
-   - Follow steps 3-7 from the Advanced Setup
+     - Follow steps 3-7 from the Advanced Setup
+     
+     **Option 2: Automatic Traffic Control (Recommended)**
+     ```bash
+     sudo python3 auto_tc_control.py
+     ```
+     - The script will automatically adjust network conditions based on real-time metrics
 
 ### Stopping the System
 
@@ -150,7 +174,7 @@ This system addresses several challenges in video streaming:
 
 3. **Reset Traffic Control (if used)**
    - In the traffic control terminal, select option 4 to reset network conditions
-   - Select option 5 to exit
+   - Select option 6 to exit
 
 ## Command Options
 
@@ -163,12 +187,14 @@ This system addresses several challenges in video streaming:
 - `--fps`: Target FPS (default: use video's FPS)
 - `--buffer`: Frame buffer size (default: 5)
 - `--display`: Display video locally (default: True)
+- `--metrics-port`: Port for metrics API server (default: 8000)
 
 ### Receiver Options:
 - `--display`: Display video (REQUIRED to see the video)
 - `--fps`: Override playback FPS (default: use sender's FPS)
 - `--buffer`: Frame buffer size (default: 5)
 - `--low-latency`: Enable low latency mode (default: True)
+- `--metrics-port`: Port for metrics API server (default: 8001)
 
 ## Buffer Management
 
@@ -222,9 +248,42 @@ python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO --buffer 15
 
 This will increase the buffer sizes and initial buffering, which can help with smoother playback at the cost of higher latency.
 
-## Traffic Control (TC)
+## Dynamic Traffic Control (TC)
 
-The traffic control script allows you to simulate different network conditions to test how the video streaming performs under various scenarios.
+### Manual Traffic Control
+
+The dynamic traffic control script (`dynamic_tc_control.sh`) allows you to manually simulate different network conditions to test how the video streaming performs under various scenarios. It's particularly useful for testing how the low-latency optimizations perform under different network conditions.
+
+### Automatic Traffic Control
+
+The automatic traffic control script (`auto_tc_control.sh`) provides an easy way to test your video streaming under different network conditions. It automatically cycles through a series of network presets, from very poor to ultra-smooth, at regular intervals.
+
+Key features of the automatic traffic control:
+
+1. **Automatic cycling** - Automatically changes network conditions every 20 seconds
+2. **Progressive testing** - Starts with poor conditions and gradually improves to excellent
+3. **Colorful output** - Uses color-coded terminal output for better readability
+4. **Real-time statistics** - Shows current network conditions and statistics
+5. **Ultra-smooth mode** - Includes an optimized ultra-low-latency configuration
+
+This script is perfect for testing how your video streaming performs under different network conditions without having to manually change settings.
+
+#### Metrics API
+
+Both the sender and receiver include a built-in metrics API that provides real-time performance data:
+
+- **Sender Metrics API**: http://SENDER_IP:8000/metrics
+- **Receiver Metrics API**: http://RECEIVER_IP:8001/metrics
+
+These APIs return JSON data with detailed performance metrics including:
+- Bandwidth usage
+- Frame rates
+- Buffer fullness
+- Frame delivery times
+- Drop rates
+- Resolution and quality settings
+
+You can access these metrics directly in a web browser or use them with monitoring tools.
 
 ### Prerequisites for Traffic Control
 
@@ -240,24 +299,54 @@ sudo apt install iproute2
 
 ### Running Traffic Control
 
+#### Manual Traffic Control
+
 1. Make the script executable (if not already):
    ```bash
-   chmod +x webrtc_tc_control.sh
+   chmod +x dynamic_tc_control.sh
    ```
 
 2. Run the script with sudo:
    ```bash
-   sudo ./webrtc_tc_control.sh
+   sudo ./dynamic_tc_control.sh
    ```
+
+#### Automatic Traffic Control
+
+1. Make the script executable (if not already):
+   ```bash
+   chmod +x auto_tc_control.sh
+   ```
+
+2. Run the script with sudo:
+   ```bash
+   sudo ./auto_tc_control.sh
+   ```
+
+3. The script will:
+   - Detect your network interface or ask you to select one
+   - Start cycling through network conditions automatically
+   - Apply each condition for 20 seconds before moving to the next
+   - Show real-time statistics for each condition
+   - Continue cycling until you press Ctrl+C
 
 3. When you first run the script, it will detect your network interface or ask you to select one.
 
-4. From the menu, you can:
+4. For manual control, from the menu, you can:
    - Option 1: Set custom network conditions (bandwidth, delay, packet loss)
-   - Option 2: Apply preset network conditions (Excellent, Good, Fair, Poor)
+   - Option 2: Apply preset network conditions (Excellent, Good, Fair, Poor, Very Poor)
    - Option 3: Show current network statistics
    - Option 4: Reset network conditions
-   - Option 5: Exit
+   - Option 5: Apply ultra-low-latency conditions
+   - Option 6: Exit
+
+5. The script cycles through these network conditions:
+   - **VERY POOR**: 1Mbit, 300ms delay, 5% loss
+   - **POOR**: 2Mbit, 150ms delay, 3% loss
+   - **FAIR**: 4Mbit, 80ms delay, 1% loss
+   - **GOOD**: 6Mbit, 40ms delay, 0.5% loss
+   - **EXCELLENT**: 10Mbit, 20ms delay, 0% loss
+   - **ULTRA**: Special ultra-low-latency configuration
 
 ### Troubleshooting TC
 
@@ -279,6 +368,34 @@ python direct_sender.py --ip RECEIVER_IP --fps 30
 # Increase buffer sizes
 python direct_receiver.py --display --buffer 30 --low-latency=False
 python direct_sender.py --ip RECEIVER_IP --buffer 30
+
+### Network conditions affect video quality:
+If you're experiencing poor video quality or high latency, try applying different network conditions:
+
+```bash
+# For ultra-low-latency (best performance)
+sudo ./dynamic_tc_control.sh
+# Then select option 5 to apply ultra-low-latency conditions
+
+# For testing under poor network conditions
+sudo ./dynamic_tc_control.sh
+# Then select option 2 and choose preset 4 or 5
+
+# For automatic cycling through different network conditions
+sudo ./auto_tc_control.sh
+```
+
+### Accessing metrics directly:
+```bash
+# View sender metrics in browser
+firefox http://localhost:8000/metrics
+
+# View receiver metrics in browser
+firefox http://RECEIVER_IP:8001/metrics
+
+# Get metrics via curl
+curl http://localhost:8000/metrics | jq
+```
 ```
 
 ### High bandwidth usage:

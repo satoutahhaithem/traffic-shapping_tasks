@@ -20,7 +20,12 @@ import time
 import argparse
 import numpy as np
 import threading
+import http.server
+import socketserver
+import json
 from collections import deque
+from threading import Thread
+from urllib.parse import urlparse, parse_qs
 
 # Traffic statistics variables
 bytes_sent = 0       # Total bytes sent
@@ -34,6 +39,11 @@ frame_buffer = deque(maxlen=5)  # Buffer to store frames (minimal size for lowes
 buffer_lock = threading.Lock()   # Lock for thread-safe buffer access
 send_thread = None               # Thread for sending frames
 running = True                   # Flag to control threads
+
+# API server for metrics
+metrics_port = 8000  # Port for the metrics API server
+metrics_server = None
+metrics_handler = None
 
 def print_stats():
     """
@@ -196,6 +206,65 @@ def send_frames_thread(client_socket, fps):
             # Not time to send next frame yet, short sleep
             time.sleep(0.001)
 
+# Custom HTTP request handler for metrics API
+class MetricsHandler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        global bytes_sent, packets_sent, frame_sizes, frame_times, frame_buffer
+        global frame_width, frame_height, video_fps, target_fps, jpeg_quality
+        
+        parsed_path = urlparse(self.path)
+        
+        if parsed_path.path == '/metrics':
+            # Calculate metrics
+            avg_frame_size = sum(frame_sizes) / len(frame_sizes) if frame_sizes else 0
+            avg_process_time = sum(frame_times) / len(frame_times) if frame_times else 0
+            actual_fps = 1 / avg_process_time if avg_process_time > 0 else 0
+            buffer_fullness = (len(frame_buffer) / frame_buffer.maxlen * 100) if frame_buffer.maxlen > 0 else 0
+            
+            # Create metrics JSON
+            metrics = {
+                "bandwidth_usage": bytes_sent / (1024 * 1024 * (time.time() - start_time)) if time.time() > start_time else 0,  # MB/s
+                "frame_size": avg_frame_size / 1024,  # KB
+                "process_time": avg_process_time * 1000,  # ms
+                "actual_fps": actual_fps,
+                "target_fps": target_fps,
+                "buffer_fullness": buffer_fullness,  # %
+                "resolution": f"{frame_width}x{frame_height}",
+                "quality": jpeg_quality,
+                "total_frames": len(frame_times)
+            }
+            
+            # Send response
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')  # Allow cross-origin requests
+            self.end_headers()
+            self.wfile.write(json.dumps(metrics).encode())
+        else:
+            self.send_response(404)
+            self.end_headers()
+            self.wfile.write(b'Not Found')
+    
+    def log_message(self, format, *args):
+        # Suppress log messages to keep console clean
+        return
+
+# Function to start metrics API server
+def start_metrics_server(port):
+    global metrics_server, metrics_handler
+    
+    # Create server
+    metrics_handler = MetricsHandler
+    metrics_server = socketserver.ThreadingTCPServer(("", port), metrics_handler)
+    
+    # Start server in a separate thread
+    server_thread = Thread(target=metrics_server.serve_forever)
+    server_thread.daemon = True
+    server_thread.start()
+    
+    print(f"Metrics API server started on port {port}")
+    print(f"Access metrics at: http://localhost:{port}/metrics")
+
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser(description="Video Sender")
@@ -207,6 +276,7 @@ if __name__ == "__main__":
     parser.add_argument("--fps", type=float, default=0, help="Target FPS (0=use video's FPS)")
     parser.add_argument("--buffer", type=int, default=5, help="Frame buffer size")
     parser.add_argument("--display", action="store_true", help="Display video locally", default=True)
+    parser.add_argument("--metrics-port", type=int, default=8000, help="Port for metrics API server")
     
     args = parser.parse_args()
     
@@ -219,6 +289,7 @@ if __name__ == "__main__":
     target_fps_arg = args.fps
     frame_buffer = deque(maxlen=args.buffer)
     display_video = args.display
+    metrics_port = args.metrics_port
     
     # Print display status
     if display_video:
@@ -235,6 +306,10 @@ if __name__ == "__main__":
         print(f"Connecting to {receiver_ip}:{receiver_port}...")
         client_socket.connect((receiver_ip, receiver_port))
         print("Connected to receiver")
+        
+        # Start metrics API server
+        start_metrics_server(metrics_port)
+        print(f"Metrics available at: http://{socket.gethostbyname(socket.gethostname())}:{metrics_port}/metrics")
         
         # Open video file
         cap = cv2.VideoCapture(video_path)
@@ -374,7 +449,12 @@ if __name__ == "__main__":
         client_socket.close()
         print("Socket closed")
         
+        # Stop metrics server
+        if metrics_server:
+            metrics_server.shutdown()
+            metrics_server.server_close()
+            print("Metrics server stopped")
+        
         if display_video:
             cv2.destroyAllWindows()
-            print("Video window closed")
             print("Video window closed")
