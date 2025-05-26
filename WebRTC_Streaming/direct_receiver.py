@@ -34,7 +34,7 @@ frames_dropped = 0    # Total frames dropped
 video_info = None     # Video information from sender
 
 # Frame buffering for smoother playback
-frame_buffer = deque(maxlen=60)  # Buffer to store frames (increased size)
+frame_buffer = deque(maxlen=15)  # Buffer to store frames (reduced size for lower latency)
 buffer_lock = threading.Lock()   # Lock for thread-safe buffer access
 buffer_thread = None             # Thread for receiving frames
 running = True                   # Flag to control threads
@@ -215,8 +215,9 @@ if __name__ == "__main__":
     parser.add_argument("--ip", default="0.0.0.0", help="IP address to listen on")
     parser.add_argument("--port", type=int, default=9999, help="Port to listen on")
     parser.add_argument("--display", action="store_true", help="Display video (requires GUI)")
-    parser.add_argument("--buffer", type=int, default=60, help="Frame buffer size")
+    parser.add_argument("--buffer", type=int, default=15, help="Frame buffer size")
     parser.add_argument("--fps", type=float, default=0, help="Override playback FPS (0=use sender's FPS)")
+    parser.add_argument("--low-latency", action="store_true", help="Enable low latency mode", default=True)
     
     args = parser.parse_args()
     
@@ -267,14 +268,21 @@ if __name__ == "__main__":
         buffer_thread.daemon = True
         buffer_thread.start()
         
-        # Wait for buffer to fill initially
+        # Wait for buffer to fill initially (reduced for lower latency)
         print("Buffering frames...")
         buffer_fill_start = time.time()
-        while len(frame_buffer) < min(30, frame_buffer.maxlen):
-            # Don't wait more than 5 seconds for buffer to fill
-            if time.time() - buffer_fill_start > 5.0:
+        
+        # If low latency mode is enabled, use minimal buffering
+        if args.low_latency:
+            buffer_target = min(5, frame_buffer.maxlen)
+        else:
+            buffer_target = min(15, frame_buffer.maxlen)
+            
+        while len(frame_buffer) < buffer_target:
+            # Don't wait more than 2 seconds for buffer to fill
+            if time.time() - buffer_fill_start > 2.0:
                 break
-            time.sleep(0.1)
+            time.sleep(0.05)  # Check more frequently
             print(f"Buffer: {len(frame_buffer)}/{frame_buffer.maxlen}", end="\r")
         print("\nBuffer filled, starting playback")
         
@@ -313,11 +321,11 @@ if __name__ == "__main__":
                     # Update last frame time for consistent playback speed
                     last_frame_time = current_time
                 else:
-                    # No frames in buffer, wait a bit
-                    time.sleep(0.01)
+                    # No frames in buffer, wait a bit (reduced wait time)
+                    time.sleep(0.001)
             else:
-                # Not time for next frame yet, short sleep
-                time.sleep(0.001)
+                # Not time for next frame yet, shorter sleep for more responsive playback
+                time.sleep(0.0005)
             
             # Print statistics every second
             if current_time - last_stats_time >= 1.0:

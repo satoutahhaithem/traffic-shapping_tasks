@@ -3,7 +3,7 @@
 Video Sender Script
 
 This script captures video from a file and sends it to a receiver over a TCP socket.
-It displays real-time traffic statistics in the terminal.
+It displays real-time traffic statistics in the terminal and shows the video locally.
 
 Usage:
     python direct_sender.py --ip RECEIVER_IP --video VIDEO_PATH
@@ -30,7 +30,7 @@ frame_times = deque(maxlen=30)  # Last 30 frame processing times
 start_time = time.time()        # When the script started
 
 # Frame buffering for smoother transmission
-frame_buffer = deque(maxlen=30)  # Buffer to store frames
+frame_buffer = deque(maxlen=15)  # Buffer to store frames (reduced size for lower latency)
 buffer_lock = threading.Lock()   # Lock for thread-safe buffer access
 send_thread = None               # Thread for sending frames
 running = True                   # Flag to control threads
@@ -205,7 +205,8 @@ if __name__ == "__main__":
     parser.add_argument("--quality", type=int, default=90, help="JPEG quality (1-100)")
     parser.add_argument("--scale", type=float, default=1.0, help="Resolution scale factor")
     parser.add_argument("--fps", type=float, default=0, help="Target FPS (0=use video's FPS)")
-    parser.add_argument("--buffer", type=int, default=30, help="Frame buffer size")
+    parser.add_argument("--buffer", type=int, default=15, help="Frame buffer size")
+    parser.add_argument("--display", action="store_true", help="Display video locally", default=True)
     
     args = parser.parse_args()
     
@@ -217,6 +218,14 @@ if __name__ == "__main__":
     scale_factor = args.scale
     target_fps_arg = args.fps
     frame_buffer = deque(maxlen=args.buffer)
+    display_video = args.display
+    
+    # Print display status
+    if display_video:
+        print("Video display is ENABLED - you should see a window showing the video")
+        # Create a window for the video
+        cv2.namedWindow("Sender Video", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("Sender Video", 640, 360)
     
     # Create TCP socket
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -309,6 +318,26 @@ if __name__ == "__main__":
                 if scale_factor != 1.0:
                     frame = cv2.resize(frame, (frame_width, frame_height))
                 
+                # Display frame immediately for lowest latency
+                if display_video:
+                    try:
+                        # Add text to the frame
+                        display_frame = frame.copy()
+                        cv2.putText(display_frame, "SENDER PREVIEW", (10, 30),
+                                   cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+                        
+                        # Show the frame
+                        cv2.imshow("Sender Video", display_frame)
+                        
+                        # Process key presses (q to quit)
+                        key = cv2.waitKey(1) & 0xFF
+                        if key == ord('q'):
+                            running = False
+                            break
+                    except Exception as e:
+                        print(f"Error displaying video: {e}")
+                        display_video = False
+                
                 # Add frame to buffer if there's space
                 with buffer_lock:
                     if len(frame_buffer) < frame_buffer.maxlen:
@@ -343,3 +372,8 @@ if __name__ == "__main__":
         
         client_socket.close()
         print("Socket closed")
+        
+        if display_video:
+            cv2.destroyAllWindows()
+            print("Video window closed")
+            print("Video window closed")
