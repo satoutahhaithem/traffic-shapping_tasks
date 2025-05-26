@@ -161,13 +161,13 @@ This system addresses several challenges in video streaming:
 - `--quality`: JPEG quality 1-100 (default: 90)
 - `--scale`: Resolution scale factor (default: 1.0)
 - `--fps`: Target FPS (default: use video's FPS)
-- `--buffer`: Frame buffer size (default: 15)
+- `--buffer`: Frame buffer size (default: 5)
 - `--display`: Display video locally (default: True)
 
 ### Receiver Options:
 - `--display`: Display video (REQUIRED to see the video)
 - `--fps`: Override playback FPS (default: use sender's FPS)
-- `--buffer`: Frame buffer size (default: 15)
+- `--buffer`: Frame buffer size (default: 5)
 - `--low-latency`: Enable low latency mode (default: True)
 
 ## Buffer Management
@@ -208,16 +208,16 @@ To properly stop the sender or receiver:
 
 The system is configured for low latency by default, which minimizes the delay between the sender and receiver displays. This is achieved by:
 
-1. **Smaller buffer sizes** on both sender and receiver
-2. **Minimal initial buffering** before playback starts
+1. **Minimal buffer sizes** (only 5 frames) on both sender and receiver
+2. **Ultra-minimal initial buffering** (only 2-3 frames) before playback starts
 3. **Faster response times** with shorter sleep intervals
 4. **Immediate frame display** on the sender side
 
 If you experience stuttering or frame drops with low latency mode, you can disable it:
 
 ```bash
-python direct_receiver.py --display --low-latency=False --buffer 30
-python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO --buffer 30
+python direct_receiver.py --display --low-latency=False --buffer 15
+python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO --buffer 15
 ```
 
 This will increase the buffer sizes and initial buffering, which can help with smoother playback at the cost of higher latency.
@@ -277,8 +277,8 @@ python direct_sender.py --ip RECEIVER_IP --fps 30
 ### Video stutters or blocks:
 ```bash
 # Increase buffer sizes
-python direct_receiver.py --display --buffer 120
-python direct_sender.py --ip RECEIVER_IP --buffer 60
+python direct_receiver.py --display --buffer 30 --low-latency=False
+python direct_sender.py --ip RECEIVER_IP --buffer 30
 ```
 
 ### High bandwidth usage:

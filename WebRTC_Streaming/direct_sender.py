@@ -30,7 +30,7 @@ frame_times = deque(maxlen=30)  # Last 30 frame processing times
 start_time = time.time()        # When the script started
 
 # Frame buffering for smoother transmission
-frame_buffer = deque(maxlen=15)  # Buffer to store frames (reduced size for lower latency)
+frame_buffer = deque(maxlen=5)  # Buffer to store frames (minimal size for lowest latency)
 buffer_lock = threading.Lock()   # Lock for thread-safe buffer access
 send_thread = None               # Thread for sending frames
 running = True                   # Flag to control threads
@@ -205,7 +205,7 @@ if __name__ == "__main__":
     parser.add_argument("--quality", type=int, default=90, help="JPEG quality (1-100)")
     parser.add_argument("--scale", type=float, default=1.0, help="Resolution scale factor")
     parser.add_argument("--fps", type=float, default=0, help="Target FPS (0=use video's FPS)")
-    parser.add_argument("--buffer", type=int, default=15, help="Frame buffer size")
+    parser.add_argument("--buffer", type=int, default=5, help="Frame buffer size")
     parser.add_argument("--display", action="store_true", help="Display video locally", default=True)
     
     args = parser.parse_args()
@@ -274,9 +274,10 @@ if __name__ == "__main__":
         frame_count = 0
         last_stats_time = time.time()
         
-        # Pre-fill buffer
+        # Pre-fill buffer (minimal fill for lowest latency)
         print("Pre-filling buffer...")
-        while len(frame_buffer) < frame_buffer.maxlen and running:
+        buffer_target = min(3, frame_buffer.maxlen)  # Only fill 3 frames
+        while len(frame_buffer) < buffer_target and running:
             ret, frame = cap.read()
             if not ret:
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
