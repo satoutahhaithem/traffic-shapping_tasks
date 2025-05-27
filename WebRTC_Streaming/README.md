@@ -21,29 +21,43 @@ For the best experience with the full system including performance monitoring an
    python direct_receiver.py --display --metrics-port 8001
    ```
 
-2. **Start the Automatic Traffic Control**
+2. **Start the Automatic Traffic Control on the Sender PC**
    ```bash
    sudo ./auto_tc_control.sh
    ```
    This will automatically cycle through different network conditions every 20 seconds.
+   
+   Note: The traffic control should be run on the sender PC to simulate network conditions
+   between the sender and receiver. This affects the outgoing traffic from the sender.
 
 3. **Start the Sender with Metrics Enabled**
    ```bash
-   python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO --metrics-port 8000
+   python direct_sender.py --ip 192.168.2.169 --video ../video/zidane.mp4 --metrics-port 8000
    ```
-   Replace RECEIVER_IP with the actual IP address and PATH_TO_VIDEO with your video file path.
+   Replace:
+   - 192.168.2.169 with the actual receiver IP address
+   - ../video/zidane.mp4 with the path to a specific video file
+   
+   Note: The video path must point to a specific video file, not a directory.
+   Common error: Using a directory path like "/home/user/videos" instead of a file path like "/home/user/videos/sample.mp4"
 
-4. **Start the Performance Monitor**
+4. **Start the Performance Monitor (Can be run on either PC)**
    ```bash
-   python performance_monitor.py --live
+   python performance_monitor.py --live --sender-ip SENDER_IP --receiver-ip RECEIVER_IP
    ```
    This will collect metrics, display live graphs, and save performance data.
+   
+   Note: The performance monitor can be run on either the sender or receiver PC.
+   Just make sure to specify the correct IP addresses for both sender and receiver.
 
-5. **View the Results in the Performance Viewer**
+5. **View the Results in the Performance Viewer (Can be run on any PC with a browser)**
    ```bash
    firefox performance_viewer.html
    ```
    This will open the web-based interface for analyzing the performance graphs.
+   
+   Note: The performance viewer is a static HTML file that can be opened in any browser.
+   You may need to copy the performance graphs to the PC where you're viewing them.
 
 6. **When Finished**
    - Press Ctrl+C in each terminal to stop the respective processes
@@ -85,17 +99,17 @@ For the best experience with the full system including performance monitoring an
      ```bash
      python direct_sender.py --ip 192.168.2.169 --video ../video/zidane.mp4
      ```
-     (Replace RECEIVER_IP with the actual IP address and PATH_TO_VIDEO with your video file path)
+     (Replace 192.168.2.169 with the actual receiver IP address and ../video/zidane.mp4 with the path to a specific video file)
    - You should see "Connected to receiver" and statistics in the terminal
    - You should also see a window showing the video on the sender's PC
    - The video on the sender and receiver should be synchronized
    - If you don't want to see the video on the sender's PC, use the --display=False flag:
      ```bash
-     python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO --display=False
+     python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --display=False
      ```
    - If the videos are not synchronized, adjust the sync delay:
      ```bash
-     python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO --sync-delay 0.5
+     python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --sync-delay 0.5
      ```
 
 5. **Observe the Video Stream**
@@ -108,7 +122,7 @@ For the best experience with the full system including performance monitoring an
    - Prepare both computers
    - Start the receiver
 
-2. **Set Up Dynamic Traffic Control on Sender**
+2. **Set Up Dynamic Traffic Control on the Sender PC**
    - On the sender computer, open a terminal
    - Navigate to the WebRTC_Streaming directory
    - You have two options for traffic control:
@@ -151,9 +165,9 @@ For the best experience with the full system including performance monitoring an
 4. **Start the Sender**
    - In a new terminal on the sender computer, run:
      ```bash
-     python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO
+     python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4
      ```
-     (Replace RECEIVER_IP with the actual IP address and PATH_TO_VIDEO with your video file path)
+     (Replace RECEIVER_IP with the actual IP address and use a specific video file path)
 
 5. **Observe the Effects**
    - Watch how the video quality and performance change under different network conditions
@@ -178,10 +192,10 @@ For the best experience with the full system including performance monitoring an
      ```
    - In the second terminal, start the sender using localhost:
      ```bash
-     python direct_sender.py --ip localhost --video PATH_TO_VIDEO
+     python direct_sender.py --ip localhost --video ../video/zidane.mp4
      ```
 
-2. **Optional: Apply Dynamic Traffic Control**
+2. **Optional: Apply Dynamic Traffic Control on the Sender PC**
    - Open a third terminal
    - You have two options:
      
@@ -209,7 +223,7 @@ For the best experience with the full system including performance monitoring an
    - Wait for the program to clean up resources
    - If it doesn't exit within a few seconds, press Ctrl+C again
 
-3. **Reset Traffic Control (if used)**
+3. **Reset Traffic Control on the Sender PC (if used)**
    - In the traffic control terminal, select option 4 to reset network conditions
    - Select option 6 to exit
 
@@ -247,12 +261,12 @@ To address a full buffer:
 
 1. **Reduce the reading rate**:
    ```bash
-   python direct_sender.py --ip RECEIVER_IP --fps 15
+   python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --fps 15
    ```
 
 2. **Increase the buffer size**:
    ```bash
-   python direct_sender.py --ip RECEIVER_IP --buffer 60
+   python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --buffer 60
    ```
 
 3. **Ensure the receiver is running** before starting the sender
@@ -280,18 +294,18 @@ If you experience stuttering or frame drops with low latency mode, you can disab
 
 ```bash
 python direct_receiver.py --display --low-latency=False --buffer 15
-python direct_sender.py --ip RECEIVER_IP --video PATH_TO_VIDEO --buffer 15
+python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --buffer 15
 ```
 
 This will increase the buffer sizes and initial buffering, which can help with smoother playback at the cost of higher latency.
 
 ## Dynamic Traffic Control (TC)
 
-### Manual Traffic Control
+### Manual Traffic Control (Run on Sender PC)
 
 The dynamic traffic control script (`dynamic_tc_control.sh`) allows you to manually simulate different network conditions to test how the video streaming performs under various scenarios. It's particularly useful for testing how the low-latency optimizations perform under different network conditions.
 
-### Automatic Traffic Control
+### Automatic Traffic Control (Run on Sender PC)
 
 The automatic traffic control script (`auto_tc_control.sh`) provides an easy way to test your video streaming under different network conditions. It automatically cycles through a series of network presets, from very poor to ultra-smooth, at regular intervals.
 
@@ -365,7 +379,7 @@ sudo apt install iproute2
 
 ### Running Traffic Control
 
-#### Manual Traffic Control
+#### Manual Traffic Control (Run on Sender PC)
 
 1. Make the script executable (if not already):
    ```bash
@@ -377,7 +391,7 @@ sudo apt install iproute2
    sudo ./dynamic_tc_control.sh
    ```
 
-#### Automatic Traffic Control
+#### Automatic Traffic Control (Run on Sender PC)
 
 1. Make the script executable (if not already):
    ```bash
@@ -426,32 +440,32 @@ sudo apt install iproute2
 ```bash
 # Set specific frame rate on both sides
 python direct_receiver.py --display --fps 30
-python direct_sender.py --ip RECEIVER_IP --fps 30
+python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --fps 30
 ```
 
 ### Video stutters or blocks:
 ```bash
 # Increase buffer sizes
 python direct_receiver.py --display --buffer 30 --low-latency=False
-python direct_sender.py --ip RECEIVER_IP --buffer 30
+python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --buffer 30
 
 ### Network conditions affect video quality:
 If you're experiencing poor video quality or high latency, try applying different network conditions:
 
 ```bash
-# For ultra-low-latency (best performance)
+# For ultra-low-latency (best performance) - Run on sender PC
 sudo ./dynamic_tc_control.sh
 # Then select option 5 to apply ultra-low-latency conditions
 
-# For testing under poor network conditions
+# For testing under poor network conditions - Run on sender PC
 sudo ./dynamic_tc_control.sh
 # Then select option 2 and choose preset 4 or 5
 
-# For automatic cycling through different network conditions
+# For automatic cycling through different network conditions - Run on sender PC
 sudo ./auto_tc_control.sh
 
-# For monitoring performance and generating graphs
-python performance_monitor.py --live
+# For monitoring performance and generating graphs (can run on either PC)
+python performance_monitor.py --live --sender-ip SENDER_IP --receiver-ip RECEIVER_IP
 ```
 
 ### Accessing metrics directly:
@@ -468,17 +482,17 @@ curl http://localhost:8000/metrics | jq
 
 ### Performance Monitoring Options:
 ```bash
-# Basic monitoring with default settings
-python performance_monitor.py
+# Basic monitoring with default settings (specify correct IPs)
+python performance_monitor.py --sender-ip SENDER_IP --receiver-ip RECEIVER_IP
 
 # Live graph display during monitoring
-python performance_monitor.py --live
+python performance_monitor.py --live --sender-ip SENDER_IP --receiver-ip RECEIVER_IP
 
 # Custom monitoring configuration
-python performance_monitor.py --sender-ip localhost --receiver-ip 192.168.2.169 --interval 0.5 --duration 600
+python performance_monitor.py --sender-ip SENDER_IP --receiver-ip RECEIVER_IP --interval 0.5 --duration 600
 
 # Save graphs to a specific directory
-python performance_monitor.py --output ./my_performance_graphs
+python performance_monitor.py --output ./my_performance_graphs --sender-ip SENDER_IP --receiver-ip RECEIVER_IP
 ```
 
 ### Viewing Performance Graphs:
