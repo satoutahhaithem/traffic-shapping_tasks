@@ -4,24 +4,73 @@
 
 We've created simple scripts that start everything for you:
 
-### On the sender PC:
+### First, install required dependencies:
+
+#### Option 1: Using apt (System-wide installation)
+
 ```bash
-sudo ./start_sender.sh RECEIVER_IP
+# On both sender and receiver PCs:
+sudo apt install python3-opencv python3-numpy python3-requests
+
+# On receiver PC only (for graphs):
+sudo apt install python3-matplotlib
+```
+
+#### Option 2: Using pip in a virtual environment (Recommended)
+
+We've created a setup script that handles everything for you:
+
+```bash
+# Run the setup script
+./setup_venv.sh
+
+# Activate the virtual environment
+source venv/bin/activate
+```
+
+Or manually:
+
+```bash
+# Create a virtual environment
+python3 -m venv venv
+
+# Activate the virtual environment
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+After installing dependencies, make sure to activate the virtual environment before running the scripts:
+
+```bash
+source venv/bin/activate
+```
+
+### Then run the scripts:
+
+#### On the sender PC:
+```bash
+# Note: sudo doesn't preserve the virtual environment by default
+sudo -E env "PATH=$PATH" ./start_sender.sh RECEIVER_IP
 ```
 Replace RECEIVER_IP with the receiver's IP address.
 
-### On the receiver PC:
+#### On the receiver PC:
 ```bash
 ./start_receiver.sh SENDER_IP
 ```
 Replace SENDER_IP with the sender's IP address.
 
-That's it! The scripts will:
-1. Start all necessary components
-2. Apply traffic control on the sender
-3. Send settings to the receiver in real-time
-4. Measure performance and generate graphs
-5. Clean up everything when you press Ctrl+C
+> **Important Note about sudo**: When using `sudo`, the virtual environment is not preserved by default. The `sudo -E env "PATH=$PATH"` command preserves the environment variables, including the virtual environment.
+
+The scripts will:
+1. Check for required dependencies
+2. Start all necessary components
+3. Apply traffic control on the sender
+4. Send settings to the receiver in real-time
+5. Measure performance and generate graphs
+6. Clean up everything when you press Ctrl+C
 
 ## Manual Setup Options
 

@@ -58,11 +58,66 @@ if ! command_exists curl; then
     exit 1
 fi
 
-if ! command_exists python || ! command_exists python3; then
-    echo -e "${RED}Error: python is not installed.${NC}"
-    echo -e "${RED}Please install it with: sudo apt install python3${NC}"
+# Check if a local virtual environment exists
+if [ -d "./venv" ] && [ -f "./venv/bin/python" ]; then
+    echo -e "${GREEN}Using local virtual environment: ./venv${NC}"
+    PYTHON_CMD="./venv/bin/python"
+elif [ -n "$VIRTUAL_ENV" ]; then
+    echo -e "${GREEN}Running in virtual environment: $VIRTUAL_ENV${NC}"
+    PYTHON_CMD="$VIRTUAL_ENV/bin/python"
+else
+    # Check for python - try both python and python3
+    PYTHON_CMD=""
+    if command_exists python3; then
+        PYTHON_CMD="python3"
+    elif command_exists python; then
+        PYTHON_CMD="python"
+    else
+        echo -e "${RED}Error: Neither python nor python3 is installed.${NC}"
+        echo -e "${RED}Please install it with: sudo apt install python3${NC}"
+        exit 1
+    fi
+fi
+
+echo -e "${GREEN}Using Python command: $PYTHON_CMD${NC}"
+
+# Check for required Python modules
+echo -e "${BLUE}Checking for required Python modules...${NC}"
+
+# Function to check if a Python module is installed
+module_exists() {
+    $PYTHON_CMD -c "import $1" 2>/dev/null
+    return $?
+}
+
+# Check for OpenCV
+if ! module_exists cv2; then
+    echo -e "${YELLOW}OpenCV (cv2) module not found.${NC}"
+    echo -e "${YELLOW}Please install it using one of these methods:${NC}"
+    echo -e "${YELLOW}1. System package: sudo apt install python3-opencv${NC}"
+    echo -e "${YELLOW}2. In a virtual environment: python3 -m pip install opencv-python${NC}"
     exit 1
 fi
+
+# Check for NumPy
+if ! module_exists numpy; then
+    echo -e "${YELLOW}NumPy module not found.${NC}"
+    echo -e "${YELLOW}Please install it using one of these methods:${NC}"
+    echo -e "${YELLOW}1. System package: sudo apt install python3-numpy${NC}"
+    echo -e "${YELLOW}2. In a virtual environment: python3 -m pip install numpy${NC}"
+    exit 1
+fi
+
+# Check for requests
+if ! module_exists requests; then
+    echo -e "${YELLOW}Requests module not found.${NC}"
+    echo -e "${YELLOW}Please install it using one of these methods:${NC}"
+    echo -e "${YELLOW}1. System package: sudo apt install python3-requests${NC}"
+    echo -e "${YELLOW}2. In a virtual environment: python3 -m pip install requests${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}All required Python modules are installed.${NC}"
 
 # Function to check if a process is running
 is_running() {
@@ -143,7 +198,7 @@ if [ ! -f "$VIDEO_PATH" ]; then
 fi
 
 # Start the sender in the background
-python direct_sender.py --ip "$RECEIVER_IP" --video "$VIDEO_PATH" --metrics-port 8000 &
+$PYTHON_CMD direct_sender.py --ip "$RECEIVER_IP" --video "$VIDEO_PATH" --metrics-port 8000 &
 SENDER_PID=$!
 
 # Wait a moment for sender to start
