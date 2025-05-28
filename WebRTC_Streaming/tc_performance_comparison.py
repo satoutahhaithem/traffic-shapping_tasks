@@ -9,7 +9,7 @@ the relationship between what was commanded and what was actually applied.
 Usage:
     python tc_performance_comparison.py [--sender-ip SENDER_IP] [--receiver-ip RECEIVER_IP]
                                        [--interval INTERVAL] [--duration DURATION]
-                                       [--output OUTPUT_DIR] [--live]
+                                       [--output OUTPUT_DIR]
 
 Author: Roo AI Assistant
 Date: May 2025
@@ -21,18 +21,23 @@ import json
 import os
 import subprocess
 import requests
-import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
-import threading
-import re
+
+# Import matplotlib with error handling
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    print("Error: matplotlib is not installed. Please install it with:")
+    print("pip install matplotlib")
+    exit(1)
 
 # Default settings
 DEFAULT_SENDER_IP = "localhost"
 DEFAULT_RECEIVER_IP = "192.168.2.169"
 DEFAULT_SENDER_PORT = 8000
 DEFAULT_RECEIVER_PORT = 8001
-DEFAULT_INTERVAL = 1.0  # seconds
+DEFAULT_INTERVAL = 10.0  # seconds (changed from 1.0 to 10.0 as requested)
 DEFAULT_DURATION = 300  # seconds (5 minutes)
 DEFAULT_OUTPUT_DIR = "./tc_performance_graphs"
 
@@ -258,148 +263,47 @@ def generate_graphs(output_dir):
     # Generate timestamp for filenames
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Create figure with subplots
-    plt.figure(figsize=(15, 12))
+    # Create a single figure with all three metrics
+    plt.figure(figsize=(12, 10))
     
-    # Plot 1: Bandwidth Comparison
+    # Plot all three metrics in one figure
     plt.subplot(3, 1, 1)
-    plt.title("Bandwidth Comparison: Commanded vs. Measured")
-    plt.plot(data["timestamps"], data["commanded"]["rate"], 'b-', label="Commanded Rate (Mbps)")
-    plt.plot(data["timestamps"], data["measured"]["bandwidth"], 'r-', label="Measured Bandwidth (Mbps)")
-    plt.ylabel("Bandwidth (Mbps)")
+    plt.title("Bandwidth Comparison")
+    plt.plot(data["timestamps"], data["commanded"]["rate"], 'b-', label="Commanded")
+    plt.plot(data["timestamps"], data["measured"]["bandwidth"], 'r-', label="Measured")
+    plt.ylabel("Mbps")
     plt.grid(True)
     plt.legend()
     
-    # Plot 2: Latency Comparison
     plt.subplot(3, 1, 2)
-    plt.title("Latency Comparison: Commanded vs. Measured")
-    plt.plot(data["timestamps"], data["commanded"]["delay"], 'b-', label="Commanded Delay (ms)")
-    plt.plot(data["timestamps"], data["measured"]["latency"], 'r-', label="Measured Latency (ms)")
-    plt.ylabel("Latency (ms)")
+    plt.title("Latency Comparison")
+    plt.plot(data["timestamps"], data["commanded"]["delay"], 'b-', label="Commanded")
+    plt.plot(data["timestamps"], data["measured"]["latency"], 'r-', label="Measured")
+    plt.ylabel("ms")
     plt.grid(True)
     plt.legend()
     
-    # Plot 3: Packet Loss Comparison
     plt.subplot(3, 1, 3)
-    plt.title("Packet Loss Comparison: Commanded vs. Measured")
-    plt.plot(data["timestamps"], data["commanded"]["loss"], 'b-', label="Commanded Loss (%)")
-    plt.plot(data["timestamps"], data["measured"]["loss_rate"], 'r-', label="Measured Loss Rate (%)")
+    plt.title("Packet Loss Comparison")
+    plt.plot(data["timestamps"], data["commanded"]["loss"], 'b-', label="Commanded")
+    plt.plot(data["timestamps"], data["measured"]["loss_rate"], 'r-', label="Measured")
     plt.xlabel("Time (seconds)")
-    plt.ylabel("Packet Loss (%)")
+    plt.ylabel("%")
     plt.grid(True)
     plt.legend()
     
-    # Add overall title and adjust layout
-    plt.suptitle("Traffic Control Performance Comparison", fontsize=16)
-    plt.tight_layout(rect=[0, 0, 1, 0.97])
+    plt.tight_layout()
     
     # Save the figure
-    output_file = os.path.join(output_dir, f"tc_performance_comparison_{timestamp}.png")
+    output_file = os.path.join(output_dir, f"tc_performance_{timestamp}.png")
     plt.savefig(output_file, dpi=150)
-    print(f"{Colors.GREEN}Saved performance comparison graph to: {output_file}{Colors.ENDC}")
-    
-    # Create individual comparison graphs for better detail
-    
-    # Bandwidth Comparison
-    plt.figure(figsize=(10, 6))
-    plt.title("Bandwidth Comparison: Commanded vs. Measured")
-    plt.plot(data["timestamps"], data["commanded"]["rate"], 'b-', label="Commanded Rate (Mbps)")
-    plt.plot(data["timestamps"], data["measured"]["bandwidth"], 'r-', label="Measured Bandwidth (Mbps)")
-    plt.xlabel("Time (seconds)")
-    plt.ylabel("Bandwidth (Mbps)")
-    plt.grid(True)
-    plt.legend()
-    
-    output_file = os.path.join(output_dir, f"bandwidth_comparison_{timestamp}.png")
-    plt.savefig(output_file, dpi=150)
-    print(f"{Colors.GREEN}Saved bandwidth comparison graph to: {output_file}{Colors.ENDC}")
-    
-    # Latency Comparison
-    plt.figure(figsize=(10, 6))
-    plt.title("Latency Comparison: Commanded vs. Measured")
-    plt.plot(data["timestamps"], data["commanded"]["delay"], 'b-', label="Commanded Delay (ms)")
-    plt.plot(data["timestamps"], data["measured"]["latency"], 'r-', label="Measured Latency (ms)")
-    plt.xlabel("Time (seconds)")
-    plt.ylabel("Latency (ms)")
-    plt.grid(True)
-    plt.legend()
-    
-    output_file = os.path.join(output_dir, f"latency_comparison_{timestamp}.png")
-    plt.savefig(output_file, dpi=150)
-    print(f"{Colors.GREEN}Saved latency comparison graph to: {output_file}{Colors.ENDC}")
-    
-    # Packet Loss Comparison
-    plt.figure(figsize=(10, 6))
-    plt.title("Packet Loss Comparison: Commanded vs. Measured")
-    plt.plot(data["timestamps"], data["commanded"]["loss"], 'b-', label="Commanded Loss (%)")
-    plt.plot(data["timestamps"], data["measured"]["loss_rate"], 'r-', label="Measured Loss Rate (%)")
-    plt.xlabel("Time (seconds)")
-    plt.ylabel("Packet Loss (%)")
-    plt.grid(True)
-    plt.legend()
-    
-    output_file = os.path.join(output_dir, f"packet_loss_comparison_{timestamp}.png")
-    plt.savefig(output_file, dpi=150)
-    print(f"{Colors.GREEN}Saved packet loss comparison graph to: {output_file}{Colors.ENDC}")
-    
-    # Create a correlation graph to show how well the commanded values match the measured values
-    
-    # Bandwidth Correlation
-    plt.figure(figsize=(10, 6))
-    plt.title("Bandwidth Correlation: Commanded vs. Measured")
-    plt.scatter(data["commanded"]["rate"], data["measured"]["bandwidth"], alpha=0.5)
-    plt.xlabel("Commanded Rate (Mbps)")
-    plt.ylabel("Measured Bandwidth (Mbps)")
-    plt.grid(True)
-    
-    # Add a perfect correlation line
-    max_val = max(max(data["commanded"]["rate"]), max(data["measured"]["bandwidth"]))
-    plt.plot([0, max_val], [0, max_val], 'r--', label="Perfect Correlation")
-    plt.legend()
-    
-    output_file = os.path.join(output_dir, f"bandwidth_correlation_{timestamp}.png")
-    plt.savefig(output_file, dpi=150)
-    print(f"{Colors.GREEN}Saved bandwidth correlation graph to: {output_file}{Colors.ENDC}")
-    
-    # Latency Correlation
-    plt.figure(figsize=(10, 6))
-    plt.title("Latency Correlation: Commanded vs. Measured")
-    plt.scatter(data["commanded"]["delay"], data["measured"]["latency"], alpha=0.5)
-    plt.xlabel("Commanded Delay (ms)")
-    plt.ylabel("Measured Latency (ms)")
-    plt.grid(True)
-    
-    # Add a perfect correlation line
-    max_val = max(max(data["commanded"]["delay"]), max(data["measured"]["latency"]))
-    plt.plot([0, max_val], [0, max_val], 'r--', label="Perfect Correlation")
-    plt.legend()
-    
-    output_file = os.path.join(output_dir, f"latency_correlation_{timestamp}.png")
-    plt.savefig(output_file, dpi=150)
-    print(f"{Colors.GREEN}Saved latency correlation graph to: {output_file}{Colors.ENDC}")
-    
-    # Packet Loss Correlation
-    plt.figure(figsize=(10, 6))
-    plt.title("Packet Loss Correlation: Commanded vs. Measured")
-    plt.scatter(data["commanded"]["loss"], data["measured"]["loss_rate"], alpha=0.5)
-    plt.xlabel("Commanded Loss (%)")
-    plt.ylabel("Measured Loss Rate (%)")
-    plt.grid(True)
-    
-    # Add a perfect correlation line
-    max_val = max(max(data["commanded"]["loss"]), max(data["measured"]["loss_rate"]))
-    plt.plot([0, max_val], [0, max_val], 'r--', label="Perfect Correlation")
-    plt.legend()
-    
-    output_file = os.path.join(output_dir, f"packet_loss_correlation_{timestamp}.png")
-    plt.savefig(output_file, dpi=150)
-    print(f"{Colors.GREEN}Saved packet loss correlation graph to: {output_file}{Colors.ENDC}")
+    print(f"{Colors.GREEN}Saved performance graph to: {output_file}{Colors.ENDC}")
     
     # Save raw data as JSON for later analysis
-    data_file = os.path.join(output_dir, f"tc_performance_data_{timestamp}.json")
+    data_file = os.path.join(output_dir, f"tc_data_{timestamp}.json")
     with open(data_file, 'w') as f:
         json.dump(data, f, indent=2)
-    print(f"{Colors.GREEN}Saved raw performance data to: {data_file}{Colors.ENDC}")
+    print(f"{Colors.GREEN}Saved raw data to: {data_file}{Colors.ENDC}")
     
     return output_file
 
@@ -416,7 +320,6 @@ def main():
     parser.add_argument("--interval", type=float, default=DEFAULT_INTERVAL, help="Metrics collection interval in seconds")
     parser.add_argument("--duration", type=int, default=DEFAULT_DURATION, help="Total duration in seconds (0 for unlimited)")
     parser.add_argument("--output", default=DEFAULT_OUTPUT_DIR, help="Output directory for graphs")
-    parser.add_argument("--live", action="store_true", help="Show live graphs during collection")
     args = parser.parse_args()
     
     print(f"{Colors.HEADER}Traffic Control Performance Comparison{Colors.ENDC}")
@@ -462,83 +365,15 @@ def main():
     # Start metrics collection
     print(f"\n{Colors.CYAN}Starting metrics collection...{Colors.ENDC}")
     
-    # If live graphs are enabled, start in a separate thread
-    if args.live:
-        import matplotlib.pyplot as plt
-        import matplotlib.animation as animation
-        
-        # Create figure with subplots
-        fig, axes = plt.subplots(3, 1, figsize=(10, 12))
-        
-        # Function to update live graph
-        def update_live_graph(frame_num):
-            global data
-            
-            # Clear all axes
-            for ax in axes:
-                ax.clear()
-            
-            # Plot data on each axis
-            
-            # Plot 1: Bandwidth Comparison
-            axes[0].set_title("Bandwidth Comparison: Commanded vs. Measured")
-            axes[0].plot(data["timestamps"], data["commanded"]["rate"], 'b-', label="Commanded Rate (Mbps)")
-            axes[0].plot(data["timestamps"], data["measured"]["bandwidth"], 'r-', label="Measured Bandwidth (Mbps)")
-            axes[0].set_ylabel("Bandwidth (Mbps)")
-            axes[0].grid(True)
-            axes[0].legend()
-            
-            # Plot 2: Latency Comparison
-            axes[1].set_title("Latency Comparison: Commanded vs. Measured")
-            axes[1].plot(data["timestamps"], data["commanded"]["delay"], 'b-', label="Commanded Delay (ms)")
-            axes[1].plot(data["timestamps"], data["measured"]["latency"], 'r-', label="Measured Latency (ms)")
-            axes[1].set_ylabel("Latency (ms)")
-            axes[1].grid(True)
-            axes[1].legend()
-            
-            # Plot 3: Packet Loss Comparison
-            axes[2].set_title("Packet Loss Comparison: Commanded vs. Measured")
-            axes[2].plot(data["timestamps"], data["commanded"]["loss"], 'b-', label="Commanded Loss (%)")
-            axes[2].plot(data["timestamps"], data["measured"]["loss_rate"], 'r-', label="Measured Loss Rate (%)")
-            axes[2].set_xlabel("Time (seconds)")
-            axes[2].set_ylabel("Packet Loss (%)")
-            axes[2].grid(True)
-            axes[2].legend()
-            
-            # Add overall title
-            fig.suptitle("Traffic Control Performance Comparison (Live)", fontsize=16)
-            
-            # Adjust layout
-            fig.tight_layout(rect=[0, 0, 1, 0.97])
-            
-            return axes
-        
-        # Create animation
-        ani = animation.FuncAnimation(fig, update_live_graph, interval=1000)
-        
-        # Start collection in a separate thread
-        collection_thread = threading.Thread(
-            target=collect_metrics,
-            args=(args.sender_ip, args.sender_port, args.receiver_ip, args.receiver_port, args.interval, args.duration)
-        )
-        collection_thread.daemon = True
-        collection_thread.start()
-        
-        # Show the plot (this will block until the window is closed)
-        plt.show()
-        
-        # When plot window is closed, stop the collection
-        running = False
-        collection_thread.join()
-    else:
-        # Start collection in the main thread
-        collect_metrics(args.sender_ip, args.sender_port, args.receiver_ip, args.receiver_port, args.interval, args.duration)
+    # Start collection in the main thread
+    collect_metrics(args.sender_ip, args.sender_port, args.receiver_ip, args.receiver_port, args.interval, args.duration)
     
     # Generate graphs
     if len(data["timestamps"]) > 0:
         output_file = generate_graphs(args.output)
         print(f"\n{Colors.GREEN}Analysis complete!{Colors.ENDC}")
-        print(f"{Colors.GREEN}View the graphs in the '{args.output}' directory{Colors.ENDC}")
+        print(f"{Colors.GREEN}Graphs have been saved in the '{args.output}' directory{Colors.ENDC}")
+        print(f"{Colors.GREEN}You can directly view the PNG files to see the comparison between commanded and measured values{Colors.ENDC}")
     else:
         print(f"\n{Colors.RED}No data collected. Cannot generate graphs.{Colors.ENDC}")
 
