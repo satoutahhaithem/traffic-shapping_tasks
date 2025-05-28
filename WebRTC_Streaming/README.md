@@ -1,5 +1,53 @@
 # Video Streaming with Traffic Control
 
+## Quick Start - What To Do
+
+If you want to see graphs comparing commanded traffic control settings with actual measured performance:
+
+### Option 1: Real-time Synchronization (Recommended)
+
+1. **On the receiver PC**:
+   ```bash
+   # Terminal 1: Start the receiver
+   python direct_receiver.py --display --metrics-port 8001
+   
+   # Terminal 2: Start the settings receiver
+   python tc_settings_receiver.py
+   
+   # Terminal 3: Start performance measurement
+   sudo python tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
+   ```
+
+2. **On the sender PC**:
+   ```bash
+   # Terminal 1: Start traffic control with synchronization
+   sudo ./auto_tc_control_sync.sh RECEIVER_IP
+   
+   # Terminal 2: Start the sender
+   python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
+   ```
+
+Replace SENDER_IP with the sender's IP address and RECEIVER_IP with the receiver's IP address.
+
+This will:
+- Apply traffic control on the sender PC
+- Send the current settings to the receiver in real-time
+- Measure performance on the receiver
+- Generate graphs showing commanded vs. measured values
+
+### Option 2: All-in-One on Receiver (Simplest)
+
+If you want the simplest setup:
+
+```bash
+# On receiver PC:
+python direct_receiver.py --display --metrics-port 8001
+sudo python tc_all_in_one.py --sender-ip SENDER_IP --receiver-ip localhost
+
+# On sender PC:
+python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
+```
+
 ## Setup
 
 1. Install dependencies:
