@@ -80,3 +80,4 @@ __MACOSX/
 *.swp
 *.swo
 video/zidane.mp4
+WebRTC_Streaming/tc_performance_graphs/*

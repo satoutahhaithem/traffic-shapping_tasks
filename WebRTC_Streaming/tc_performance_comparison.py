@@ -38,7 +38,7 @@ DEFAULT_RECEIVER_IP = "192.168.2.169"
 DEFAULT_SENDER_PORT = 8000
 DEFAULT_RECEIVER_PORT = 8001
 DEFAULT_INTERVAL = 10.0  # seconds (changed from 1.0 to 10.0 as requested)
-DEFAULT_DURATION = 300  # seconds (5 minutes)
+DEFAULT_DURATION = 120  # seconds (2 minutes)
 DEFAULT_OUTPUT_DIR = "./tc_performance_graphs"
 
 # Global variables
@@ -170,8 +170,8 @@ def collect_metrics(sender_ip, sender_port, receiver_ip, receiver_port, interval
     start_time = time.time()
     count = 0
     
-    print(f"{Colors.GREEN}Starting metrics collection...{Colors.ENDC}")
-    print(f"{Colors.CYAN}Press Ctrl+C to stop collection and generate graphs{Colors.ENDC}")
+    print(f"{Colors.GREEN}Starting metrics collection for {duration} seconds...{Colors.ENDC}")
+    print(f"{Colors.CYAN}Press Ctrl+C at any time to stop collection and generate graphs immediately{Colors.ENDC}")
     
     try:
         while running and (duration <= 0 or time.time() - start_time < duration):
@@ -305,6 +305,10 @@ def generate_graphs(output_dir):
         json.dump(data, f, indent=2)
     print(f"{Colors.GREEN}Saved raw data to: {data_file}{Colors.ENDC}")
     
+    # Show the graph directly
+    print(f"{Colors.GREEN}Displaying graph...{Colors.ENDC}")
+    plt.show()
+    
     return output_file
 
 # Main function
@@ -329,7 +333,6 @@ def main():
     print(f"Interval: {args.interval} seconds")
     print(f"Duration: {args.duration} seconds (0 = unlimited)")
     print(f"Output Directory: {args.output}")
-    print(f"Live Graphs: {'Enabled' if args.live else 'Disabled'}")
     print(f"{Colors.HEADER}======================================{Colors.ENDC}")
     
     # Check if we can access the metrics APIs
@@ -373,7 +376,6 @@ def main():
         output_file = generate_graphs(args.output)
         print(f"\n{Colors.GREEN}Analysis complete!{Colors.ENDC}")
         print(f"{Colors.GREEN}Graphs have been saved in the '{args.output}' directory{Colors.ENDC}")
-        print(f"{Colors.GREEN}You can directly view the PNG files to see the comparison between commanded and measured values{Colors.ENDC}")
     else:
         print(f"\n{Colors.RED}No data collected. Cannot generate graphs.{Colors.ENDC}")
 
