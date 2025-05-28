@@ -1,8 +1,31 @@
 # Video Streaming with Traffic Control
 
-## Quick Start - What To Do
+## Quick Start - Just Run These Scripts!
 
-If you want to see graphs comparing commanded traffic control settings with actual measured performance:
+We've created simple scripts that start everything for you:
+
+### On the sender PC:
+```bash
+sudo ./start_sender.sh RECEIVER_IP
+```
+Replace RECEIVER_IP with the receiver's IP address.
+
+### On the receiver PC:
+```bash
+./start_receiver.sh SENDER_IP
+```
+Replace SENDER_IP with the sender's IP address.
+
+That's it! The scripts will:
+1. Start all necessary components
+2. Apply traffic control on the sender
+3. Send settings to the receiver in real-time
+4. Measure performance and generate graphs
+5. Clean up everything when you press Ctrl+C
+
+## Manual Setup Options
+
+If you prefer to run the commands manually:
 
 ### Option 1: Real-time Synchronization (Recommended)
 
@@ -27,17 +50,7 @@ If you want to see graphs comparing commanded traffic control settings with actu
    python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
    ```
 
-Replace SENDER_IP with the sender's IP address and RECEIVER_IP with the receiver's IP address.
-
-This will:
-- Apply traffic control on the sender PC
-- Send the current settings to the receiver in real-time
-- Measure performance on the receiver
-- Generate graphs showing commanded vs. measured values
-
 ### Option 2: All-in-One on Receiver (Simplest)
-
-If you want the simplest setup:
 
 ```bash
 # On receiver PC:
