@@ -129,6 +129,21 @@ cleanup() {
     exit 0
 }
 
+# Function to check if a terminal emulator is available
+check_terminal_emulator() {
+    if command_exists gnome-terminal; then
+        echo "gnome-terminal"
+    elif command_exists xterm; then
+        echo "xterm"
+    elif command_exists konsole; then
+        echo "konsole"
+    elif command_exists terminator; then
+        echo "terminator"
+    else
+        echo ""
+    fi
+}
+
 # Trap Ctrl+C to clean up
 trap cleanup INT
 
@@ -137,6 +152,33 @@ echo -e "${BLUE}Stopping any existing processes...${NC}"
 kill_process "direct_receiver.py"
 kill_process "tc_settings_receiver.py"
 kill_process "tc_performance_sync.py"
+
+# Get current directory
+CURRENT_DIR=$(pwd)
+
+# Check for a terminal emulator
+TERMINAL_CMD=$(check_terminal_emulator)
+
+# Launch additional terminal windows if a terminal emulator is available
+if [ -n "$TERMINAL_CMD" ]; then
+    echo -e "${GREEN}Launching monitoring terminals...${NC}"
+    
+    # Launch terminal for receiver metrics API monitoring
+    $TERMINAL_CMD -- bash -c "cd \"$CURRENT_DIR\" && echo 'Waiting for metrics API to start...' && sleep 5 && watch -n 1 'curl -s http://localhost:8001/metrics | python3 -m json.tool'; exec bash" &
+    echo -e "${GREEN}Launched receiver metrics monitoring terminal.${NC}"
+    
+    # Launch terminal for log monitoring
+    $TERMINAL_CMD -- bash -c "cd \"$CURRENT_DIR\" && echo 'Waiting for logs to be created...' && sleep 5 && tail -f logs/receiver.log; exec bash" &
+    echo -e "${GREEN}Launched log monitoring terminal.${NC}"
+    
+    # Give time for terminals to launch
+    sleep 1
+else
+    echo -e "${YELLOW}No supported terminal emulator found. Will not launch additional monitoring windows.${NC}"
+    echo -e "${YELLOW}You can manually run these commands in separate terminals:${NC}"
+    echo -e "${YELLOW}  watch -n 1 'curl -s http://localhost:8001/metrics | python3 -m json.tool'${NC}"
+    echo -e "${YELLOW}  tail -f logs/receiver.log${NC}"
+fi
 
 # Create a directory for logs
 mkdir -p logs
