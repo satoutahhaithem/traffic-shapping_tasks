@@ -30,9 +30,11 @@ Replace RECEIVER_IP with the receiver's IP address.
 
 This system offers two different solutions for measuring and visualizing the performance of traffic control:
 
-### Solution 1: Traffic Shaping on Sender, Measurement on Receiver
+## IMPORTANT: Choose ONE of the following solutions - do NOT use both at the same time!
 
-This approach keeps traffic control and performance measurement separate:
+### Solution 1: Traffic Shaping on Sender, Measurement on Receiver (Hardcoded Cycle)
+
+This approach keeps traffic control and performance measurement separate, but uses hardcoded knowledge of the traffic control cycle:
 
 1. **On the Sender PC**: Run auto_tc_control.sh to apply traffic control
 2. **On the Receiver PC**: Run tc_performance_manual.py to measure and plot
@@ -62,6 +64,46 @@ This script:
 3. Measures the performance and plots the graphs
 4. Resets the network conditions when done
 
+### Solution 3: Real-time Synchronization Between Sender and Receiver
+
+This approach uses real-time communication to send the traffic control settings from the sender to the receiver:
+
+1. **On the Receiver PC**: Start the settings receiver server
+   ```bash
+   # Terminal 1: Start the settings receiver
+   python tc_settings_receiver.py
+   ```
+
+2. **On the Sender PC**: Run the modified traffic control script that sends settings to the receiver
+   ```bash
+   # Terminal 1: Start traffic control with synchronization
+   sudo ./auto_tc_control_sync.sh RECEIVER_IP
+   ```
+   Replace RECEIVER_IP with the actual IP address of the receiver.
+
+3. **On the Receiver PC**: Run the performance measurement script
+   ```bash
+   # Terminal 2: Start performance measurement
+   sudo python tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
+   ```
+   Replace SENDER_IP with the actual IP address of the sender.
+
+This solution:
+1. Applies traffic control on the sender PC
+2. Sends the current settings to the receiver PC in real-time
+3. Measures the performance on the receiver PC
+4. Plots graphs showing the actual commanded values from the sender
+
+### Do NOT run traffic shaping on both PCs at the same time!
+
+If you run auto_tc_control.sh on the sender PC AND tc_all_in_one.py on the receiver PC:
+- Both PCs will be applying traffic control simultaneously
+- This will create unpredictable network conditions
+- The measurements will not match either set of commanded values
+- The graphs will be meaningless
+
+Choose either Solution 1, Solution 2, OR Solution 3, not multiple solutions at the same time.
+
 ### When to Do Traffic Shaping on the Receiver PC
 
 You should use Solution 2 (tc_all_in_one.py) when:
@@ -82,21 +124,76 @@ You should use Solution 2 (tc_all_in_one.py) when:
    - Since both traffic shaping and measurement happen on the same machine
    - The graphs will show perfect correlation between what was commanded and what was measured
 
-### Important Note About Commanded Values
+### Comparing the Three Solutions
 
-When running traffic control on the sender and measurement on the receiver (Solution 1), there's a challenge:
-- The receiver doesn't know what traffic control settings are being applied on the sender
-- This is why we created `tc_performance_manual.py` which has the auto_tc_control.sh cycle built-in
-- It doesn't need to query the sender for the commanded values; it already knows them
+#### Solution 1: Traffic Shaping on Sender, Measurement on Receiver (Hardcoded Cycle)
+- **Advantages**:
+  - Simple setup with existing scripts
+  - No additional server or communication needed
+- **Disadvantages**:
+  - Relies on hardcoded knowledge of the traffic control cycle
+  - If you start the sender and receiver scripts at different times, the commanded values may be out of sync
+  - If you modify the auto_tc_control.sh script, you must also update tc_performance_manual.py
 
-If you want to do traffic shaping on the receiver PC (Solution 2), you get these benefits:
-- The receiver directly knows what traffic control settings are being applied
-- No need to synchronize or communicate the commanded values between machines
-- The graphs will be more accurate because the commanded values are known with certainty
+#### Solution 2: Traffic Shaping and Measurement on Receiver
+- **Advantages**:
+  - Everything runs on one machine
+  - Perfect synchronization between commanded and measured values
+  - Simplest setup with just one script to run
+- **Disadvantages**:
+  - Traffic shaping happens on the receiver, not the sender
+  - May not accurately represent real-world scenarios where network limitations are on the sender side
 
-### Step-by-Step Guide for Traffic Shaping on Receiver PC
+#### Solution 3: Real-time Synchronization Between Sender and Receiver
+- **Advantages**:
+  - Traffic shaping happens on the sender (more realistic)
+  - Real-time communication of commanded values to the receiver
+  - Accurate graphs even if you modify the traffic control settings or cycle
+  - No need to keep hardcoded values in sync between scripts
+- **Disadvantages**:
+  - More complex setup with three scripts
+  - Requires network communication between sender and receiver
+  - Requires both machines to be accessible to each other
 
-To implement Solution 2 (traffic shaping on the receiver PC):
+### When to Use Solution 3 (Real-time Synchronization)
+
+Solution 3 is the best choice when:
+1. You want the most accurate representation of commanded vs. measured values
+2. You want to modify the traffic control cycle or settings without updating multiple scripts
+3. You want to apply traffic control on the sender (more realistic) but measure on the receiver
+4. You need to ensure the commanded values shown in graphs exactly match what was applied
+
+### Step-by-Step Guide for Each Solution
+
+#### Solution 1: Traffic Shaping on Sender, Measurement on Receiver (Hardcoded Cycle)
+
+1. **Start the receiver**:
+   ```bash
+   # On the receiver PC
+   python direct_receiver.py --display --metrics-port 8001
+   ```
+
+2. **Start traffic control on the sender**:
+   ```bash
+   # On the sender PC
+   sudo ./auto_tc_control.sh
+   ```
+
+3. **Start the sender**:
+   ```bash
+   # On the sender PC
+   python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
+   ```
+   Replace RECEIVER_IP with the actual IP address of the receiver.
+
+4. **Run the performance measurement script on the receiver**:
+   ```bash
+   # On the receiver PC
+   sudo python tc_performance_manual.py --sender-ip SENDER_IP --receiver-ip localhost
+   ```
+   Replace SENDER_IP with the actual IP address of the sender.
+
+#### Solution 2: Traffic Shaping and Measurement on Receiver
 
 1. **Start the sender without traffic control**:
    ```bash
@@ -117,10 +214,44 @@ To implement Solution 2 (traffic shaping on the receiver PC):
    ```
    Replace SENDER_IP with the actual IP address of the sender.
 
-4. **Watch the results**:
-   - The script will apply traffic control settings on the receiver PC
-   - It will cycle through different network conditions every 20 seconds
-   - It will collect performance metrics and display them in real-time
+#### Solution 3: Real-time Synchronization Between Sender and Receiver
+
+1. **Start the receiver**:
+   ```bash
+   # On the receiver PC
+   python direct_receiver.py --display --metrics-port 8001
+   ```
+
+2. **Start the settings receiver server on the receiver PC**:
+   ```bash
+   # On the receiver PC (Terminal 2)
+   python tc_settings_receiver.py
+   ```
+
+3. **Start traffic control with synchronization on the sender PC**:
+   ```bash
+   # On the sender PC
+   sudo ./auto_tc_control_sync.sh RECEIVER_IP
+   ```
+   Replace RECEIVER_IP with the actual IP address of the receiver.
+
+4. **Start the sender**:
+   ```bash
+   # On the sender PC (Terminal 2)
+   python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
+   ```
+   Replace RECEIVER_IP with the actual IP address of the receiver.
+
+5. **Run the synchronized performance measurement script on the receiver**:
+   ```bash
+   # On the receiver PC (Terminal 3)
+   sudo python tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
+   ```
+   Replace SENDER_IP with the actual IP address of the sender.
+
+6. **Watch the results**:
+   - The sender will apply traffic control settings and send them to the receiver
+   - The receiver will collect performance metrics and display them in real-time
    - After 2 minutes (or when you press Ctrl+C), it will generate and display graphs
    - The graphs will show both commanded and measured values
 
