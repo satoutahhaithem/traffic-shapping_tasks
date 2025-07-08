@@ -390,14 +390,23 @@ if __name__ == "__main__":
                 if frame is not None:
                     # Display frame if requested
                     if display_video:
-                        cv2.imshow('Received Video', frame)
-                        frames_displayed += 1
-                        
-                        # Press 'q' to quit
-                        key = cv2.waitKey(1) & 0xFF
-                        if key == ord('q'):
-                            running = False
-                            break
+                        try:
+                            # Add text to the frame for identification
+                            display_frame = frame.copy()
+                            cv2.putText(display_frame, "RECEIVER", (10, 30),
+                                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+                            
+                            cv2.imshow('Received Video', display_frame)
+                            frames_displayed += 1
+                            
+                            # Press 'q' to quit
+                            key = cv2.waitKey(1) & 0xFF
+                            if key == ord('q'):
+                                running = False
+                                break
+                        except Exception as e:
+                            print(f"Error displaying frame: {e}")
+                            display_video = False # Disable display if it fails
                     
                     # Update last frame time for consistent playback speed
                     last_frame_time = current_time
