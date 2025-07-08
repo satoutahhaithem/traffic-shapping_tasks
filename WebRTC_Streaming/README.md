@@ -72,6 +72,26 @@ The scripts will:
 5. Measure performance and generate graphs
 6. Clean up everything when you press Ctrl+C
 
+## How to Run a Stable, High-Performance Stream
+
+If your goal is not to test different network conditions but to have the most stable, high-quality stream possible, you should use the `start_stable_sender.sh` script. This script applies an optimized, low-latency network configuration and starts the sender.
+
+### On the Sender PC:
+```bash
+# This single command applies stable network settings and starts the sender.
+sudo -E env "PATH=$PATH" ./start_stable_sender.sh RECEIVER_IP
+```
+Replace `RECEIVER_IP` with the receiver's IP address.
+
+### On the Receiver PC:
+The receiver setup is the same as the quick start.
+```bash
+./start_receiver.sh SENDER_IP
+```
+Replace `SENDER_IP` with the sender's IP address.
+
+This setup is ideal for demonstrations or when you simply want the best possible video quality without manually managing network conditions.
+
 ## Manual Setup Options
 
 If you prefer to run the commands manually:
