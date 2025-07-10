@@ -30,6 +30,39 @@ import traceback
 import traceback
 import traceback
 
+def check_dependencies():
+   """
+   Checks if all required libraries are installed and working correctly.
+   If not, prints an informative error message and exits.
+   """
+   try:
+       # Attempt to import and use critical parts of the libraries
+       import cv2
+       import numpy as np
+       
+       # Test a basic numpy function that might fail with a broken install
+       np.array([1, 2, 3])
+       
+       # Test a basic cv2 function
+       cv2.getBuildInformation()
+       
+   except ImportError as e:
+       print("="*60)
+       print("FATAL ERROR: A required library is missing or broken.")
+       print(f"--> Error details: {e}")
+       print("This is often caused by a corrupted NumPy or OpenCV installation.")
+       print("\nTo fix this, please run the dependency fix script:")
+       print("    bash WebRTC_Streaming/fix_dependencies.sh")
+       print("="*60)
+       exit(1)
+   except Exception as e:
+       print("="*60)
+       print("FATAL ERROR: An unexpected error occurred while checking dependencies.")
+       print(f"--> Error details: {e}")
+       print("There might be a deeper issue with your Python environment.")
+       print("="*60)
+       exit(1)
+
 # Traffic statistics variables
 bytes_received = 0    # Total bytes received
 packets_received = 0  # Total packets received
@@ -177,9 +210,10 @@ def receive_frame(client_socket):
     
     except Exception as e:
         print(f"Error receiving frame: {e}")
+        # More detailed error logging
+        print("\n--- TRACEBACK ---")
         traceback.print_exc()
-        traceback.print_exc()
-        traceback.print_exc()
+        print("-----------------\n")
         frames_dropped += 1
         return None
 
@@ -217,9 +251,9 @@ def receive_video_info(client_socket):
     
     except Exception as e:
         print(f"Error receiving video info: {e}")
+        print("\n--- TRACEBACK ---")
         traceback.print_exc()
-        traceback.print_exc()
-        traceback.print_exc()
+        print("-----------------\n")
         return None
 
 def buffer_frames(client_socket):
@@ -311,167 +345,170 @@ def start_metrics_server(port):
     print(f"Access metrics at: http://localhost:{port}/metrics")
 
 if __name__ == "__main__":
-    # Parse command line arguments
-    parser = argparse.ArgumentParser(description="Video Receiver")
-    parser.add_argument("--ip", default="0.0.0.0", help="IP address to listen on")
-    parser.add_argument("--port", type=int, default=9999, help="Port to listen on")
-    parser.add_argument("--display", action="store_true", help="Display video (requires GUI)")
-    parser.add_argument("--buffer", type=int, default=5, help="Frame buffer size")
-    parser.add_argument("--fps", type=float, default=0, help="Override playback FPS (0=use sender's FPS)")
-    parser.add_argument("--low-latency", action="store_true", help="Enable low latency mode", default=True)
-    parser.add_argument("--metrics-port", type=int, default=8001, help="Port for metrics API server")
-    
-    args = parser.parse_args()
-    
-    # Set variables from arguments
-    server_ip = args.ip
-    server_port = args.port
-    display_video = args.display
-    frame_buffer = deque(maxlen=args.buffer)
-    override_fps = args.fps
-    playback_fps = override_fps  # Will be updated with video_info if not overridden
-    metrics_port = args.metrics_port
-    
-    # Create TCP socket
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    
-    try:
-        # Bind socket to address and port
-        server_socket.bind((server_ip, server_port))
-        server_socket.listen(5)
-        print(f"Listening on {server_ip}:{server_port}...")
-        
-        # Start metrics API server
-        start_metrics_server(metrics_port)
-        print(f"Metrics available at: http://{socket.gethostbyname(socket.gethostname())}:{metrics_port}/metrics")
-        
-        # Accept connection from sender
-        client_socket, addr = server_socket.accept()
-        print(f"Connection from {addr}")
-        
-        # Receive video information
-        video_info = receive_video_info(client_socket)
-        if not video_info:
-            print("Failed to receive video info")
-            client_socket.close()
-            server_socket.close()
-            exit()
-        
-        print(f"Received video info: {video_info}")
-        
-        # Set playback FPS from video_info if not overridden
-        if override_fps <= 0 and video_info and 'fps' in video_info:
-            playback_fps = video_info['fps']
-        elif override_fps > 0:
-            playback_fps = override_fps
-        else:
-            playback_fps = 30.0  # Default if no FPS info available
-            
-        print(f"Using playback FPS: {playback_fps}")
-        
-        # Start frame buffering thread
-        buffer_thread = threading.Thread(target=buffer_frames, args=(client_socket,))
-        buffer_thread.daemon = True
-        buffer_thread.start()
-        
-        # Wait for buffer to fill initially (reduced for lower latency)
-        print("Buffering frames...")
-        buffer_fill_start = time.time()
-        
-        # If low latency mode is enabled, use minimal buffering
-        if args.low_latency:
-            buffer_target = min(2, frame_buffer.maxlen)  # Only wait for 2 frames
-        else:
-            buffer_target = min(5, frame_buffer.maxlen)
-            
-        while len(frame_buffer) < buffer_target:
-            # Don't wait more than 1 second for buffer to fill
-            if time.time() - buffer_fill_start > 1.0:
-                break
-            time.sleep(0.01)  # Check more frequently
-            print(f"Buffer: {len(frame_buffer)}/{frame_buffer.maxlen}", end="\r")
-        print("\nBuffer filled, starting playback")
-        
-        # Start displaying frames
-        last_stats_time = time.time()
-        last_frame_time = time.time()
-        
-        # Calculate target frame time based on playback FPS
-        target_frame_time = 1.0 / playback_fps
-        
-        while running:
-            # Calculate time since last frame
-            current_time = time.time()
-            elapsed = current_time - last_frame_time
-            
-            # Only display a new frame if enough time has passed (control playback speed)
-            if elapsed >= target_frame_time:
-                # Get frame from buffer
-                frame = None
-                with buffer_lock:
-                    if frame_buffer:
-                        frame = frame_buffer.popleft()
-                
-                if frame is not None:
-                    # Display frame if requested
-                    if display_video:
-                        try:
-                            # Add text to the frame for identification
-                            display_frame = frame.copy()
-                            cv2.putText(display_frame, "RECEIVER", (10, 30),
-                                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-                            
-                            cv2.imshow('Received Video', display_frame)
-                            frames_displayed += 1
-                            
-                            # Press 'q' to quit
-                            key = cv2.waitKey(1) & 0xFF
-                            if key == ord('q'):
-                                running = False
-                                break
-                        except Exception as e:
-                            print(f"Error displaying frame: {e}")
-                            display_video = False # Disable display if it fails
-                    
-                    # Update last frame time for consistent playback speed
-                    last_frame_time = current_time
-                else:
-                    # No frames in buffer, wait a bit (reduced wait time)
-                    time.sleep(0.001)
-            else:
-                # Not time for next frame yet, shorter sleep for more responsive playback
-                time.sleep(0.0005)
-            
-            # Print statistics every second
-            if current_time - last_stats_time >= 1.0:
-                print_stats()
-                last_stats_time = current_time
-    
-    except KeyboardInterrupt:
-        print("\nStopped by user")
-    
-    except Exception as e:
-        print(f"Error: {e}")
-    
-    finally:
-        # Clean up resources
-        running = False
-        if buffer_thread and buffer_thread.is_alive():
-            buffer_thread.join(timeout=1.0)
-        
-        if 'client_socket' in locals():
-            client_socket.close()
-        
-        server_socket.close()
-        
-        # Stop metrics server
-        if metrics_server:
-            metrics_server.shutdown()
-            metrics_server.server_close()
-            print("Metrics server stopped")
-        
-        if display_video:
-            cv2.destroyAllWindows()
-        
-        print("Socket closed")
+   # First, check if all dependencies are installed and working
+   check_dependencies()
+
+   # Parse command line arguments
+   parser = argparse.ArgumentParser(description="Video Receiver")
+   parser.add_argument("--ip", default="0.0.0.0", help="IP address to listen on")
+   parser.add_argument("--port", type=int, default=9999, help="Port to listen on")
+   parser.add_argument("--display", action="store_true", help="Display video (requires GUI)")
+   parser.add_argument("--buffer", type=int, default=5, help="Frame buffer size")
+   parser.add_argument("--fps", type=float, default=0, help="Override playback FPS (0=use sender's FPS)")
+   parser.add_argument("--low-latency", action="store_true", help="Enable low latency mode", default=True)
+   parser.add_argument("--metrics-port", type=int, default=8001, help="Port for metrics API server")
+   
+   args = parser.parse_args()
+   
+   # Set variables from arguments
+   server_ip = args.ip
+   server_port = args.port
+   display_video = args.display
+   frame_buffer = deque(maxlen=args.buffer)
+   override_fps = args.fps
+   playback_fps = override_fps  # Will be updated with video_info if not overridden
+   metrics_port = args.metrics_port
+   
+   # Create TCP socket
+   server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+   server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+   
+   try:
+       # Bind socket to address and port
+       server_socket.bind((server_ip, server_port))
+       server_socket.listen(5)
+       print(f"Listening on {server_ip}:{server_port}...")
+       
+       # Start metrics API server
+       start_metrics_server(metrics_port)
+       print(f"Metrics available at: http://{socket.gethostbyname(socket.gethostname())}:{metrics_port}/metrics")
+       
+       # Accept connection from sender
+       client_socket, addr = server_socket.accept()
+       print(f"Connection from {addr}")
+       
+       # Receive video information
+       video_info = receive_video_info(client_socket)
+       if not video_info:
+           print("Failed to receive video info")
+           client_socket.close()
+           server_socket.close()
+           exit()
+       
+       print(f"Received video info: {video_info}")
+       
+       # Set playback FPS from video_info if not overridden
+       if override_fps <= 0 and video_info and 'fps' in video_info:
+           playback_fps = video_info['fps']
+       elif override_fps > 0:
+           playback_fps = override_fps
+       else:
+           playback_fps = 30.0  # Default if no FPS info available
+           
+       print(f"Using playback FPS: {playback_fps}")
+       
+       # Start frame buffering thread
+       buffer_thread = threading.Thread(target=buffer_frames, args=(client_socket,))
+       buffer_thread.daemon = True
+       buffer_thread.start()
+       
+       # Wait for buffer to fill initially (reduced for lower latency)
+       print("Buffering frames...")
+       buffer_fill_start = time.time()
+       
+       # If low latency mode is enabled, use minimal buffering
+       if args.low_latency:
+           buffer_target = min(2, frame_buffer.maxlen)  # Only wait for 2 frames
+       else:
+           buffer_target = min(5, frame_buffer.maxlen)
+           
+       while len(frame_buffer) < buffer_target:
+           # Don't wait more than 1 second for buffer to fill
+           if time.time() - buffer_fill_start > 1.0:
+               break
+           time.sleep(0.01)  # Check more frequently
+           print(f"Buffer: {len(frame_buffer)}/{frame_buffer.maxlen}", end="\r")
+       print("\nBuffer filled, starting playback")
+       
+       # Start displaying frames
+       last_stats_time = time.time()
+       last_frame_time = time.time()
+       
+       # Calculate target frame time based on playback FPS
+       target_frame_time = 1.0 / playback_fps
+       
+       while running:
+           # Calculate time since last frame
+           current_time = time.time()
+           elapsed = current_time - last_frame_time
+           
+           # Only display a new frame if enough time has passed (control playback speed)
+           if elapsed >= target_frame_time:
+               # Get frame from buffer
+               frame = None
+               with buffer_lock:
+                   if frame_buffer:
+                       frame = frame_buffer.popleft()
+               
+               if frame is not None:
+                   # Display frame if requested
+                   if display_video:
+                       try:
+                           # Add text to the frame for identification
+                           display_frame = frame.copy()
+                           cv2.putText(display_frame, "RECEIVER", (10, 30),
+                                       cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+                           
+                           cv2.imshow('Received Video', display_frame)
+                           frames_displayed += 1
+                           
+                           # Press 'q' to quit
+                           key = cv2.waitKey(1) & 0xFF
+                           if key == ord('q'):
+                               running = False
+                               break
+                       except Exception as e:
+                           print(f"Error displaying frame: {e}")
+                           display_video = False # Disable display if it fails
+                   
+                   # Update last frame time for consistent playback speed
+                   last_frame_time = current_time
+               else:
+                   # No frames in buffer, wait a bit (reduced wait time)
+                   time.sleep(0.001)
+           else:
+               # Not time for next frame yet, shorter sleep for more responsive playback
+               time.sleep(0.0005)
+           
+           # Print statistics every second
+           if current_time - last_stats_time >= 1.0:
+               print_stats()
+               last_stats_time = current_time
+   
+   except KeyboardInterrupt:
+       print("\nStopped by user")
+   
+   except Exception as e:
+       print(f"Error: {e}")
+   
+   finally:
+       # Clean up resources
+       running = False
+       if buffer_thread and buffer_thread.is_alive():
+           buffer_thread.join(timeout=1.0)
+       
+       if 'client_socket' in locals():
+           client_socket.close()
+       
+       server_socket.close()
+       
+       # Stop metrics server
+       if metrics_server:
+           metrics_server.shutdown()
+           metrics_server.server_close()
+           print("Metrics server stopped")
+       
+       if display_video:
+           cv2.destroyAllWindows()
+       
+       print("Socket closed")
