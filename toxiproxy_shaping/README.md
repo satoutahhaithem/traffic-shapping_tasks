@@ -22,7 +22,18 @@ This solution uses Toxiproxy to create a controlled network environment where yo
 ### **On the Receiver PC (`192.168.2.120`) Only**
 
 1.  **Install Toxiproxy Server:**
-    Download and install the Toxiproxy server from the [official releases page](https://github.com/Shopify/toxiproxy/releases). Make sure the `toxiproxy-server` executable is in your system's `PATH`.
+    The Toxiproxy server is not a Python package and must be installed manually.
+
+    ```bash
+    # Download the correct binary for your system (this example is for x86_64 Linux)
+    wget https://github.com/Shopify/toxiproxy/releases/download/v2.5.0/toxiproxy-server-linux-amd64
+
+    # Make the binary executable
+    chmod +x toxiproxy-server-linux-amd64
+
+    # Move the binary to your system's PATH
+    sudo mv toxiproxy-server-linux-amd64 /usr/local/bin/toxiproxy-server
+    ```
 
 ---
 
