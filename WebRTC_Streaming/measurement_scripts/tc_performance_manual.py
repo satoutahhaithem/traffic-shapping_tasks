@@ -34,7 +34,7 @@ except ImportError:
 
 # Default settings
 DEFAULT_SENDER_IP = "localhost"
-DEFAULT_RECEIVER_IP = "192.168.2.169"
+DEFAULT_RECEIVER_IP = "localhost"
 DEFAULT_SENDER_PORT = 8000
 DEFAULT_RECEIVER_PORT = 8001
 DEFAULT_INTERVAL = 10.0  # seconds

@@ -92,6 +92,41 @@ Replace `SENDER_IP` with the sender's IP address.
 
 This setup is ideal for demonstrations or when you simply want the best possible video quality without manually managing network conditions.
 
+## Recommended Workflow: Real-Time Measurement
+
+This is the most accurate and flexible way to measure the impact of traffic shaping. It uses real-time synchronization between the sender and receiver.
+
+### On the Sender Machine (e.g., 192.168.2.120)
+
+1.  **Start the video sender:**
+    ```bash
+    python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
+    ```
+    Replace `RECEIVER_IP` with the IP address of the receiver machine.
+
+2.  **Apply traffic control with synchronization:**
+    ```bash
+    sudo bash auto_tc_control_sync.sh RECEIVER_IP
+    ```
+    Replace `RECEIVER_IP` with the IP address of the receiver machine.
+
+### On the Receiver Machine (e.g., 192.168.2.169)
+
+1.  **Start the video receiver:**
+    ```bash
+    python direct_receiver.py --display --metrics-port 8001
+    ```
+
+2.  **Run the measurement setup script:**
+    ```bash
+    ./setup_measurement.sh SENDER_IP
+    ```
+    Replace `SENDER_IP` with the IP address of the sender machine.
+
+    This script will:
+    *   Start the `tc_settings_receiver.py` script to receive traffic control settings
+    *   Run the `tc_performance_sync.py` script to measure and graph the performance
+
 ## Manual Setup Options
 
 If you prefer to run the commands manually:

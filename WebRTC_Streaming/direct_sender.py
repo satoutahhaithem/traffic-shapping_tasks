@@ -115,8 +115,12 @@ def send_frame(client_socket, frame, quality=90):
         print("Error encoding frame")
         return False
     
-    # Serialize frame for network transmission
-    data = pickle.dumps(encoded_frame)
+    # Serialize frame and timestamp for network transmission
+    payload = {
+        "frame": encoded_frame,
+        "timestamp": time.time()
+    }
+    data = pickle.dumps(payload)
     
     # Get the size of the data
     size = len(data)
