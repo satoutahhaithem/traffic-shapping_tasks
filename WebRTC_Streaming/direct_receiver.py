@@ -26,6 +26,9 @@ import json
 from collections import deque
 from threading import Thread
 from urllib.parse import urlparse, parse_qs
+import traceback
+import traceback
+import traceback
 
 # Traffic statistics variables
 bytes_received = 0    # Total bytes received
@@ -145,16 +148,23 @@ def receive_frame(client_socket):
         
         # Deserialize the payload
         payload = pickle.loads(data)
-        encoded_frame = payload["frame"]
-        sent_timestamp = payload["timestamp"]
+        
+        # Check if the payload is in the new format (a dictionary with a timestamp)
+        if isinstance(payload, dict) and "frame" in payload:
+            encoded_frame = payload["frame"]
+            sent_timestamp = payload.get("timestamp")
+
+            if sent_timestamp:
+                # Calculate network latency
+                reception_time = time.time()
+                latency = reception_time - sent_timestamp
+                network_latencies.append(latency)
+        else:
+            # Handle the old format (raw frame data)
+            encoded_frame = payload
 
         # Decode the JPEG frame
         frame = cv2.imdecode(encoded_frame, cv2.IMREAD_COLOR)
-        
-        # Calculate network latency
-        reception_time = time.time()
-        latency = reception_time - sent_timestamp
-        network_latencies.append(latency)
         
         if frame is None:
             frames_dropped += 1
@@ -167,6 +177,9 @@ def receive_frame(client_socket):
     
     except Exception as e:
         print(f"Error receiving frame: {e}")
+        traceback.print_exc()
+        traceback.print_exc()
+        traceback.print_exc()
         frames_dropped += 1
         return None
 
@@ -204,6 +217,9 @@ def receive_video_info(client_socket):
     
     except Exception as e:
         print(f"Error receiving video info: {e}")
+        traceback.print_exc()
+        traceback.print_exc()
+        traceback.print_exc()
         return None
 
 def buffer_frames(client_socket):
