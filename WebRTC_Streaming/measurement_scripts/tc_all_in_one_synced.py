@@ -119,22 +119,22 @@ def run_test_cycle(sender_ip, sender_port, receiver_ip, receiver_port, interval,
                 
                 cycle_start_time = time.time()
                 while time.time() - cycle_start_time < interval:
-                    current_time = time.time() - start_time
-                    data["timestamps"].append(current_time)
-                    
-                    # Store commanded values
-                    rate_mbps = float(preset['rate'].replace('mbit', '').replace('kbit', '')) / (1000 if 'kbit' in preset['rate'] else 1)
-                    delay_ms = float(preset['delay'].replace('ms', ''))
-                    loss_percent = float(preset['loss'].replace('%', ''))
-                    data["commanded"]["rate"].append(rate_mbps)
-                    data["commanded"]["delay"].append(delay_ms)
-                    data["commanded"]["loss"].append(loss_percent)
-                    
                     # Get measured values
                     sender_metrics = get_sender_metrics(sender_ip, sender_port)
                     receiver_metrics = get_receiver_metrics(receiver_ip, receiver_port)
                     
                     if sender_metrics and receiver_metrics:
+                        current_time = time.time() - start_time
+                        data["timestamps"].append(current_time)
+
+                        # Store commanded values
+                        rate_mbps = float(preset['rate'].replace('mbit', '').replace('kbit', '')) / (1000 if 'kbit' in preset['rate'] else 1)
+                        delay_ms = float(preset['delay'].replace('ms', ''))
+                        loss_percent = float(preset['loss'].replace('%', ''))
+                        data["commanded"]["rate"].append(rate_mbps)
+                        data["commanded"]["delay"].append(delay_ms)
+                        data["commanded"]["loss"].append(loss_percent)
+
                         bandwidth_mbps = sender_metrics.get("bandwidth_usage", 0) * 8
                         latency_ms = receiver_metrics.get("network_latency", 0)
                         loss_rate = receiver_metrics.get("frame_drop_rate", 0)
@@ -145,10 +145,7 @@ def run_test_cycle(sender_ip, sender_port, receiver_ip, receiver_port, interval,
                         
                         print(f"  Measured - Bandwidth: {bandwidth_mbps:.2f} Mbps, Latency: {latency_ms:.2f} ms, Loss: {loss_rate:.2f}%")
                     else:
-                        data["measured"]["bandwidth"].append(data["measured"]["bandwidth"][-1] if data["measured"]["bandwidth"] else 0)
-                        data["measured"]["latency"].append(data["measured"]["latency"][-1] if data["measured"]["latency"] else 0)
-                        data["measured"]["loss_rate"].append(data["measured"]["loss_rate"][-1] if data["measured"]["loss_rate"] else 0)
-                        print(f"  {Colors.YELLOW}Could not get complete metrics{Colors.ENDC}")
+                        print(f"  {Colors.YELLOW}Could not get complete metrics. Skipping data point.{Colors.ENDC}")
 
                     time.sleep(1)
 

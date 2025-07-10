@@ -35,7 +35,7 @@ This new, simplified approach uses a single script on the receiver to both contr
 1.  **Start the Video Sender:**
     Open a terminal and run the following command to start sending the video stream to the receiver's Toxiproxy server.
     ```bash
-    python WebRTC_Streaming/direct_sender.py --ip 192.168.2.120 --port 8666
+    python3 WebRTC_Streaming/direct_sender.py --ip 192.168.2.120 --port 8666
     ```
 
 ### **On the Receiver PC (`192.168.2.120`)**
@@ -49,13 +49,13 @@ This new, simplified approach uses a single script on the receiver to both contr
 2.  **Start the Video Receiver:**
     Open another new terminal and start the video receiver to display the incoming stream.
     ```bash
-    python WebRTC_Streaming/direct_receiver.py --display
+    python3 WebRTC_Streaming/direct_receiver.py --display
     ```
 
 3.  **Start the All-in-One Test Script:**
     Finally, open one more terminal and run the all-in-one script. This will control the traffic shaping and measure the performance in a synchronized loop.
     ```bash
-    python toxiproxy_shaping/toxiproxy_all_in_one.py --sender-ip 192.168.2.169
+    python3 toxiproxy_shaping/toxiproxy_all_in_one.py --sender-ip 192.168.2.169
     ```
 
 You should now see the performance graphs updating in real-time, with the measured values closely matching the commanded values.
