@@ -22,7 +22,7 @@ We've created a setup script that handles everything for you:
 
 ```bash
 # Run the setup script
-./setup_venv.sh
+./setup_scripts/setup_venv.sh
 
 # Activate the virtual environment
 source venv/bin/activate
@@ -52,13 +52,13 @@ source venv/bin/activate
 #### On the sender PC:
 ```bash
 # Note: sudo doesn't preserve the virtual environment by default
-sudo -E env "PATH=$PATH" ./start_sender.sh RECEIVER_IP
+sudo -E env "PATH=$PATH" ./setup_scripts/start_sender.sh RECEIVER_IP
 ```
 Replace RECEIVER_IP with the receiver's IP address.
 
 #### On the receiver PC:
 ```bash
-./start_receiver.sh SENDER_IP
+./setup_scripts/start_receiver.sh SENDER_IP
 ```
 Replace SENDER_IP with the sender's IP address.
 
@@ -79,14 +79,14 @@ If your goal is not to test different network conditions but to have the most st
 ### On the Sender PC:
 ```bash
 # This single command applies stable network settings and starts the sender.
-sudo -E env "PATH=$PATH" ./start_stable_sender.sh RECEIVER_IP
+sudo -E env "PATH=$PATH" ./setup_scripts/start_stable_sender.sh RECEIVER_IP
 ```
 Replace `RECEIVER_IP` with the receiver's IP address.
 
 ### On the Receiver PC:
 The receiver setup is the same as the quick start.
 ```bash
-./start_receiver.sh SENDER_IP
+./setup_scripts/start_receiver.sh SENDER_IP
 ```
 Replace `SENDER_IP` with the sender's IP address.
 
@@ -106,7 +106,7 @@ This is the most accurate and flexible way to measure the impact of traffic shap
 
 2.  **Apply traffic control with synchronization:**
     ```bash
-    sudo bash auto_tc_control_sync.sh RECEIVER_IP
+    sudo bash tc_scripts/auto_tc_control_sync.sh RECEIVER_IP
     ```
     Replace `RECEIVER_IP` with the IP address of the receiver machine.
 
@@ -119,13 +119,13 @@ This is the most accurate and flexible way to measure the impact of traffic shap
 
 2.  **Run the measurement setup script:**
     ```bash
-    ./setup_measurement.sh SENDER_IP
+    ./setup_scripts/setup_measurement.sh SENDER_IP
     ```
     Replace `SENDER_IP` with the IP address of the sender machine.
 
     This script will:
-    *   Start the `tc_settings_receiver.py` script to receive traffic control settings
-    *   Run the `tc_performance_sync.py` script to measure and graph the performance
+    *   Start the `measurement_scripts/tc_settings_receiver.py` script to receive traffic control settings
+    *   Run the `measurement_scripts/tc_performance_sync.py` script to measure and graph the performance
 
 ## Manual Setup Options
 
@@ -139,16 +139,16 @@ If you prefer to run the commands manually:
    python direct_receiver.py --display --metrics-port 8001
    
    # Terminal 2: Start the settings receiver
-   python tc_settings_receiver.py
+   python measurement_scripts/tc_settings_receiver.py
    
    # Terminal 3: Start performance measurement
-   sudo python tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
+   sudo python measurement_scripts/tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
    ```
 
 2. **On the sender PC**:
    ```bash
    # Terminal 1: Start traffic control with synchronization
-   sudo ./auto_tc_control_sync.sh RECEIVER_IP
+   sudo ./tc_scripts/auto_tc_control_sync.sh RECEIVER_IP
    
    # Terminal 2: Start the sender
    python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
@@ -159,7 +159,7 @@ If you prefer to run the commands manually:
 ```bash
 # On receiver PC:
 python direct_receiver.py --display --metrics-port 8001
-sudo python tc_all_in_one.py --sender-ip SENDER_IP --receiver-ip localhost
+sudo python measurement_scripts/tc_all_in_one.py --sender-ip SENDER_IP --receiver-ip localhost
 
 # On sender PC:
 python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
@@ -184,7 +184,7 @@ Run these in separate terminals:
 
 ```bash
 # Terminal 1: Start traffic control
-sudo ./auto_tc_control.sh
+sudo ./tc_scripts/auto_tc_control.sh
 
 # Terminal 2: Start the sender
 python direct_sender.py --ip RECEIVER_IP --video ../video/zidane.mp4 --metrics-port 8000
@@ -201,18 +201,18 @@ This system offers two different solutions for measuring and visualizing the per
 
 This approach keeps traffic control and performance measurement separate, but uses hardcoded knowledge of the traffic control cycle:
 
-1. **On the Sender PC**: Run auto_tc_control.sh to apply traffic control
-2. **On the Receiver PC**: Run tc_performance_manual.py to measure and plot
+1. **On the Sender PC**: Run `tc_scripts/auto_tc_control.sh` to apply traffic control
+2. **On the Receiver PC**: Run `measurement_scripts/tc_performance_manual.py` to measure and plot
 
 ```bash
 # On the sender PC
-sudo ./auto_tc_control.sh
+sudo ./tc_scripts/auto_tc_control.sh
 
 # On the receiver PC
-sudo python tc_performance_manual.py --sender-ip SENDER_IP --receiver-ip localhost
+sudo python measurement_scripts/tc_performance_manual.py --sender-ip SENDER_IP --receiver-ip localhost
 ```
 
-This script has the auto_tc_control.sh cycle built-in, so it knows what the commanded values should be without having to detect them.
+This script has the `auto_tc_control.sh` cycle built-in, so it knows what the commanded values should be without having to detect them.
 
 ### Solution 2: Traffic Shaping and Measurement on Receiver
 
@@ -220,12 +220,12 @@ This approach combines traffic control and performance measurement in a single s
 
 ```bash
 # On the receiver PC only
-sudo python tc_all_in_one.py --sender-ip SENDER_IP --receiver-ip localhost
+sudo python measurement_scripts/tc_all_in_one.py --sender-ip SENDER_IP --receiver-ip localhost
 ```
 
 This script:
 1. Applies traffic control directly on the receiver PC
-2. Cycles through the same network conditions as auto_tc_control.sh
+2. Cycles through the same network conditions as `auto_tc_control.sh`
 3. Measures the performance and plots the graphs
 4. Resets the network conditions when done
 
@@ -236,20 +236,20 @@ This approach uses real-time communication to send the traffic control settings 
 1. **On the Receiver PC**: Start the settings receiver server
    ```bash
    # Terminal 1: Start the settings receiver
-   python tc_settings_receiver.py
+   python measurement_scripts/tc_settings_receiver.py
    ```
 
 2. **On the Sender PC**: Run the modified traffic control script that sends settings to the receiver
    ```bash
    # Terminal 1: Start traffic control with synchronization
-   sudo ./auto_tc_control_sync.sh RECEIVER_IP
+   sudo ./tc_scripts/auto_tc_control_sync.sh RECEIVER_IP
    ```
    Replace RECEIVER_IP with the actual IP address of the receiver.
 
 3. **On the Receiver PC**: Run the performance measurement script
    ```bash
    # Terminal 2: Start performance measurement
-   sudo python tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
+   sudo python measurement_scripts/tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
    ```
    Replace SENDER_IP with the actual IP address of the sender.
 
@@ -261,7 +261,7 @@ This solution:
 
 ### Do NOT run traffic shaping on both PCs at the same time!
 
-If you run auto_tc_control.sh on the sender PC AND tc_all_in_one.py on the receiver PC:
+If you run `tc_scripts/auto_tc_control.sh` on the sender PC AND `measurement_scripts/tc_all_in_one.py` on the receiver PC:
 - Both PCs will be applying traffic control simultaneously
 - This will create unpredictable network conditions
 - The measurements will not match either set of commanded values
@@ -271,7 +271,7 @@ Choose either Solution 1, Solution 2, OR Solution 3, not multiple solutions at t
 
 ### When to Do Traffic Shaping on the Receiver PC
 
-You should use Solution 2 (tc_all_in_one.py) when:
+You should use Solution 2 (`measurement_scripts/tc_all_in_one.py`) when:
 
 1. **You want to control the network at the receiving end**:
    - This simulates bandwidth limitations, latency, and packet loss at the receiver
@@ -298,7 +298,7 @@ You should use Solution 2 (tc_all_in_one.py) when:
 - **Disadvantages**:
   - Relies on hardcoded knowledge of the traffic control cycle
   - If you start the sender and receiver scripts at different times, the commanded values may be out of sync
-  - If you modify the auto_tc_control.sh script, you must also update tc_performance_manual.py
+  - If you modify the `tc_scripts/auto_tc_control.sh` script, you must also update `measurement_scripts/tc_performance_manual.py`
 
 #### Solution 2: Traffic Shaping and Measurement on Receiver
 - **Advantages**:
@@ -341,7 +341,7 @@ Solution 3 is the best choice when:
 2. **Start traffic control on the sender**:
    ```bash
    # On the sender PC
-   sudo ./auto_tc_control.sh
+   sudo ./tc_scripts/auto_tc_control.sh
    ```
 
 3. **Start the sender**:
@@ -354,7 +354,7 @@ Solution 3 is the best choice when:
 4. **Run the performance measurement script on the receiver**:
    ```bash
    # On the receiver PC
-   sudo python tc_performance_manual.py --sender-ip SENDER_IP --receiver-ip localhost
+   sudo python measurement_scripts/tc_performance_manual.py --sender-ip SENDER_IP --receiver-ip localhost
    ```
    Replace SENDER_IP with the actual IP address of the sender.
 
@@ -375,7 +375,7 @@ Solution 3 is the best choice when:
 3. **Run the all-in-one script on the receiver**:
    ```bash
    # On the receiver PC
-   sudo python tc_all_in_one.py --sender-ip SENDER_IP --receiver-ip localhost
+   sudo python measurement_scripts/tc_all_in_one.py --sender-ip SENDER_IP --receiver-ip localhost
    ```
    Replace SENDER_IP with the actual IP address of the sender.
 
@@ -390,13 +390,13 @@ Solution 3 is the best choice when:
 2. **Start the settings receiver server on the receiver PC**:
    ```bash
    # On the receiver PC (Terminal 2)
-   python tc_settings_receiver.py
+   python measurement_scripts/tc_settings_receiver.py
    ```
 
 3. **Start traffic control with synchronization on the sender PC**:
    ```bash
    # On the sender PC
-   sudo ./auto_tc_control_sync.sh RECEIVER_IP
+   sudo ./tc_scripts/auto_tc_control_sync.sh RECEIVER_IP
    ```
    Replace RECEIVER_IP with the actual IP address of the receiver.
 
@@ -410,7 +410,7 @@ Solution 3 is the best choice when:
 5. **Run the synchronized performance measurement script on the receiver**:
    ```bash
    # On the receiver PC (Terminal 3)
-   sudo python tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
+   sudo python measurement_scripts/tc_performance_sync.py --sender-ip SENDER_IP --receiver-ip localhost
    ```
    Replace SENDER_IP with the actual IP address of the sender.
 
@@ -488,15 +488,15 @@ Make sure auto_tc_control.sh is running
 This means the script cannot detect any traffic control settings. Check:
 
 1. **Verify traffic control is running**:
-   - Make sure you've started `auto_tc_control.sh` on the sender
-   - Run it with sudo: `sudo ./auto_tc_control.sh`
+   - Make sure you've started `tc_scripts/auto_tc_control.sh` on the sender
+   - Run it with sudo: `sudo ./tc_scripts/auto_tc_control.sh`
 
 2. **Check if traffic control is working**:
    - On the sender, run: `sudo tc qdisc show`
    - You should see output containing rate, delay, and loss settings
 
 3. **Run traffic control manually**:
-   - If auto_tc_control.sh isn't working, try manual settings:
+   - If `tc_scripts/auto_tc_control.sh` isn't working, try manual settings:
    ```bash
    # Replace eth0 with your network interface
    sudo tc qdisc add dev eth0 root netem rate 5mbit delay 100ms loss 1%
