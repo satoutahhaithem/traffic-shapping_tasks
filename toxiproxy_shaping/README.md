@@ -26,9 +26,9 @@ This solution uses Toxiproxy to create a controlled network environment where yo
 
 ---
 
-## **Part 2: Running the Video Stream**
+## **Part 2: Running the All-in-One Test**
 
-Now, let's start the video stream.
+This new, simplified approach uses a single script on the receiver to both control the traffic shaping and measure the performance, ensuring perfect synchronization.
 
 ### **On the Sender PC (`192.168.2.169`)**
 
@@ -52,26 +52,10 @@ Now, let's start the video stream.
     python WebRTC_Streaming/direct_receiver.py --display
     ```
 
-At this point, you should see the video streaming from the sender to the receiver.
-
----
-
-## **Part 3: Applying Traffic Shaping and Measuring Performance**
-
-With the video streaming, you can now apply network conditions and measure the results.
-
-### **On the Receiver PC (`192.168.2.120`)**
-
-1.  **Start the Traffic Shaping Controller:**
-    Open a new terminal and run the controller script. This will start applying a cycle of network conditions (latency, bandwidth limits, etc.) to the video stream.
+3.  **Start the All-in-One Test Script:**
+    Finally, open one more terminal and run the all-in-one script. This will control the traffic shaping and measure the performance in a synchronized loop.
     ```bash
-    python toxiproxy_shaping/toxiproxy_controller.py
+    python toxiproxy_shaping/toxiproxy_all_in_one.py --sender-ip 192.168.2.169
     ```
 
-2.  **Start the Performance Measurement:**
-    Finally, open one more terminal and run the measurement script. This will collect data and generate real-time graphs showing the impact of the traffic shaping.
-    ```bash
-    python toxiproxy_shaping/toxiproxy_measurement.py --sender-ip 192.168.2.169
-    ```
-
-You should now see the performance graphs updating in real-time, accurately reflecting the network conditions being applied by Toxiproxy.
+You should now see the performance graphs updating in real-time, with the measured values closely matching the commanded values.
