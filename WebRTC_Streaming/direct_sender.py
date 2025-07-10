@@ -274,7 +274,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Video Sender")
     parser.add_argument("--ip", default="192.168.2.169", help="Receiver IP address")
     parser.add_argument("--port", type=int, default=9999, help="Receiver port")
-    parser.add_argument("--video", default="../video/zidane.mp4", help="Video file path")
+    # Construct the absolute path to the video file relative to the script's location
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    default_video_path = os.path.join(script_dir, '..', 'video', 'zidane.mp4')
+    parser.add_argument("--video", default=default_video_path, help="Video file path")
     parser.add_argument("--quality", type=int, default=90, help="JPEG quality (1-100)")
     parser.add_argument("--scale", type=float, default=1.0, help="Resolution scale factor")
     parser.add_argument("--fps", type=float, default=0, help="Target FPS (0=use video's FPS)")
