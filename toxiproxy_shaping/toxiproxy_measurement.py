@@ -1,36 +1,11 @@
-#!/usr/bin/env python3
-"""
-Traffic Control Performance Comparison with Manual Commanded Values
-
-This script is a modified version of tc_performance_comparison.py that uses
-manually defined commanded values that match the auto_tc_control.sh cycle.
-Use this when you need to run the script on the receiver machine.
-
-Usage:
-    python tc_performance_manual.py [--sender-ip SENDER_IP] [--receiver-ip RECEIVER_IP]
-                                   [--interval INTERVAL] [--duration DURATION]
-                                   [--output OUTPUT_DIR]
-
-Author: Roo AI Assistant
-Date: May 2025
-"""
-
 import argparse
 import time
 import json
 import os
-import subprocess
 import requests
 import numpy as np
 from datetime import datetime
-
-# Import matplotlib with error handling
-try:
-    import matplotlib.pyplot as plt
-except ImportError:
-    print("Error: matplotlib is not installed. Please install it with:")
-    print("pip install matplotlib")
-    exit(1)
+import matplotlib.pyplot as plt
 
 # Default settings
 DEFAULT_SENDER_IP = "localhost"
@@ -39,8 +14,8 @@ DEFAULT_SENDER_PORT = 8000
 DEFAULT_RECEIVER_PORT = 8001
 DEFAULT_INTERVAL = 10.0  # seconds
 DEFAULT_DURATION = 120  # seconds (2 minutes)
-DEFAULT_OUTPUT_DIR = "./tc_performance_graphs"
-DEFAULT_CYCLE_DURATION = 20  # seconds per network condition (from auto_tc_control.sh)
+DEFAULT_OUTPUT_DIR = "./toxiproxy_performance_graphs"
+DEFAULT_CYCLE_DURATION = 20  # seconds per network condition
 
 # Global variables
 running = True
@@ -70,12 +45,12 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# Define the network condition presets from auto_tc_control.sh
+# Define the network condition presets from toxiproxy_controller.py
 NETWORK_PRESETS = [
-    {"name": "VERY POOR", "rate": 1, "delay": 300, "loss": 5},
-    {"name": "POOR", "rate": 2, "delay": 150, "loss": 3},
-    {"name": "FAIR", "rate": 4, "delay": 80, "loss": 1},
-    {"name": "GOOD", "rate": 6, "delay": 40, "loss": 0.5},
+    {"name": "VERY POOR", "rate": 0.5, "delay": 300, "loss": 0}, # Toxiproxy doesn't directly support packet loss, so we set it to 0
+    {"name": "POOR", "rate": 1, "delay": 150, "loss": 0},
+    {"name": "FAIR", "rate": 2, "delay": 80, "loss": 0},
+    {"name": "GOOD", "rate": 5, "delay": 40, "loss": 0},
     {"name": "EXCELLENT", "rate": 10, "delay": 20, "loss": 0},
     {"name": "ULTRA", "rate": 50, "delay": 1, "loss": 0}
 ]
@@ -108,13 +83,9 @@ def get_receiver_metrics(receiver_ip, receiver_port):
 
 # Function to get commanded network conditions based on time
 def get_commanded_conditions(elapsed_time):
-    # Calculate which preset should be active based on elapsed time
     cycle_time = elapsed_time % (len(NETWORK_PRESETS) * DEFAULT_CYCLE_DURATION)
     preset_index = int(cycle_time / DEFAULT_CYCLE_DURATION)
-    
-    # Get the preset
     preset = NETWORK_PRESETS[preset_index]
-    
     return {
         "name": preset["name"],
         "rate": preset["rate"],
@@ -134,49 +105,34 @@ def collect_metrics(sender_ip, sender_port, receiver_ip, receiver_port, interval
     
     try:
         while running and (duration <= 0 or time.time() - start_time < duration):
-            # Get current timestamp
             current_time = time.time() - start_time
             data["timestamps"].append(current_time)
             
-            # Get commanded network conditions based on auto_tc_control.sh cycle
             commanded = get_commanded_conditions(current_time)
             
-            # Store commanded values
             data["commanded"]["rate"].append(commanded["rate"])
             data["commanded"]["delay"].append(commanded["delay"])
             data["commanded"]["loss"].append(commanded["loss"])
             
-            # Get sender metrics
             sender_metrics = get_sender_metrics(sender_ip, sender_port)
-            
-            # Get receiver metrics
             receiver_metrics = get_receiver_metrics(receiver_ip, receiver_port)
             
-            # Calculate measured values
             if sender_metrics and receiver_metrics:
-                # Convert bandwidth from MB/s to Mbps (1 MB/s = 8 Mbps)
                 bandwidth_mbps = sender_metrics.get("bandwidth_usage", 0) * 8
-                
-                # Get latency from network_latency
                 latency_ms = receiver_metrics.get("network_latency", 0)
-                
-                # Get loss rate from frame drop rate
                 loss_rate = receiver_metrics.get("frame_drop_rate", 0)
                 
-                # Store measured values
                 data["measured"]["bandwidth"].append(bandwidth_mbps)
                 data["measured"]["latency"].append(latency_ms)
                 data["measured"]["loss_rate"].append(loss_rate)
             else:
-                # Use previous values or 0 if no previous values
                 data["measured"]["bandwidth"].append(data["measured"]["bandwidth"][-1] if data["measured"]["bandwidth"] else 0)
                 data["measured"]["latency"].append(data["measured"]["latency"][-1] if data["measured"]["latency"] else 0)
                 data["measured"]["loss_rate"].append(data["measured"]["loss_rate"][-1] if data["measured"]["loss_rate"] else 0)
             
-            # Print current metrics every 5 seconds
             if count % 5 == 0:
                 print(f"\n{Colors.BLUE}======================================================{Colors.ENDC}")
-                print(f"{Colors.BLUE}TC PERFORMANCE COMPARISON - {time.strftime('%H:%M:%S')}{Colors.ENDC}")
+                print(f"{Colors.BLUE}TOXIPROXY PERFORMANCE - {time.strftime('%H:%M:%S')}{Colors.ENDC}")
                 print(f"{Colors.BLUE}======================================================{Colors.ENDC}")
                 
                 print(f"{Colors.CYAN}Commanded Network Conditions: {commanded['name']}{Colors.ENDC}")
@@ -192,7 +148,6 @@ def collect_metrics(sender_ip, sender_port, receiver_ip, receiver_port, interval
                 else:
                     print(f"  {Colors.YELLOW}Could not get complete metrics{Colors.ENDC}")
             
-            # Wait for the next interval
             time.sleep(interval)
             count += 1
     
@@ -203,7 +158,8 @@ def collect_metrics(sender_ip, sender_port, receiver_ip, receiver_port, interval
         print(f"\n{Colors.RED}Error collecting metrics: {e}{Colors.ENDC}")
     
     finally:
-        print(f"\n{Colors.GREEN}Collected {len(data['timestamps'])} data points over {data['timestamps'][-1]:.1f} seconds{Colors.ENDC}")
+        if data["timestamps"]:
+            print(f"\n{Colors.GREEN}Collected {len(data['timestamps'])} data points over {data['timestamps'][-1]:.1f} seconds{Colors.ENDC}")
 
 # Function to generate graphs
 def generate_graphs(output_dir):
@@ -211,16 +167,12 @@ def generate_graphs(output_dir):
     
     print(f"{Colors.GREEN}Generating performance comparison graphs...{Colors.ENDC}")
     
-    # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     
-    # Generate timestamp for filenames
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Create a single figure with all three metrics
     plt.figure(figsize=(12, 10))
     
-    # Plot all three metrics in one figure
     plt.subplot(3, 1, 1)
     plt.title("Bandwidth Comparison")
     plt.plot(data["timestamps"], data["commanded"]["rate"], 'b-', label="Commanded")
@@ -248,18 +200,15 @@ def generate_graphs(output_dir):
     
     plt.tight_layout()
     
-    # Save the figure
-    output_file = os.path.join(output_dir, f"tc_performance_{timestamp}.png")
+    output_file = os.path.join(output_dir, f"toxiproxy_performance_{timestamp}.png")
     plt.savefig(output_file, dpi=150)
     print(f"{Colors.GREEN}Saved performance graph to: {output_file}{Colors.ENDC}")
     
-    # Save raw data as JSON for later analysis
-    data_file = os.path.join(output_dir, f"tc_data_{timestamp}.json")
+    data_file = os.path.join(output_dir, f"toxiproxy_data_{timestamp}.json")
     with open(data_file, 'w') as f:
         json.dump(data, f, indent=2)
     print(f"{Colors.GREEN}Saved raw data to: {data_file}{Colors.ENDC}")
     
-    # Show the graph directly
     print(f"{Colors.GREEN}Displaying graph...{Colors.ENDC}")
     plt.show()
     
@@ -269,8 +218,7 @@ def generate_graphs(output_dir):
 def main():
     global running
     
-    # Parse command line arguments
-    parser = argparse.ArgumentParser(description="Traffic Control Performance Comparison with Manual Commanded Values")
+    parser = argparse.ArgumentParser(description="Toxiproxy Performance Measurement")
     parser.add_argument("--sender-ip", default=DEFAULT_SENDER_IP, help="Sender IP address")
     parser.add_argument("--receiver-ip", default=DEFAULT_RECEIVER_IP, help="Receiver IP address")
     parser.add_argument("--sender-port", type=int, default=DEFAULT_SENDER_PORT, help="Sender metrics port")
@@ -280,7 +228,7 @@ def main():
     parser.add_argument("--output", default=DEFAULT_OUTPUT_DIR, help="Output directory for graphs")
     args = parser.parse_args()
     
-    print(f"{Colors.HEADER}Traffic Control Performance Comparison (Manual Mode){Colors.ENDC}")
+    print(f"{Colors.HEADER}Toxiproxy Performance Measurement{Colors.ENDC}")
     print(f"{Colors.HEADER}======================================{Colors.ENDC}")
     print(f"Sender: {args.sender_ip}:{args.sender_port}")
     print(f"Receiver: {args.receiver_ip}:{args.receiver_port}")
@@ -289,7 +237,6 @@ def main():
     print(f"Output Directory: {args.output}")
     print(f"{Colors.HEADER}======================================{Colors.ENDC}")
     
-    # Check if we can access the metrics APIs
     print(f"\n{Colors.CYAN}Checking metrics APIs...{Colors.ENDC}")
     
     sender_metrics = get_sender_metrics(args.sender_ip, args.sender_port)
@@ -306,13 +253,10 @@ def main():
         print(f"{Colors.YELLOW}Warning: Could not connect to receiver metrics API{Colors.ENDC}")
         print(f"{Colors.YELLOW}Make sure the receiver is running with --metrics-port {args.receiver_port}{Colors.ENDC}")
     
-    # Start metrics collection
     print(f"\n{Colors.CYAN}Starting metrics collection...{Colors.ENDC}")
     
-    # Start collection in the main thread
     collect_metrics(args.sender_ip, args.sender_port, args.receiver_ip, args.receiver_port, args.interval, args.duration)
     
-    # Generate graphs
     if len(data["timestamps"]) > 0:
         output_file = generate_graphs(args.output)
         print(f"\n{Colors.GREEN}Analysis complete!{Colors.ENDC}")

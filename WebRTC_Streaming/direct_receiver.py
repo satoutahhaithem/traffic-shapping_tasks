@@ -32,6 +32,7 @@ bytes_received = 0    # Total bytes received
 packets_received = 0  # Total packets received
 frame_sizes = deque(maxlen=30)  # Last 30 frame sizes for averaging
 frame_times = deque(maxlen=30)  # Last 30 frame processing times
+network_latencies = deque(maxlen=30) # Last 30 network latencies
 start_time = time.time()        # When the script started
 frames_received = 0   # Total frames received
 frames_displayed = 0  # Total frames displayed
@@ -142,11 +143,18 @@ def receive_frame(client_socket):
         frame_sizes.append(size)
         frames_received += 1
         
-        # Deserialize the data
-        encoded_frame = pickle.loads(data)
-        
+        # Deserialize the payload
+        payload = pickle.loads(data)
+        encoded_frame = payload["frame"]
+        sent_timestamp = payload["timestamp"]
+
         # Decode the JPEG frame
         frame = cv2.imdecode(encoded_frame, cv2.IMREAD_COLOR)
+        
+        # Calculate network latency
+        reception_time = time.time()
+        latency = reception_time - sent_timestamp
+        network_latencies.append(latency)
         
         if frame is None:
             frames_dropped += 1
@@ -231,6 +239,7 @@ class MetricsHandler(http.server.BaseHTTPRequestHandler):
             # Calculate metrics
             avg_frame_size = sum(frame_sizes) / len(frame_sizes) if frame_sizes else 0
             avg_process_time = sum(frame_times) / len(frame_times) if frame_times else 0
+            avg_network_latency = sum(network_latencies) / len(network_latencies) if network_latencies else 0
             actual_fps = 1 / avg_process_time if avg_process_time > 0 else 0
             buffer_fullness = (len(frame_buffer) / frame_buffer.maxlen * 100) if frame_buffer.maxlen > 0 else 0
             drop_rate = (frames_dropped / frames_received * 100) if frames_received > 0 else 0
@@ -240,6 +249,7 @@ class MetricsHandler(http.server.BaseHTTPRequestHandler):
                 "bandwidth_usage": bytes_received / (1024 * 1024 * (time.time() - start_time)) if time.time() > start_time else 0,  # MB/s
                 "frame_size": avg_frame_size / 1024,  # KB
                 "frame_delivery_time": avg_process_time * 1000,  # ms
+                "network_latency": avg_network_latency * 1000, #ms
                 "actual_fps": actual_fps,
                 "buffer_fullness": buffer_fullness,  # %
                 "frame_drop_rate": drop_rate,  # %

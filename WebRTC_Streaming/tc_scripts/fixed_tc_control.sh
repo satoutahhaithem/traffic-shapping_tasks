@@ -122,12 +122,12 @@ show_conditions() {
     
     # Show tc qdisc statistics
     echo -e "\n${CYAN}Traffic Control Settings:${NC}"
-    tc -s qdisc show dev $INTERFACE
+    tc -s qdisc show dev ifb0
     
     # Check if netem is configured and show details
-    if tc qdisc show dev $INTERFACE | grep -q "netem"; then
+    if tc qdisc show dev ifb0 | grep -q "netem"; then
         echo -e "\n${GREEN}Network emulation is ACTIVE with the following parameters:${NC}"
-        tc qdisc show dev $INTERFACE | grep -i "rate\|delay\|loss\|limit" | sed "s/^/    /"
+        tc qdisc show dev ifb0 | grep -i "rate\|delay\|loss\|limit" | sed "s/^/    /"
     else
         echo -e "\n${YELLOW}Network emulation is NOT ACTIVE.${NC}"
     fi
