@@ -44,15 +44,14 @@ The process involves starting the sender and receiver, and then using the intera
 
 ### **Step 1: Start the Video Stream**
 
-**On the Sender PC:**
+**On the Sender PC (192.168.2.169):**
 1.  Activate the virtual environment (`source venv/bin/activate`).
-2.  Find the **Receiver's IP address** (`hostname -I`).
-3.  Start the sender script, pointing it to the receiver's IP.
+2.  Start the sender script, pointing it to the receiver's IP.
     ```bash
-    python3 direct_sender.py --ip <RECEIVER_IP>
+    python3 direct_sender.py --ip 192.168.2.120
     ```
 
-**On the Receiver PC:**
+**On the Receiver PC (192.168.2.120):**
 1.  Activate the virtual environment (`source venv/bin/activate`).
 2.  Start the receiver script in a dedicated terminal.
     ```bash
@@ -63,7 +62,7 @@ The process involves starting the sender and receiver, and then using the intera
 
 ### **Step 2: Apply and Verify Traffic Shaping**
 
-**On the Receiver PC**, in a new terminal:
+**On the Receiver PC (192.168.2.120)**, in a new terminal:
 
 1.  **Navigate to the correct directory:**
     ```bash
