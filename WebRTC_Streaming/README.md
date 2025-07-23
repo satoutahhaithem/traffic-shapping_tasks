@@ -6,93 +6,82 @@ This project provides a streamlined solution for testing real-time video streami
 
 The workflow is designed for a two-PC setup: a **Sender** and a **Receiver**.
 
-The key scripts are:
-*   `direct_sender.py`: Captures video from a webcam and streams it to the receiver.
-*   `direct_receiver.py`: Receives and displays the video stream.
-*   `measurement_scripts/tc_all_in_one_synced.py`: An automated script for running synchronized performance measurements.
-*   `traffic_shapping/dynamic_tc_control.sh`: An interactive bash script for manually applying traffic shaping rules.
+## 2. Core Components
 
-## 2. Prerequisites
+*   **`direct_sender.py`**: Captures video from a webcam and streams it to the receiver.
+*   **`direct_receiver.py`**: Receives and displays the video stream.
+*   **`traffic_shapping/dynamic_tc_control.sh`**: An interactive bash script to manually apply and manage traffic shaping rules on the receiver.
+*   **`measurement_scripts/tc_all_in_one_synced.py`**: An automated script that runs on the receiver to apply a sequence of traffic shaping rules and plot the resulting performance in real-time.
 
-Before you begin, ensure you have the following installed on both the Sender and Receiver PCs:
+## 3. Prerequisites
 
 *   **OS:** A Linux distribution (e.g., Ubuntu 20.04+)
 *   **Python:** Python 3.8 or newer.
-*   **iproute2:** The package that contains the `tc` utility. This is installed by default on most Linux systems. You can verify with `tc -V`.
+*   **iproute2:** The package containing the `tc` utility (installed by default on most Linux systems).
 *   **A webcam:** Connected to the Sender PC.
 
-## 3. Setup Instructions
+## 4. Setup Instructions
 
-Follow these steps on both the **Sender** and **Receiver** PCs to prepare the environment.
+Follow these steps on both the **Sender** and **Receiver** PCs.
 
-**Step 1: Create a Python Virtual Environment**
-
+**Step 1: Create and Activate a Python Virtual Environment**
 ```bash
-# Navigate to the project directory
+# Navigate to the WebRTC_Streaming directory
 cd /path/to/traffic-shapping_tasks/WebRTC_Streaming
 
-# Create a virtual environment named 'venv'
+# Create and activate the virtual environment
 python3 -m venv venv
-
-# Activate the virtual environment
 source venv/bin/activate
 ```
-*Your terminal prompt should now be prefixed with `(venv)`.*
 
 **Step 2: Install Required Libraries**
-
 ```bash
-# Ensure you are in the WebRTC_Streaming directory
 pip install -r requirements.txt
 ```
 
-## 4. Usage
+## 5. How to Run the Test
 
-This project offers two primary modes of operation: **Synchronized Measurement** for automated testing and **Manual Control** for interactive adjustments.
+The process involves starting the sender and receiver, and then choosing a method on the receiver to apply traffic shaping.
 
----
+### **Step 1: Start the Video Stream**
 
-### Option A: Synchronized Measurement (Recommended)
-
-This workflow uses a Python script to automate the process of applying network conditions and measuring performance.
-
-**Step 1: Identify IP Addresses**
-*   **SENDER_IP**: The IP address of the Sender PC.
-*   **RECEIVER_IP**: The IP address of the Receiver PC.
-
-#### **On the Sender PC**
-1.  Activate the virtual environment: `source venv/bin/activate`
-2.  Start the sender:
+**On the Sender PC:**
+1.  Activate the virtual environment (`source venv/bin/activate`).
+2.  Find the **Receiver's IP address** (`hostname -I`).
+3.  Start the sender script, pointing it to the receiver's IP.
     ```bash
-    python3 direct_sender.py --ip RECEIVER_IP
+    python3 direct_sender.py --ip <RECEIVER_IP>
     ```
 
-#### **On the Receiver PC**
-1.  Activate the virtual environment: `source venv/bin/activate`
-2.  In a new terminal, start the receiver:
+**On the Receiver PC:**
+1.  Activate the virtual environment (`source venv/bin/activate`).
+2.  Start the receiver script in a dedicated terminal.
     ```bash
     python3 direct_receiver.py --display
     ```
-3.  In another terminal, start the measurement script:
-    ```bash
-    sudo python3 measurement_scripts/tc_all_in_one_synced.py --sender-ip SENDER_IP
-    ```
+At this point, the video stream is running but with no traffic shaping applied.
 
 ---
 
-### Option B: Manual Control with Bash Script
+### **Step 2: Apply Traffic Shaping (Choose One Method)**
 
-This workflow uses an interactive bash script to manually apply traffic shaping rules.
+You can apply network constraints using either an automated script that cycles through presets or a manual script for interactive control. **Run one of the following in a new terminal on the Receiver PC.**
 
-#### **On the Sender PC**
-Follow the same steps as in Option A to start the video sender.
+#### **Method A: Automated Measurement with `tc_all_in_one_synced.py`**
 
-#### **On the Receiver PC**
+This script automatically applies a series of predefined network conditions and plots the performance in real-time. This is ideal for standardized testing.
 
-**Terminal 1: Start the Video Receiver**
-Follow the same steps as in Option A to start the video receiver.
+1.  Find the **Sender's IP address**.
+2.  Run the script with `sudo`:
+    ```bash
+    sudo python3 measurement_scripts/tc_all_in_one_synced.py --sender-ip <SENDER_IP>
+    ```
+    A Matplotlib window will appear showing real-time graphs of bitrate and latency as the script cycles through different network conditions.
 
-**Terminal 2: Run the Traffic Shaping Script**
+#### **Method B: Manual Control with `dynamic_tc_control.sh`**
+
+This script provides an interactive command-line menu to set custom network conditions on the fly. This is useful for experimentation.
+
 1.  Make the script executable:
     ```bash
     chmod +x traffic_shapping/dynamic_tc_control.sh
@@ -101,9 +90,4 @@ Follow the same steps as in Option A to start the video receiver.
     ```bash
     sudo ./traffic_shapping/dynamic_tc_control.sh
     ```
-3.  You will see a menu allowing you to set network conditions (rate, delay, loss), view stats, or reset the configuration.
-
-## 5. Expected Output
-
-*   **For Synchronized Measurement:** A Matplotlib window will appear showing real-time graphs of commanded vs. measured bitrate and latency.
-*   **For Manual Control:** The interactive script will prompt you for traffic shaping values. The video window will show the stream quality changing in response to your adjustments.
+3.  Use the menu to set a custom rate, delay, and packet loss. The changes will affect the video stream immediately. You can run the measurement script from Method A in a separate terminal to visualize the impact of your manual changes.
