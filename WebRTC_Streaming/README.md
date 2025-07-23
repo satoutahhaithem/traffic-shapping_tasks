@@ -12,7 +12,7 @@ This project provides a complete workflow for testing real-time video streaming 
     *   `static_tc_control.sh`: Manually set specific network conditions.
     *   `auto_tc_control.sh`: Automatically cycle through predefined network conditions.
 *   **`measurement/`**: Contains the script to measure performance on the **Receiver PC**.
-    *   `tc_all_in_one_synced.py`: Measures and plots bitrate and latency in real-time.
+    *   `performance_monitor.py`: Measures and plots bitrate and latency in real-time.
 
 ## 3. Prerequisites
 
@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 ## 5. Testing Workflow
 
-The workflow involves three main steps, executed across three terminals on the Sender PC and two terminals on the Receiver PC.
+The workflow involves three main steps, executed across terminals on both the Sender and Receiver PCs.
 
 ### **Step 1: Start the Receiver**
 
@@ -80,11 +80,11 @@ The workflow involves three main steps, executed across three terminals on the S
 
 **On the Receiver PC (192.168.2.120):**
 
-**Terminal 2: Start the Measurement Script**
+**Terminal 2: Start the Performance Monitor**
 1.  Activate the virtual environment.
-2.  Run the measurement script with `sudo`, pointing it to the Sender's IP:
+2.  Run the performance monitor script, pointing it to the Sender's IP:
     ```bash
-    sudo python3 measurement/tc_all_in_one_synced.py --sender-ip 192.168.2.169
+    python3 measurement/performance_monitor.py --sender-ip 192.168.2.169
     ```
 
-A Matplotlib window will appear on the receiver, showing real-time graphs of the measured bitrate and latency, allowing you to see the direct impact of the traffic shaping rules you applied on the sender.
+A Matplotlib window will appear on the receiver, showing real-time graphs of the measured bitrate, latency, and packet loss, allowing you to see the direct impact of the traffic shaping rules you applied on the sender.
