@@ -21,10 +21,15 @@ DEFAULT_OUTPUT_DIR = "./performance_graphs"
 running = True
 data = {
     "timestamps": [],
+    "commanded": {
+        "rate": [],
+        "delay": [],
+        "loss": []
+    },
     "measured": {
-        "bandwidth": [],  # MB/s (will convert to Mbps)
-        "latency": [],    # ms
-        "loss_rate": []   # %
+        "bandwidth": [],
+        "latency": [],
+        "loss_rate": []
     }
 }
 
@@ -71,24 +76,29 @@ def run_measurement_cycle(sender_ip, sender_port, receiver_ip, receiver_port, in
             current_time = time.time() - start_time
             data["timestamps"].append(current_time)
             
-            # Get measured values
+            # Get metrics from both sender and receiver
             sender_metrics = get_sender_metrics(sender_ip, sender_port)
             receiver_metrics = get_receiver_metrics(receiver_ip, receiver_port)
             
             if sender_metrics and receiver_metrics:
-                bandwidth_mbps = sender_metrics.get("bandwidth_usage", 0) * 8
-                latency_ms = receiver_metrics.get("network_latency", 0)
-                loss_rate = receiver_metrics.get("frame_drop_rate", 0)
+                # Measured values
+                data["measured"]["bandwidth"].append(sender_metrics.get("bandwidth_usage", 0) * 8)
+                data["measured"]["latency"].append(receiver_metrics.get("network_latency", 0))
+                data["measured"]["loss_rate"].append(receiver_metrics.get("frame_drop_rate", 0))
                 
-                data["measured"]["bandwidth"].append(bandwidth_mbps)
-                data["measured"]["latency"].append(latency_ms)
-                data["measured"]["loss_rate"].append(loss_rate)
+                # Commanded values (from sender's TC rules)
+                data["commanded"]["rate"].append(sender_metrics.get("commanded_rate", 0))
+                data["commanded"]["delay"].append(sender_metrics.get("commanded_delay", 0))
+                data["commanded"]["loss"].append(sender_metrics.get("commanded_loss", 0))
                 
-                print(f"  Measured - Bandwidth: {bandwidth_mbps:.2f} Mbps, Latency: {latency_ms:.2f} ms, Loss: {loss_rate:.2f}%")
+                print(f"  Measured - Bandwidth: {data['measured']['bandwidth'][-1]:.2f} Mbps, Latency: {data['measured']['latency'][-1]:.2f} ms, Loss: {data['measured']['loss_rate'][-1]:.2f}%")
+                print(f"  Commanded - Rate: {data['commanded']['rate'][-1]:.2f} Mbps, Delay: {data['commanded']['delay'][-1]:.2f} ms, Loss: {data['commanded']['loss'][-1]:.2f}%")
             else:
-                data["measured"]["bandwidth"].append(data["measured"]["bandwidth"][-1] if data["measured"]["bandwidth"] else 0)
-                data["measured"]["latency"].append(data["measured"]["latency"][-1] if data["measured"]["latency"] else 0)
-                data["measured"]["loss_rate"].append(data["measured"]["loss_rate"][-1] if data["measured"]["loss_rate"] else 0)
+                # Append last known values if metrics fail
+                for key in data["measured"]:
+                    data["measured"][key].append(data["measured"][key][-1] if data["measured"][key] else 0)
+                for key in data["commanded"]:
+                    data["commanded"][key].append(data["commanded"][key][-1] if data["commanded"][key] else 0)
                 print(f"  {Colors.YELLOW}Could not get complete metrics{Colors.ENDC}")
 
             time.sleep(interval)
@@ -104,7 +114,7 @@ def run_measurement_cycle(sender_ip, sender_port, receiver_ip, receiver_port, in
 def generate_graphs(output_dir):
     global data
     
-    print(f"{Colors.GREEN}Generating performance graphs...{Colors.ENDC}")
+    print(f"{Colors.GREEN}Generating performance comparison graphs...{Colors.ENDC}")
     
     os.makedirs(output_dir, exist_ok=True)
     
@@ -112,28 +122,37 @@ def generate_graphs(output_dir):
     
     plt.figure(figsize=(12, 10))
     
+    # Bandwidth Plot
     plt.subplot(3, 1, 1)
-    plt.title("Measured Bandwidth")
-    plt.plot(data["timestamps"], data["measured"]["bandwidth"], 'r-')
+    plt.title("Bandwidth Comparison")
+    plt.plot(data["timestamps"], data["commanded"]["rate"], 'b-', label="Commanded Rate")
+    plt.plot(data["timestamps"], data["measured"]["bandwidth"], 'r-', label="Measured Bandwidth")
     plt.ylabel("Mbps")
     plt.grid(True)
+    plt.legend()
     
+    # Latency Plot
     plt.subplot(3, 1, 2)
-    plt.title("Measured Latency")
-    plt.plot(data["timestamps"], data["measured"]["latency"], 'r-')
+    plt.title("Latency Comparison")
+    plt.plot(data["timestamps"], data["commanded"]["delay"], 'b-', label="Commanded Delay")
+    plt.plot(data["timestamps"], data["measured"]["latency"], 'r-', label="Measured Latency")
     plt.ylabel("ms")
     plt.grid(True)
+    plt.legend()
     
+    # Packet Loss Plot
     plt.subplot(3, 1, 3)
-    plt.title("Measured Packet Loss")
-    plt.plot(data["timestamps"], data["measured"]["loss_rate"], 'r-')
+    plt.title("Packet Loss Comparison")
+    plt.plot(data["timestamps"], data["commanded"]["loss"], 'b-', label="Commanded Loss")
+    plt.plot(data["timestamps"], data["measured"]["loss_rate"], 'r-', label="Measured Loss")
     plt.xlabel("Time (seconds)")
     plt.ylabel("%")
     plt.grid(True)
+    plt.legend()
     
     plt.tight_layout()
     
-    output_file = os.path.join(output_dir, f"performance_{timestamp}.png")
+    output_file = os.path.join(output_dir, f"performance_comparison_{timestamp}.png")
     plt.savefig(output_file, dpi=150)
     print(f"{Colors.GREEN}Saved performance graph to: {output_file}{Colors.ENDC}")
     

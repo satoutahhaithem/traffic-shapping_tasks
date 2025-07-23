@@ -24,6 +24,8 @@ import threading
 import http.server
 import socketserver
 import json
+import re
+import subprocess
 from collections import deque
 from threading import Thread
 from urllib.parse import urlparse, parse_qs
@@ -45,6 +47,42 @@ running = True                   # Flag to control threads
 metrics_port = 8000  # Port for the metrics API server
 metrics_server = None
 metrics_handler = None
+
+def get_default_interface():
+    """Auto-detects the default network interface."""
+    try:
+        result = subprocess.run("ip route | grep default | awk '{print $5}' | head -n 1",
+                               shell=True, capture_output=True, text=True, check=True)
+        interface = result.stdout.strip()
+        if interface:
+            return interface
+    except Exception:
+        pass
+    # Fallback if auto-detection fails
+    return "eth0"
+
+def get_tc_stats(interface):
+    """Gets the current traffic control stats for a given interface."""
+    try:
+        result = subprocess.run(f"tc -s qdisc show dev {interface}", shell=True, capture_output=True, text=True)
+        output = result.stdout
+        
+        rate_match = re.search(r'rate (\d+\.?\d*)(\w+)', output)
+        delay_match = re.search(r'delay (\d+\.?\d*)ms', output)
+        loss_match = re.search(r'loss (\d+\.?\d*)%', output)
+        
+        rate = float(rate_match.group(1)) if rate_match else 0
+        unit = rate_match.group(2) if rate_match else "mbit"
+        if unit == 'kbit':
+            rate /= 1000
+        
+        return {
+            "rate": rate,
+            "delay": float(delay_match.group(1)) if delay_match else 0,
+            "loss": float(loss_match.group(1)) if loss_match else 0
+        }
+    except Exception:
+        return {"rate": 0, "delay": 0, "loss": 0}
 
 def print_stats():
     """
@@ -226,6 +264,9 @@ class MetricsHandler(http.server.BaseHTTPRequestHandler):
             actual_fps = 1 / avg_process_time if avg_process_time > 0 else 0
             buffer_fullness = (len(frame_buffer) / frame_buffer.maxlen * 100) if frame_buffer.maxlen > 0 else 0
             
+            # Get commanded TC values
+            tc_stats = get_tc_stats(get_default_interface())
+
             # Create metrics JSON
             metrics = {
                 "bandwidth_usage": bytes_sent / (1024 * 1024 * (time.time() - start_time)) if time.time() > start_time else 0,  # MB/s
@@ -236,7 +277,10 @@ class MetricsHandler(http.server.BaseHTTPRequestHandler):
                 "buffer_fullness": buffer_fullness,  # %
                 "resolution": f"{frame_width}x{frame_height}",
                 "quality": jpeg_quality,
-                "total_frames": len(frame_times)
+                "total_frames": len(frame_times),
+                "commanded_rate": tc_stats["rate"],
+                "commanded_delay": tc_stats["delay"],
+                "commanded_loss": tc_stats["loss"]
             }
             
             # Send response
