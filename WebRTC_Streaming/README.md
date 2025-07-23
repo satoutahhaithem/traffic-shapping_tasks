@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ## 5. How to Run the Test
 
-The process involves starting the sender and receiver, and then choosing a method on the receiver to apply traffic shaping.
+The process involves starting the sender and receiver, applying traffic shaping rules, and then verifying that the rules are active.
 
 ### **Step 1: Start the Video Stream**
 
@@ -59,35 +59,51 @@ The process involves starting the sender and receiver, and then choosing a metho
     ```bash
     python3 direct_receiver.py --display
     ```
-At this point, the video stream is running but with no traffic shaping applied.
 
 ---
 
 ### **Step 2: Apply Traffic Shaping (Choose One Method)**
 
-You can apply network constraints using either an automated script that cycles through presets or a manual script for interactive control. **Run one of the following in a new terminal on the Receiver PC.**
+Apply network constraints using either an automated script or a manual one. **Run one of the following in a new terminal on the Receiver PC.**
 
-#### **Method A: Automated Measurement with `tc_all_in_one_synced.py`**
-
-This script automatically applies a series of predefined network conditions and plots the performance in real-time. This is ideal for standardized testing.
-
+#### **Method A: Automated Measurement**
+This script automatically applies a series of network conditions and plots the performance.
 1.  Find the **Sender's IP address**.
 2.  Run the script with `sudo`:
     ```bash
     sudo python3 measurement_scripts/tc_all_in_one_synced.py --sender-ip <SENDER_IP>
     ```
-    A Matplotlib window will appear showing real-time graphs of bitrate and latency as the script cycles through different network conditions.
 
-#### **Method B: Manual Control with `dynamic_tc_control.sh`**
-
-This script provides an interactive command-line menu to set custom network conditions on the fly. This is useful for experimentation.
-
-1.  Make the script executable:
-    ```bash
-    chmod +x traffic_shapping/dynamic_tc_control.sh
-    ```
+#### **Method B: Manual Control**
+This script provides an interactive menu to set custom network conditions.
+1.  Make the script executable: `chmod +x traffic_shapping/dynamic_tc_control.sh`
 2.  Run the script with `sudo`:
     ```bash
     sudo ./traffic_shapping/dynamic_tc_control.sh
     ```
-3.  Use the menu to set a custom rate, delay, and packet loss. The changes will affect the video stream immediately. You can run the measurement script from Method A in a separate terminal to visualize the impact of your manual changes.
+3.  Use the menu to set a custom rate, delay, and packet loss.
+
+---
+
+### **Step 3: Verify Traffic Shaping Rules**
+
+After applying traffic shaping using either method, it is crucial to verify that the rules have been correctly applied by the system.
+
+**On the Receiver PC**, open a new terminal and use the following command to inspect the active `tc` queueing disciplines (`qdisc`):
+
+```bash
+tc -s qdisc show dev <INTERFACE>
+```
+*Replace `<INTERFACE>` with your network interface name (e.g., `eth0`, `wlp0s20f3`). You can find it using `ip a`.*
+
+**What to look for in the output:**
+
+*   **`qdisc netem ...`**: This confirms that the Network Emulator (`netem`) is active.
+*   **`limit`**: The maximum number of packets the qdisc can hold.
+*   **`delay`**: The configured latency (e.g., `100.0ms`).
+*   **`rate`**: The configured bandwidth limit (e.g., `1Mbit`).
+*   **`loss`**: The configured packet loss percentage (e.g., `10%`).
+*   **`dropped`**: A counter for the number of packets dropped due to the rate limit. If this number is increasing, your traffic shaping is actively limiting the bandwidth.
+*   **`overlimits`**: A counter for the number of times the traffic exceeded the allocated bandwidth, causing packets to be delayed or dropped.
+
+By checking this output, you can confirm that your traffic shaping rules are not just set, but are actively working and affecting the network traffic as intended.
