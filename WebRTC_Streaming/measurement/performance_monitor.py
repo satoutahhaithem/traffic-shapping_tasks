@@ -7,6 +7,7 @@ import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
 import subprocess
+import re
 
 # Default settings
 DEFAULT_SENDER_IP = "localhost"
@@ -45,6 +46,42 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+def get_default_interface():
+    """Auto-detects the default network interface."""
+    try:
+        result = subprocess.run("ip route | grep default | awk '{print $5}' | head -n 1",
+                               shell=True, capture_output=True, text=True, check=True)
+        interface = result.stdout.strip()
+        if interface:
+            return interface
+    except Exception:
+        pass
+    return "eth0"
+
+def get_tc_stats(interface):
+    """Gets the current traffic control stats for a given interface."""
+    try:
+        result = subprocess.run(f"tc -s qdisc show dev {interface}", shell=True, capture_output=True, text=True)
+        output = result.stdout
+        
+        rate_match = re.search(r'rate (\d+\.?\d*)(\w+)', output)
+        delay_match = re.search(r'delay (\d+\.?\d*)ms', output)
+        loss_match = re.search(r'loss (\d+\.?\d*)%', output)
+        
+        rate = float(rate_match.group(1)) if rate_match else 0
+        unit = rate_match.group(2) if rate_match else "mbit"
+        if unit == 'kbit':
+            rate /= 1000
+        
+        return {
+            "rate": rate,
+            "delay": float(delay_match.group(1)) if delay_match else 0,
+            "loss": float(loss_match.group(1)) if loss_match else 0
+        }
+    except Exception as e:
+        print(f"Error getting tc stats: {e}")
+        return {"rate": 0, "delay": 0, "loss": 0}
+
 # Function to get metrics from the sender
 def get_sender_metrics(sender_ip, sender_port):
     try:
@@ -64,12 +101,12 @@ def get_receiver_metrics(receiver_ip, receiver_port):
         return None
 
 # Function to run the measurement cycle
-def run_measurement_cycle(sender_ip, sender_port, receiver_ip, receiver_port, interval, duration):
+def run_measurement_cycle(sender_ip, sender_port, receiver_ip, receiver_port, interval, duration, interface):
     global running, data
     
     start_time = time.time()
     
-    print(f"{Colors.GREEN}Starting metrics collection for  {duration} seconds...{Colors.ENDC}")
+    print(f"{Colors.GREEN}Starting metrics collection for {duration} seconds...{Colors.ENDC}")
     
     try:
         while running and (duration <= 0 or time.time() - start_time < duration):
@@ -79,6 +116,7 @@ def run_measurement_cycle(sender_ip, sender_port, receiver_ip, receiver_port, in
             # Get metrics from both sender and receiver
             sender_metrics = get_sender_metrics(sender_ip, sender_port)
             receiver_metrics = get_receiver_metrics(receiver_ip, receiver_port)
+            tc_stats = get_tc_stats(interface)
             
             if sender_metrics and receiver_metrics:
                 # Measured values
@@ -86,10 +124,10 @@ def run_measurement_cycle(sender_ip, sender_port, receiver_ip, receiver_port, in
                 data["measured"]["latency"].append(receiver_metrics.get("network_latency", 0))
                 data["measured"]["loss_rate"].append(receiver_metrics.get("frame_drop_rate", 0))
                 
-                # Commanded values (from sender's TC rules)
-                data["commanded"]["rate"].append(sender_metrics.get("commanded_rate", 0))
-                data["commanded"]["delay"].append(sender_metrics.get("commanded_delay", 0))
-                data["commanded"]["loss"].append(sender_metrics.get("commanded_loss", 0))
+                # Commanded values (from local TC rules)
+                data["commanded"]["rate"].append(tc_stats.get("rate", 0))
+                data["commanded"]["delay"].append(tc_stats.get("delay", 0))
+                data["commanded"]["loss"].append(tc_stats.get("loss", 0))
                 
                 print(f"  Measured - Bandwidth: {data['measured']['bandwidth'][-1]:.2f} Mbps, Latency: {data['measured']['latency'][-1]:.2f} ms, Loss: {data['measured']['loss_rate'][-1]:.2f}%")
                 print(f"  Commanded - Rate: {data['commanded']['rate'][-1]:.2f} Mbps, Delay: {data['commanded']['delay'][-1]:.2f} ms, Loss: {data['commanded']['loss'][-1]:.2f}%")
@@ -176,6 +214,7 @@ def main():
     parser.add_argument("--interval", type=float, default=DEFAULT_INTERVAL, help="Metrics collection interval in seconds")
     parser.add_argument("--duration", type=int, default=DEFAULT_DURATION, help="Total duration in seconds (0 for unlimited)")
     parser.add_argument("--output", default=DEFAULT_OUTPUT_DIR, help="Output directory for graphs")
+    parser.add_argument("--interface", default=get_default_interface(), help="Network interface to check for TC rules")
     args = parser.parse_args()
     
     print(f"{Colors.HEADER}Performance Monitor for WebRTC Streaming{Colors.ENDC}")
@@ -185,6 +224,7 @@ def main():
     print(f"Interval: {args.interval} seconds")
     print(f"Total Duration: {args.duration} seconds (0 = unlimited)")
     print(f"Output Directory: {args.output}")
+    print(f"Monitoring TC on interface: {args.interface}")
     print(f"{Colors.HEADER}======================================{Colors.ENDC}")
     
     print(f"\n{Colors.CYAN}Checking metrics APIs...{Colors.ENDC}")
@@ -199,7 +239,7 @@ def main():
     else:
         print(f"{Colors.GREEN}Successfully connected to receiver metrics API{Colors.ENDC}")
     
-    run_measurement_cycle(args.sender_ip, args.sender_port, args.receiver_ip, args.receiver_port, args.interval, args.duration)
+    run_measurement_cycle(args.sender_ip, args.sender_port, args.receiver_ip, args.receiver_port, args.interval, args.duration, args.interface)
     
     if len(data["timestamps"]) > 0:
         generate_graphs(args.output)

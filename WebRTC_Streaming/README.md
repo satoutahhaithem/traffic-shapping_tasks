@@ -1,18 +1,18 @@
-# Real-Time Video Streaming with Traffic Shaping and Measurement
+# Real-Time Video Streaming with Receiver-Side Traffic Shaping and Measurement
 
 ## 1. Overview
 
-This project provides a complete workflow for testing real-time video streaming performance. It allows you to apply specific network constraints (traffic shaping) on the Sender PC and then measure the impact of those constraints on the Receiver PC.
+This project provides a complete and simplified workflow for testing real-time video streaming performance. It allows you to apply specific network constraints (traffic shaping) and measure the impact of those constraints **on the same machine (the Receiver)**. This removes network complexity and makes debugging more reliable.
 
 ## 2. Core Components
 
 *   **`direct_sender.py`**: Captures and streams video from a webcam.
 *   **`direct_receiver.py`**: Receives and displays the video stream.
-*   **`traffic_shapping/`**: Contains scripts to apply network constraints on the **Sender PC**.
+*   **`traffic_shapping/`**: Contains scripts to apply network constraints on the **Receiver PC**.
     *   `static_tc_control.sh`: Manually set specific network conditions.
     *   `auto_tc_control.sh`: Automatically cycle through predefined network conditions.
 *   **`measurement/`**: Contains the script to measure performance on the **Receiver PC**.
-    *   `performance_monitor.py`: Measures and plots bitrate and latency in real-time.
+    *   `performance_monitor.py`: Measures and plots commanded vs. measured values in real-time.
 
 ## 3. Prerequisites
 
@@ -37,23 +37,34 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## 5. Testing Workflow for PC 192.168.2.120 (Receiver)
+## 5. Testing Workflow
 
-Here is the precise command sequence for your debugging session.
+The workflow is now entirely focused on the Receiver PC for traffic control and measurement.
 
----
-### **On the SENDER PC (192.168.2.169)**
+### **Step 1: Start the Sender**
 
-You will need **two terminals** on this machine.
-
-**Terminal 1: Start the Video Sender**
-1.  Activate the virtual environment: `source venv/bin/activate`
-2.  Run the sender script, pointing to the receiver's IP address:
+**On the Sender PC (192.168.2.169):**
+1.  Activate the virtual environment.
+2.  Start the sender script, pointing it to the receiver's IP:
     ```bash
     python3 direct_sender.py --ip 192.168.2.120
     ```
 
-**Terminal 2: Apply Traffic Shaping**
+---
+### **Step 2: Start Receiver, Apply Traffic Shaping, and Measure**
+
+**On the Receiver PC (192.168.2.120):**
+
+You will need **three terminals** on this machine.
+
+**Terminal 1: Start the Video Receiver**
+1.  Activate the virtual environment.
+2.  Start the receiver script:
+    ```bash
+    python3 direct_receiver.py --display
+    ```
+
+**Terminal 2: Apply Traffic Shaping (Choose One)**
 1.  Make the scripts executable:
     ```bash
     chmod +x traffic_shapping/static_tc_control.sh
@@ -61,30 +72,18 @@ You will need **two terminals** on this machine.
     ```
 2.  Run your chosen traffic shaping script with `sudo`:
     ```bash
-    # For automatic, cycling conditions:
-    sudo ./traffic_shapping/auto_tc_control.sh
-
-    # OR for manual, interactive control:
+    # For manual, interactive control:
     sudo ./traffic_shapping/static_tc_control.sh
+
+    # OR for automatic, cycling conditions:
+    sudo ./traffic_shapping/auto_tc_control.sh
     ```
 
----
-### **On the RECEIVER PC (192.168.2.120)**
-
-You will need **two terminals** on this machine.
-
-**Terminal 1: Start the Video Receiver**
-1.  Activate the virtual environment: `source venv/bin/activate`
-2.  Run the receiver script to display the incoming video:
-    ```bash
-    python3 direct_receiver.py --display
-    ```
-
-**Terminal 2: Start the Performance Monitor**
-1.  Activate the virtual environment: `source venv/bin/activate`
-2.  Run the performance monitor script, pointing it to the sender's IP address:
+**Terminal 3: Start the Performance Monitor**
+1.  Activate the virtual environment.
+2.  Run the performance monitor script, pointing it to the sender's IP:
     ```bash
     python3 measurement/performance_monitor.py --sender-ip 192.168.2.169
     ```
 
-This setup will show you the video stream on the receiver and a real-time graph of the performance, allowing you to debug the system effectively.
+This setup will now correctly measure and plot both the commanded `tc` rules and the resulting performance, all from the receiver's perspective.
