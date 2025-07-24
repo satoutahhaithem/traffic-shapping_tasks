@@ -69,7 +69,7 @@ def run_measurement_cycle(sender_ip, sender_port, receiver_ip, receiver_port, in
     
     start_time = time.time()
     
-    print(f"{Colors.GREEN}Starting metrics collection for {duration} seconds...{Colors.ENDC}")
+    print(f"{Colors.GREEN}Starting metrics collection for  {duration} seconds...{Colors.ENDC}")
     
     try:
         while running and (duration <= 0 or time.time() - start_time < duration):
