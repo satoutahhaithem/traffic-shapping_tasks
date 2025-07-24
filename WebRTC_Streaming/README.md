@@ -37,54 +37,54 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## 5. Testing Workflow
+## 5. Testing Workflow for PC 192.168.2.120 (Receiver)
 
-The workflow involves three main steps, executed across terminals on both the Sender and Receiver PCs.
+Here is the precise command sequence for your debugging session.
 
-### **Step 1: Start the Receiver**
+---
+### **On the SENDER PC (192.168.2.169)**
 
-**On the Receiver PC (192.168.2.120):**
-1.  Activate the virtual environment.
-2.  Start the receiver script:
-    ```bash
-    python3 direct_receiver.py --display
-    ```
-
-### **Step 2: Start the Sender and Apply Traffic Shaping**
-
-**On the Sender PC (192.168.2.169):**
+You will need **two terminals** on this machine.
 
 **Terminal 1: Start the Video Sender**
-1.  Activate the virtual environment.
-2.  Start the sender script:
+1.  Activate the virtual environment: `source venv/bin/activate`
+2.  Run the sender script, pointing to the receiver's IP address:
     ```bash
     python3 direct_sender.py --ip 192.168.2.120
     ```
 
-**Terminal 2: Apply Traffic Shaping (Choose One)**
+**Terminal 2: Apply Traffic Shaping**
 1.  Make the scripts executable:
     ```bash
     chmod +x traffic_shapping/static_tc_control.sh
     chmod +x traffic_shapping/auto_tc_control.sh
     ```
-2.  Run either the manual or automatic script with `sudo`:
+2.  Run your chosen traffic shaping script with `sudo`:
     ```bash
-    # For manual control
-    sudo ./traffic_shapping/static_tc_control.sh
-
-    # For automatic control
+    # For automatic, cycling conditions:
     sudo ./traffic_shapping/auto_tc_control.sh
+
+    # OR for manual, interactive control:
+    sudo ./traffic_shapping/static_tc_control.sh
     ```
 
-### **Step 3: Measure the Performance**
+---
+### **On the RECEIVER PC (192.168.2.120)**
 
-**On the Receiver PC (192.168.2.120):**
+You will need **two terminals** on this machine.
+
+**Terminal 1: Start the Video Receiver**
+1.  Activate the virtual environment: `source venv/bin/activate`
+2.  Run the receiver script to display the incoming video:
+    ```bash
+    python3 direct_receiver.py --display
+    ```
 
 **Terminal 2: Start the Performance Monitor**
-1.  Activate the virtual environment.
-2.  Run the performance monitor script, pointing it to the Sender's IP:
+1.  Activate the virtual environment: `source venv/bin/activate`
+2.  Run the performance monitor script, pointing it to the sender's IP address:
     ```bash
     python3 measurement/performance_monitor.py --sender-ip 192.168.2.169
     ```
 
-A Matplotlib window will appear on the receiver, showing real-time graphs of the measured bitrate, latency, and packet loss, allowing you to see the direct impact of the traffic shaping rules you applied on the sender.
+This setup will show you the video stream on the receiver and a real-time graph of the performance, allowing you to debug the system effectively.
